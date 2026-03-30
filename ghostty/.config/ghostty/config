@@ -1,0 +1,73 @@
+macos-option-as-alt = false
+
+# window size
+window-width = 160
+window-height = 47 
+
+window-position-x = 300
+window-position-y = 50
+
+
+# State
+quick-terminal-position = center
+quick-terminal-screen = main
+quick-terminal-size = 75%,80%
+window-save-state = never
+
+# Keybinding for Quick Terminal
+keybind = global:super+ctrl+l=toggle_quick_terminal
+# Font
+# font-family = Fira Code  # base fira code 
+# font-family = "FiraCode Nerd Font"
+# font-family =   MapleMono NF
+font-family = "Maple Mono NF"
+font-size = 15
+
+# cursor
+# cursor-style = block
+
+# Cursor animation
+cursor-style = block
+cursor-style-blink = true
+# cursor-color = 02b890
+shell-integration-features = no-cursor
+# cursor-text = a19f9f
+# background = 0a0a0a
+background = 1a1d24
+# font-style-bold = "Bold"
+# font-synthetic-style = bold
+font-thicken = true
+
+clipboard-read = allow
+clipboard-write = allow
+
+# Rendering - sync frames to display refresh rate (reduces tearing)
+window-vsync = true
+
+# Send CSI u sequence for Ctrl+I to distinguish from Tab
+keybind = ctrl+i=csi:105;5u
+
+# Cmd+/ sends Alt+/ for commenting in Neovim (<M-/>)
+keybind = super+slash=esc:/
+
+# Cmd+Arrows send Shift+Arrows for window resize in Neovim
+keybind = super+up=csi:1;2A
+keybind = super+down=csi:1;2B
+keybind = super+left=csi:1;2D
+keybind = super+right=csi:1;2C
+keybind = ctrl+k=unbind
+keybind = ctrl+l=unbind
+
+# Cmd+F sends Esc+f (passes through tmux to Neovim as <M-f> for LSP highlight)
+keybind = super+f=esc:f
+
+# Cmd+key sends Meta sequences for Neovim keymaps (since macos-option-as-alt is off)
+keybind = super+d=esc:d
+keybind = super+shift+l=esc:L
+keybind = super+shift+]=esc:}
+keybind = super+i=esc:i
+keybind = super+w=esc:w
+keybind = super+l=esc:l
+keybind = super+]=esc:]
+keybind = super+[=esc:[
+
