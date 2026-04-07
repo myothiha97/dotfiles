@@ -1,5 +1,16 @@
 macos-option-as-alt = false
 
+# macOS handles key repeat outside Ghostty's own config, and the effective
+# knob is usually the global defaults domain rather than a Ghostty-only one.
+# For faster held movement keys in Neovim, apply:
+#   defaults write -g KeyRepeat -int 1
+#   defaults write -g InitialKeyRepeat -int 10
+# Go back to the macOS system default with:
+#   defaults delete -g KeyRepeat
+#   defaults delete -g InitialKeyRepeat
+# Restart Ghostty after changing these values. If the change still does not
+# show up, log out of macOS and back in once.
+
 # window size
 window-width = 160
 window-height = 47 
@@ -70,4 +81,3 @@ keybind = super+w=esc:w
 keybind = super+l=esc:l
 keybind = super+]=esc:]
 keybind = super+[=esc:[
-
