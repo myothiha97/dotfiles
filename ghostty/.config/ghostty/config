@@ -55,6 +55,9 @@ clipboard-write = allow
 # Rendering - sync frames to display refresh rate (reduces tearing)
 window-vsync = true
 
+# Use P3 wide color gamut on Mac XDR/Pro Display - makes colors match Neovide vibrancy
+window-colorspace = display-p3
+
 # Send CSI u sequence for Ctrl+I to distinguish from Tab
 keybind = ctrl+i=csi:105;5u
 
