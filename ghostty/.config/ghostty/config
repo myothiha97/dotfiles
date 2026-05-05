@@ -18,6 +18,9 @@ window-height = 47
 window-position-x = 300
 window-position-y = 50
 
+# background
+background-opacity = 0.95
+
 
 # State
 quick-terminal-position = center
@@ -32,7 +35,7 @@ keybind = global:super+ctrl+l=toggle_quick_terminal
 # font-family = "FiraCode Nerd Font"
 # font-family =   MapleMono NF
 font-family = "Maple Mono NF"
-font-size = 15
+font-size = 13.5
 
 # cursor
 # cursor-style = block
@@ -55,7 +58,9 @@ clipboard-write = allow
 # Rendering - sync frames to display refresh rate (reduces tearing)
 window-vsync = true
 
-# Use P3 wide color gamut on Mac XDR/Pro Display - makes colors match Neovide vibrancy
+# Ghostty's default auto-converts sRGB → P3 at shader level (best of both worlds).
+# display-p3 reinterprets raw hex as P3 coordinates, which distorts sRGB colorschemes
+# and breaks background-opacity on multi-monitor setups (macOS compositor issue).
 window-colorspace = display-p3
 
 # Send CSI u sequence for Ctrl+I to distinguish from Tab
