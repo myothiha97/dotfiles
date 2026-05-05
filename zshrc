@@ -45,7 +45,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^L' autosuggest-accept
-bindkey '^;' autosuggest-accept
+# bindkey '^;' autosuggest-accept
 
 bindkey '^[^[' autosuggest-clear  # Double-tap Esc to clear
 
@@ -74,9 +74,9 @@ clear-screen-widget() {
     zle reset-prompt
 }
 
-# 2. Register and bind to Ctrl+L
+# 2. Register and bind to Ctrl+f
 zle -N clear-screen-widget
-bindkey '^O' clear-screen-widget
+bindkey '^O' clear-screen-widget 
 
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
