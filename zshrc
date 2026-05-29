@@ -92,3 +92,7 @@ esac
 
 # User scripts
 export PATH="$HOME/.scripts:$PATH"
+
+# Local-only secrets (API keys, tokens). File lives outside ~/.dotfiles, never committed.
+[ -f ~/.zshenv.local ] && source ~/.zshenv.local
+

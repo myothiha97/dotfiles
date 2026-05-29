@@ -13,13 +13,22 @@ macos-option-as-alt = false
 
 # window size
 window-width = 160
-window-height = 47 
+window-height = 44
 
 window-position-x = 300
 window-position-y = 50
 
-# background
-background-opacity = 0.95
+# background = 0a0a0a
+# background = 1a1d24
+# background = 001419
+# background-blur = true
+
+# copied from https://github.com/craftzdog/dotfiles-public/blob/master/.config/ghostty/config
+# basically the same config as craftzdog's but with some tweaks to the colors and font size
+background-opacity = 0.9
+background-blur-radius = 20
+background = #031219
+
 
 
 # State
@@ -46,8 +55,6 @@ cursor-style-blink = true
 # cursor-color = 02b890
 shell-integration-features = no-cursor
 # cursor-text = a19f9f
-# background = 0a0a0a
-background = 1a1d24
 # font-style-bold = "Bold"
 # font-synthetic-style = bold
 font-thicken = true
