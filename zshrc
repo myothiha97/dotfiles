@@ -57,10 +57,12 @@ export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"
 
 # alias
 alias vim='nvim'
-alias vm='nvim'
-alias v="nvim"
+alias vi="nvim"
+
 alias pn='pnpm'
 alias lgit='lazygit'
+alias cc="claude" # cc = alias for claude code 
+alias tm="tmux"
 # Copy current branch name to clipboard
 alias copybr="git branch --show-current | pbcopy"
 # alias clh='history -p && :> ~/.zsh_history && exec $SHELL'
