@@ -96,3 +96,8 @@ keybind = super+w=esc:w
 keybind = super+l=esc:l
 keybind = super+]=esc:]
 keybind = super+[=esc:[
+
+# Cmd+K → <M-k> for Copilot toggle in Neovim insert mode (see copilot.lua/neovide.lua).
+# Deferred loose end: rarely used, and this would override Ghostty's default
+# cmd+k = clear-scrollback. Uncomment to enable the in-terminal toggle.
+# keybind = super+k=esc:k
