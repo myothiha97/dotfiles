@@ -95,6 +95,12 @@ esac
 # User scripts
 export PATH="$HOME/.scripts:$PATH"
 
+# go bin
+export PATH="$PATH:$HOME/go/bin"
+
 # Local-only secrets (API keys, tokens). File lives outside ~/.dotfiles, never committed.
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
 
+
+# Claude Code accounts
+alias claude-work='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
