@@ -1,0 +1,18 @@
+git:
+  # Use git's natural commit order instead of the default `topo-order`.
+  # topo-order forces a full topological sort of all reachable history before
+  # the graph can render — on large repos (many branches / deep history) that
+  # is a 1-2s freeze on startup. `default` streams commits cheaply with no
+  # global sort pass. Harmless on small repos, big win on large ones.
+  log:
+    order: default
+
+gui:
+  # Lazygit cannot truly hide the Commits/Stash panels by default in 0.62.2,
+  # so bias the layout toward the currently focused area instead.
+  # screen mode normal, half, full
+  screenMode: normal
+  sidePanelWidth: 0.3
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 3
+  showCommandLog: false
