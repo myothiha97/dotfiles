@@ -6,7 +6,17 @@ git:
   # global sort pass. Harmless on small repos, big win on large ones.
   log:
     order: default
-
+  # DISABLED (2026-06-29): reverted to lazygit's default diff coloring — the
+  # delta pager proved unstable in the diff view. Kept here, commented, so it
+  # can be re-enabled later by uncommenting the `pagers` block below.
+  #
+  # Pipe diffs through delta for syntax highlighting + clearer add/remove
+  # colors. Affects the diff/preview panel only — lazygit renders the merge
+  # conflict resolver itself, so that view is unchanged. --paging=never lets
+  # lazygit own the scrolling; light-mode users can swap --dark for --light.
+  # pagers:
+  #   - colorArg: always
+  #     pager: delta --paging=never
 gui:
   # Lazygit cannot truly hide the Commits/Stash panels by default in 0.62.2,
   # so bias the layout toward the currently focused area instead.
