@@ -44,7 +44,7 @@ keybind = global:super+ctrl+l=toggle_quick_terminal
 # font-family = "FiraCode Nerd Font"
 # font-family =   MapleMono NF
 font-family = "Maple Mono NF"
-font-size = 13.5
+font-size = 13
 
 # cursor
 # cursor-style = block
