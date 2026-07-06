@@ -61,6 +61,8 @@ alias vi="nvim"
 
 alias pn='pnpm'
 alias lgit='lazygit'
+alias g="git"
+alias lg="lazygit"
 alias cc="claude" # cc = alias for claude code 
 alias tm="tmux"
 # Copy current branch name to clipboard
