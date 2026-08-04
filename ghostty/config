@@ -61,21 +61,51 @@ shell-integration-features = no-cursor
 # Stroke weight. `font-thicken` is a macOS-only stroke thickening, and
 # `font-thicken-strength` scales it from 0 to 255.
 #
-# Tried and rejected, in order:
-#   255 (the strength default, and what this config ran on) -- too heavy, glyphs
-#       read thick and slightly blurred.
+# CURRENT STATE: the strength line below is commented out on purpose, so the
+# effective value is Ghostty's default of 255. Commenting it does NOT turn
+# thickening off -- `font-thicken = true` is still set.
+#
+# History, in order:
+#   255 -- once judged too heavy (thick, slightly blurred). That judgement was made
+#       while the real problem was somewhere else entirely, see below. Re-judged on
+#       2026-08-05 and it reads correct, so this is where the config sits again.
 #   font-thicken = false (Ghostty's own default) -- too far the other way: strokes
 #       go thin enough that text reads faded AND visually smaller at 13pt.
 #   100 -- still thin and faded.
-# 140 is the pick: real stroke weight, and still under ~180, where the thickening
-# starts softening glyph edges. Both ends of the range were seen before choosing.
+#   140 -- ran here for a while, then measured on 2026-08-05 rather than guessed.
+#       Glyph pixels sampled from a screenshot: mean stroke coverage 0.386, so base0
+#       #9eabac area-averaged to #3c4e51, L* 31.8. The same colour in Neovide covered
+#       0.492 and landed at L* 38.7. A 6.9 L* gap on identical colour, i.e. purely a
+#       rasterization difference, and the reason code read faded at 140.
+#   165 -- recommended after that measurement, then superseded before it was ever
+#       judged, because the measurement also showed the ACTUAL complaint was not
+#       this dial at all.
+#
+# WHY THIS DIAL WAS BEING TOUCHED AT ALL, and why it should not be again:
+# the thing that looked wrong was the CodeCompanion chat panel reading too bright.
+# It was measured at effective L* 65.4 against 37.8 for the code text beside it,
+# because that panel paints its prose with its own explicit colour. Lowering
+# thickening did dim the chat by 10.1 L*, but it also cost 5.6 L* on ALL code text
+# and every other terminal pane, to fix one panel worth ~25% of the screen. Wrong
+# scope. It was fixed at its own layer instead: `CodeCompanionChatText` in
+# lua/plugins/codecompanion.lua, which is already chat-scoped and costs nothing
+# elsewhere. That freed this dial to go back to whatever suits code, which is 255.
+#
+# So: if ONE pane looks wrong, fix that pane. Only touch this dial when ALL text in
+# the terminal is wrong. Ghostty has no text gamma/contrast correction of its own,
+# so this really is the entire stroke-weight budget, which is exactly why it is too
+# blunt for a single-panel problem. (Neovide looks fuller on the same theme because
+# Skia applies its own gamma correction to text masks.) And note that raising the
+# nvim palette is not the lever either: at 0.386 coverage a brighter base0 bought
+# only ~2 L*. See `todos/syntax-palette-followups.md` item 4 in the nvim config.
 font-thicken = true
-font-thicken-strength = 140
-# Adjust on this line first -- it is a 0-255 dial, so nudge it (120 thinner, 165
-# heavier) rather than switching thickening off again.
+# font-thicken-strength = 165
+# Uncomment and adjust the line above only for a whole-terminal problem. It is a
+# 0-255 dial: 180 and up starts softening glyph edges, 140 measured faded.
 #
 # Two other knobs, only if the strength dial alone can't get there:
-#   * Thin strokes read as small type. One step up compensates without weight:
+#   * Thin strokes read as small type. One step up compensates without weight, and
+#     would also match Neovide, which has been running at h14 all along:
 #       font-size = 14
 #   * Real weight change. "Maple Mono NF Light" and "Medium" are both installed:
 #       font-style = Light
