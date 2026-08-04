@@ -57,7 +57,30 @@ shell-integration-features = no-cursor
 # cursor-text = a19f9f
 # font-style-bold = "Bold"
 # font-synthetic-style = bold
+
+# Stroke weight. `font-thicken` is a macOS-only stroke thickening, and
+# `font-thicken-strength` scales it from 0 to 255.
+#
+# Tried and rejected, in order:
+#   255 (the strength default, and what this config ran on) -- too heavy, glyphs
+#       read thick and slightly blurred.
+#   font-thicken = false (Ghostty's own default) -- too far the other way: strokes
+#       go thin enough that text reads faded AND visually smaller at 13pt.
+#   100 -- still thin and faded.
+# 140 is the pick: real stroke weight, and still under ~180, where the thickening
+# starts softening glyph edges. Both ends of the range were seen before choosing.
 font-thicken = true
+font-thicken-strength = 140
+# Adjust on this line first -- it is a 0-255 dial, so nudge it (120 thinner, 165
+# heavier) rather than switching thickening off again.
+#
+# Two other knobs, only if the strength dial alone can't get there:
+#   * Thin strokes read as small type. One step up compensates without weight:
+#       font-size = 14
+#   * Real weight change. "Maple Mono NF Light" and "Medium" are both installed:
+#       font-style = Light
+#     Avoid `alpha-blending = linear-corrected` for this: it thins bright text on
+#     a dark background, which is the direction you already rejected.
 
 clipboard-read = allow
 clipboard-write = allow
