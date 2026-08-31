@@ -1,0 +1,15 @@
+config-version = 2
+
+# Keep this disabled while testing AeroSpace.
+start-at-login = false
+
+# Shortcut-only mode: never resize or tile application windows.
+on-window-detected = [
+    { check-further-callbacks = true, run = 'layout floating' },
+]
+
+[mode.main.binding]
+    cmd-ctrl-h = 'exec-and-forget open -a "Google Chrome"'
+    cmd-ctrl-j = '''exec-and-forget osascript -e 'tell application "Ghostty" to activate' '''
+    cmd-ctrl-k = '''exec-and-forget osascript -e 'tell application "Finder" to activate' '''
+    cmd-ctrl-l = 'exec-and-forget open -a Slack'

@@ -10,6 +10,9 @@ back into this repo. Edit files in place — changes are reflected live and trac
 | Folder    | Tracked file   | Symlinked to                                          |
 | --------- | -------------- | ----------------------------------------------------- |
 | `ghostty` | `config`       | `~/.config/ghostty/config`                            |
+| `aerospace` | `aerospace.toml` | `~/.config/aerospace/aerospace.toml`              |
+| `yabai`   | `yabairc`, `focus-app.sh` | `~/.config/yabai/`                         |
+| `skhd`    | `skhdrc`       | `~/.config/skhd/skhdrc`                               |
 | `tmux`    | `.tmux.conf`   | `~/.tmux.conf`                                         |
 | `lazygit` | `config.yml`   | `~/Library/Application Support/lazygit/config.yml`     |
 | `zshrc`   | `zshrc`        | `~/.zshrc`                                             |
@@ -29,6 +32,12 @@ ln -sf ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
 mkdir -p ~/.config/ghostty
 ln -sf ~/.dotfiles/ghostty/config  ~/.config/ghostty/config
+
+mkdir -p ~/.config/aerospace ~/.config/yabai ~/.config/skhd
+ln -sf ~/.dotfiles/aerospace/aerospace.toml ~/.config/aerospace/aerospace.toml
+ln -sf ~/.dotfiles/yabai/yabairc ~/.config/yabai/yabairc
+ln -sf ~/.dotfiles/yabai/focus-app.sh ~/.config/yabai/focus-app.sh
+ln -sf ~/.dotfiles/skhd/skhdrc ~/.config/skhd/skhdrc
 
 mkdir -p "$HOME/Library/Application Support/lazygit"
 ln -sf ~/.dotfiles/lazygit/config.yml "$HOME/Library/Application Support/lazygit/config.yml"

@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Shortcut-only migration from AeroSpace. Keep every Space unmanaged so Yabai
+# never tiles or resizes application windows.
+yabai -m config layout float
+
+# Switch directly to applications on other native macOS Spaces without the
+# standard Space animation. This setup intentionally does not load the
+# scripting addition, so SIP can remain fully enabled.
+yabai -m config skip_window_focus_animation on
+
+# Preserve normal macOS pointer behavior.
+yabai -m config mouse_follows_focus off
+yabai -m config focus_follows_mouse off
