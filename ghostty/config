@@ -150,6 +150,52 @@ keybind = super+l=esc:l
 keybind = super+]=esc:]
 keybind = super+[=esc:[
 
+# tmux session switching: prefix + Cmd + <digit> jumps to a session by position,
+# prefix + Cmd + n / p cycles to the next / previous one.
+#
+# tmux has no Super/Cmd modifier, so these deliberately emit Ctrl/Meta sequences
+# and tmux binds them as C-<n> / M-n / M-p. You press Cmd, tmux sees Ctrl or Alt.
+#
+# Accepted trade-off: Ghostty cannot know whether the tmux prefix was just
+# pressed, so these fire on every Cmd+<key>. Used outside the prefix, tmux
+# forwards the key to the running program. Deliberate, not a bug.
+
+# Cycle sessions. Sent as Meta (ESC n / ESC p) rather than Ctrl because the
+# leak is then harmless: terminal Neovim and zsh map neither <M-n> nor <M-p>,
+# whereas Ctrl+n would trigger Neovim completion and zsh history.
+# Overrides Ghostty's default super+n = new_window.
+keybind = super+n=esc:n
+keybind = super+p=esc:p
+
+# Jump by position. Ctrl+digit has no reliable terminal encoding: under
+# modifyOtherKeys mode 1, which only rewrites keys lacking a "well-known
+# representation", Ctrl+3 arrives as a bare ESC (0x1b), Ctrl+2 as NUL and
+# Ctrl+4-8 as other control codes, so tmux never sees a C-3 key at all. Emit the
+# xterm-style extended-key sequence directly; tmux decodes it unconditionally.
+# Format: CSI 27 ; <modifier> ; <keycode> ~  (modifier 5 = Ctrl, keycode = ASCII)
+#
+# Bind both the logical (super+three) and physical (super+digit_3) forms;
+# overriding only one leaves Ghostty's other super+1..9 tab-switch default live.
+# Leaking past the prefix types a bare digit, and Cmd+4 sends 0x1c / SIGQUIT.
+keybind = super+one=text:\x1b[27;5;49~
+keybind = super+digit_1=text:\x1b[27;5;49~
+keybind = super+two=text:\x1b[27;5;50~
+keybind = super+digit_2=text:\x1b[27;5;50~
+keybind = super+three=text:\x1b[27;5;51~
+keybind = super+digit_3=text:\x1b[27;5;51~
+keybind = super+four=text:\x1b[27;5;52~
+keybind = super+digit_4=text:\x1b[27;5;52~
+keybind = super+five=text:\x1b[27;5;53~
+keybind = super+digit_5=text:\x1b[27;5;53~
+keybind = super+six=text:\x1b[27;5;54~
+keybind = super+digit_6=text:\x1b[27;5;54~
+keybind = super+seven=text:\x1b[27;5;55~
+keybind = super+digit_7=text:\x1b[27;5;55~
+keybind = super+eight=text:\x1b[27;5;56~
+keybind = super+digit_8=text:\x1b[27;5;56~
+keybind = super+nine=text:\x1b[27;5;57~
+keybind = super+digit_9=text:\x1b[27;5;57~
+
 # Cmd+K → <M-k> for Copilot toggle in Neovim insert mode (see copilot.lua/neovide.lua).
 # Deferred loose end: rarely used, and this would override Ghostty's default
 # cmd+k = clear-scrollback. Uncomment to enable the in-terminal toggle.
