@@ -13,6 +13,7 @@ and symlinked to their live locations.
 | `aerospace` | Disabled floating-only fallback config | `~/.config/aerospace/aerospace.toml` |
 | `tmux` | Sessions, panes, keymaps, session scripts, and persistence | `~/.tmux.conf` |
 | `lazygit` | Faster log ordering and UI layout | `~/Library/Application Support/lazygit/config.yml` |
+| `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
 Neovim is maintained separately at
@@ -36,6 +37,10 @@ ln -sf ~/.dotfiles/skhd/skhdrc ~/.config/skhd/skhdrc
 mkdir -p "$HOME/Library/Application Support/lazygit"
 ln -sf ~/.dotfiles/lazygit/config.yml \
   "$HOME/Library/Application Support/lazygit/config.yml"
+
+mkdir -p "$HOME/Library/Application Support/com.colliderli.iina/input_conf"
+ln -sf ~/.dotfiles/iina/Custom.conf \
+  "$HOME/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf"
 ```
 
 Back up any existing real file before replacing it with a symlink.
@@ -60,6 +65,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+K` | Finder |
 | `Cmd+Ctrl+L` | Slack |
 | `Cmd+Ctrl+\`` | YouTube Music |
+| `Cmd+Ctrl+,` | IINA |
 
 The helper focuses an existing accessible window or launches the app. If Finder
 has no usable window, it opens the home folder.
@@ -176,6 +182,36 @@ rejected ones went, and how to regenerate a lighter or darker ladder.
 TPM manages `tmux-resurrect` and `tmux-continuum`. Sessions auto-save every 15
 minutes and restore when tmux starts. Install plugins with `Prefix+I` after TPM is
 installed at `~/.tmux/plugins/tpm`.
+
+## IINA
+
+IINA is the default video player, used for watching course videos. `iina/Custom.conf`
+is a copy of the bundled `IINA Default` binding set with the speed keys rebound. The
+built-in sets live inside the app bundle and cannot be edited, so a full copy is the
+supported way to change them.
+
+| Shortcut | Speed change |
+| --- | --- |
+| `Cmd+]` / `Cmd+[` | Faster or slower by 1.0x |
+| `Ctrl+]` / `Ctrl+[` | Faster or slower by 0.5x |
+| `Cmd+Ctrl+]` / `Cmd+Ctrl+[` | Faster or slower by 0.25x |
+| `Opt+Cmd+]` / `Opt+Cmd+[` | Faster or slower by 10 percent, left at the default |
+| `Cmd+\` | Back to 1x |
+
+The defaults multiplied the rate (`Cmd+]` doubled it), which overshoots for lecture
+video. These add a flat amount instead, and nothing clamps the result, so repeated
+presses will run past any useful speed. `Cmd+\` resets.
+
+The file is inert until it is selected: **Preferences > Key Bindings > Configuration**
+must be set to `Custom`. IINA reads the file at that moment and does not watch it
+afterwards, so edits made outside the app need the dropdown toggled away and back, or
+a restart. Editing bindings inside IINA rewrites the file, which may replace the
+symlink with a regular file; check `git status` here after doing that.
+
+Playlist behaviour for a course folder is set under **Preferences > General**: turn on
+`Add files in the same folder automatically` and `Play next item automatically`, plus
+`Resume last playback position` to continue a part-watched video. Those are app
+preferences, not part of this config file, so they are not tracked here.
 
 ## zsh and lazygit
 
