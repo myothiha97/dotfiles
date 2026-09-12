@@ -55,6 +55,9 @@ opts=(
   # fzf draws a "gutter" bar (default U+258C) at the start of every row that is
   # not the current one. Blank it so the ">" pointer is the only marker.
   --gutter=' '
+  # Without this fzf paints bg+ only behind the item's own text, so the band
+  # stops at the end of the session name. This runs it to the popup edge.
+  --highlight-line
   # Backgrounds are pinned to the terminal default (-1) so ghostty's window
   # transparency and blur show through the popup.
   #
