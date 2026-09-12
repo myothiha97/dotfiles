@@ -11,7 +11,7 @@ and symlinked to their live locations.
 | `yabai` | Floating window manager and app-focus helper | `~/.config/yabai/` |
 | `skhd` | Global app-focus shortcuts | `~/.config/skhd/skhdrc` |
 | `aerospace` | Disabled floating-only fallback config | `~/.config/aerospace/aerospace.toml` |
-| `tmux` | Sessions, panes, keymaps, and persistence | `~/.tmux.conf` |
+| `tmux` | Sessions, panes, keymaps, session scripts, and persistence | `~/.tmux.conf` |
 | `lazygit` | Faster log ordering and UI layout | `~/Library/Application Support/lazygit/config.yml` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
@@ -39,6 +39,10 @@ ln -sf ~/.dotfiles/lazygit/config.yml \
 ```
 
 Back up any existing real file before replacing it with a symlink.
+
+The tmux config runs the scripts from `~/.dotfiles/tmux/` by path, so they need
+no symlink, but the clone must live at `~/.dotfiles`. The session pickers use
+`fzf` and fall back to a plainer menu without it (`brew install fzf`).
 
 Local API keys and tokens belong in `~/.zshenv.local`. This file is sourced by
 `zshrc` and must not be committed.
@@ -74,15 +78,20 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 
 ## Ghostty
 
-- Maple Mono NF at 12.5 pt with macOS font thickening enabled.
-- Transparent dark background, blur, and display-P3 output.
+- FiraCode Nerd Font at 13.7 pt with macOS font thickening enabled.
+- Transparent dark background (`#031219`, opacity 0.9), blur, and display-P3 output.
 - Global quick terminal on `Cmd+Ctrl+L`.
 - `Ctrl+I` is distinct from Tab through the CSI-u sequence.
 - Selected Command keys are translated to Meta keys for Neovim.
+- Cmd+`n`/`p` and Cmd+`1`-`9` are translated for tmux session switching (see below).
 - macOS Option is not globally treated as Alt.
 
 `Cmd+Ctrl+L` is also assigned to Slack in skhd. Keep only one binding if they
 conflict on the machine.
+
+The config carries long comments on the stroke-weight dial (`font-thicken`) and
+on why the session-switch keys use those exact escape sequences. Read them before
+changing either.
 
 ## tmux
 
@@ -98,6 +107,54 @@ The prefix is `Ctrl+Space`.
 | `Enter` | Enter copy mode |
 | `x` / `X` / `Q` | Kill pane, window, or session |
 | `r` | Reload the configuration |
+
+### Session switching
+
+Sessions are numbered from 1 in creation order, oldest first.
+`tmux/list-sessions.sh` is the single source of truth for that order, so the
+pickers and the number shortcuts always agree. tmux's own ordering is by name,
+which would reshuffle whenever a session is renamed.
+
+| Keys after prefix | Action |
+| --- | --- |
+| `s` | Session picker, no search field: `j`/`k`, `Ctrl+n`/`Ctrl+p`, arrows, or digits `1`-`9` |
+| `f` | Session picker with a search field: everything types, arrows and `Ctrl+n`/`Ctrl+p` move |
+| `S` | Built-in `choose-tree` |
+| `Cmd+1` ... `Cmd+9` | Jump to a session by position |
+| `Cmd+n` / `Cmd+p` | Cycle to the next or previous session |
+
+Both pickers are fzf in a popup, sharing one look. `choose-tree` is not used for
+them because its row keys start at 0 and cannot be rebased, and `display-menu`
+hardcodes its navigation keys. Without fzf installed, the pickers fall back to
+`tmux/session-menu.sh`, a `display-menu` version.
+
+The Cmd shortcuts work because tmux has no Super modifier: `ghostty/config`
+translates Cmd+`<digit>` into the Ctrl+`<digit>` extended-key sequence and
+Cmd+`n`/`p` into `M-n`/`M-p`. The key pressed is Cmd, the key tmux matches is
+Ctrl or Alt. Ghostty cannot tell whether the prefix was just pressed, so these
+fire on every Cmd+key; outside the prefix tmux forwards them to the running
+program.
+
+Scripts in `tmux/`:
+
+| Script | Role |
+| --- | --- |
+| `list-sessions.sh` | Session names in creation order; the shared numbering |
+| `session-picker.sh` | fzf popup picker, `select` and `search` modes |
+| `session-menu.sh` | `display-menu` fallback when fzf is missing |
+| `switch-session.sh` | Jump to the session at a given position |
+| `cycle-session.sh` | Move to the next or previous session, wrapping |
+
+### Status bar
+
+Plain text, no powerline pills: session name on the left, clock and date on the
+right, windows as `<index>:<name>`. The background is `default` rather than a
+hex colour so Ghostty's opacity and blur show through. Colours are tokyonight
+blue `#7aa2f7` for the accent, `#565f89` for dim text, `#c0caf5` for the
+default foreground. `tmux/COLORS.md` records every colour tried, why the
+rejected ones went, and how to regenerate a lighter or darker ladder.
+
+### Plugins
 
 TPM manages `tmux-resurrect` and `tmux-continuum`. Sessions auto-save every 15
 minutes and restore when tmux starts. Install plugins with `Prefix+I` after TPM is
