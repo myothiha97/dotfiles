@@ -55,10 +55,15 @@ opts=(
   # fzf draws a "gutter" bar (default U+258C) at the start of every row that is
   # not the current one. Blank it so the ">" pointer is the only marker.
   --gutter=' '
-  # Every surface fzf would otherwise paint is pinned to the terminal's default
-  # background (-1). Anything else is an opaque colour, which cancels ghostty's
-  # window transparency and blur inside the popup.
-  --color='bg:-1,bg+:-1,gutter:-1,preview-bg:-1,border:-1,header:-1,pointer:green'
+  # Backgrounds are pinned to the terminal default (-1) so ghostty's window
+  # transparency and blur show through the popup.
+  #
+  # bg+ is the one deliberate exception. A terminal cannot draw a translucent
+  # cell background, so the current row's band has to be a solid colour, and
+  # that one row is opaque. It is kept close to the ghostty background
+  # (#031219) so it reads as a faint lift rather than a block. fg+ is reset to
+  # regular because the band, not bold text, is what marks the current row.
+  --color='bg:-1,gutter:-1,preview-bg:-1,border:-1,header:-1,bg+:#0d2a38,fg+:-1:regular,pointer:green'
 )
 
 # Arrows are fzf defaults in both modes; ctrl-n / ctrl-p are made explicit.
