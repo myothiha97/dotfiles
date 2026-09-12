@@ -124,7 +124,13 @@ which would reshuffle whenever a session is renamed.
 | `Cmd+n` / `Cmd+p` | Cycle to the next or previous session |
 
 Both pickers are fzf in a popup, sharing one look. Both open with the cursor
-on the session you are in, which is marked `*`.
+on the session you are in, which is marked `*`, and that row carries a faint
+band (`#0d2a38`) run to the popup edge so it reads without a pointer column.
+
+The popup sets no background, so the terminal's shows through and Ghostty's
+opacity and blur reach it. Its border is dimmed to `#3b4261`, the inactive
+pane-border colour: tmux defaults the frame to the terminal foreground, and that
+bright white ring competes with the session names inside it.
 
 Killing a session is `Ctrl+x` in both, and `s` takes a plain `x` as well, since
 it has no field competing for the key. In `f` a plain `x` has to stay typable,
