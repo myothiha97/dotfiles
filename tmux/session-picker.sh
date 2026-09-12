@@ -48,7 +48,10 @@ opts=(
   # fzf draws a "gutter" bar (default U+258C) at the start of every row that is
   # not the current one. Blank it so the ">" pointer is the only marker.
   --gutter=' '
-  --color='pointer:green'
+  # Every surface fzf would otherwise paint is pinned to the terminal's default
+  # background (-1). Anything else is an opaque colour, which cancels ghostty's
+  # window transparency and blur inside the popup.
+  --color='bg:-1,bg+:-1,gutter:-1,preview-bg:-1,border:-1,header:-1,pointer:green'
 )
 
 # Arrows are fzf defaults in both modes; ctrl-n / ctrl-p are made explicit.
