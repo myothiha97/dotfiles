@@ -7,8 +7,8 @@ HSL is hue/lightness/saturation, the axes that were actually tuned.
 
 | hex | used for | notes | HSL |
 |---|---|---|---|
-| `#7aa2f7` | accent: session name + current window | tokyonight blue, the original accent | 221/72/89 |
-| `#565f89` | inactive windows, clock, date | tokyonight dim | 229/44/23 |
+| `#7aa2f7` | accent: session name, current window, date | tokyonight blue, the original accent | 221/72/89 |
+| `#565f89` | inactive windows, clock | tokyonight dim | 229/44/23 |
 | `#c0caf5` | status bar default foreground | tokyonight fg | 229/86/73 |
 | `default` | status bar background | keeps ghostty background-opacity 0.9 + blur | - |
 
@@ -54,11 +54,10 @@ HSL is hue/lightness/saturation, the axes that were actually tuned.
 
 ## Differences from the pre-2026-09-12 config
 
-Text colours are unchanged. Two other things are not:
+Text colours are unchanged. One other thing is not:
 
 - Bar background was `#1a1b26` (opaque). Now `default`, so ghostty's
   `background-opacity = 0.9` and blur show through.
-- The date (`%d-%b`) was `#7aa2f7` blue. Now `#565f89`, same as the clock.
 
 ## Reference, not tmux colours
 
