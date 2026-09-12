@@ -117,17 +117,25 @@ which would reshuffle whenever a session is renamed.
 
 | Keys after prefix | Action |
 | --- | --- |
-| `s` | Session picker, no search field: `j`/`k`, `Ctrl+n`/`Ctrl+p`, arrows, or digits `1`-`9` |
-| `f` | Session picker with a search field: everything types, arrows and `Ctrl+n`/`Ctrl+p` move |
+| `s` | Session picker, no search field: `j`/`k`, `Ctrl+n`/`Ctrl+p`, arrows, or digits `1`-`9`. `x` or `Ctrl+x` kills the row under the cursor |
+| `f` | Session picker with a search field: everything types, arrows and `Ctrl+n`/`Ctrl+p` move, `Ctrl+x` kills |
 | `S` | Built-in `choose-tree` |
 | `Cmd+1` ... `Cmd+9` | Jump to a session by position |
 | `Cmd+n` / `Cmd+p` | Cycle to the next or previous session |
 
 Both pickers are fzf in a popup, sharing one look. Both open with the cursor
-on the session you are in, which is marked `*`. `choose-tree` is not used for
-them because its row keys start at 0 and cannot be rebased, and `display-menu`
-hardcodes its navigation keys. Without fzf installed, the pickers fall back to
-`tmux/session-menu.sh`, a `display-menu` version.
+on the session you are in, which is marked `*`.
+
+Killing a session is `Ctrl+x` in both, and `s` takes a plain `x` as well, since
+it has no field competing for the key. In `f` a plain `x` has to stay typable,
+or no session with an `x` in its name could be searched for. Either key asks for
+`y`/`n` first, and refuses on the current session, whose client the popup runs
+in, and on the last remaining session, which would stop the server.
+
+`choose-tree` is not used for them because its row keys start at 0 and cannot
+be rebased, and `display-menu` hardcodes its navigation keys. Without fzf
+installed, the pickers fall back to `tmux/session-menu.sh`, a `display-menu`
+version.
 
 The Cmd shortcuts work because tmux has no Super modifier: `ghostty/config`
 translates Cmd+`<digit>` into the Ctrl+`<digit>` extended-key sequence and
@@ -142,6 +150,8 @@ Scripts in `tmux/`:
 | --- | --- |
 | `list-sessions.sh` | Session names in creation order; the shared numbering |
 | `session-picker.sh` | fzf popup picker, `select` and `search` modes |
+| `session-rows.sh` | The picker's numbered rows; rerun to refresh after a kill |
+| `kill-session.sh` | Confirm and kill the session behind a picker row |
 | `session-menu.sh` | `display-menu` fallback when fzf is missing |
 | `switch-session.sh` | Jump to the session at a given position |
 | `cycle-session.sh` | Move to the next or previous session, wrapping |

@@ -6,9 +6,14 @@
 # cannot be both, so each mode picks one.
 #
 #   select  (prefix + s)  no input field. j/k, ctrl-n/ctrl-p, arrows and the
-#                         digits 1-9 all navigate or jump. No search.
-#   search  (prefix + f)  input field shown. Everything types, including j/k
-#                         and digits; only ctrl-n/ctrl-p and the arrows move.
+#                         digits 1-9 all navigate or jump, and x kills the
+#                         session under the cursor. No search.
+#   search  (prefix + f)  input field shown. Everything types, including j/k,
+#                         x and the digits; only ctrl-n/ctrl-p and the arrows
+#                         move.
+#
+# Killing is on ctrl-x in both modes, and additionally on plain x in select,
+# where no field is competing for the key.
 #
 # tmux's own display-menu is not used for either: menu.c hardcodes its
 # navigation keys (arrows, j/k, tab, C-b/C-f, g/G) with no way to add
@@ -32,8 +37,7 @@ current=$(tmux display-message -p '#S')
 
 sessions=$("$script_dir/list-sessions.sh")
 
-rows=$(printf '%s\n' "$sessions" | awk -v cur="$current" '
-  { printf "%d  %s%s\n", NR, $0, ($0 == cur ? "  *" : "") }')
+rows=$("$script_dir/session-rows.sh")
 
 # Row number of the session we are in, so the cursor can start there instead of
 # on the first row. Empty if the current session is somehow not in the list, in
@@ -50,6 +54,9 @@ opts=(
   --info=hidden
   --border=none
   --height=100%
+  # Wait for the whole list before the first draw, so the "start" binding below
+  # runs against a loaded list.
+  --sync
   --pointer='>'
   --marker=' '
   # fzf draws a "gutter" bar (default U+258C) at the start of every row that is
@@ -69,27 +76,37 @@ opts=(
   --color='bg:-1,gutter:-1,preview-bg:-1,border:-1,header:-1,bg+:#0d2a38,fg+:-1:regular,pointer:green'
 )
 
+# Kill the row under the cursor, after a y/n prompt. execute() hands the popup's
+# terminal to the prompt, then reload rebuilds the rows so the numbering and the
+# "*" marker follow the kill.
+kill_row="execute(\"$script_dir/kill-session.sh\" {})+reload(\"$script_dir/session-rows.sh\")"
+
 # Arrows are fzf defaults in both modes; ctrl-n / ctrl-p are made explicit.
-binds='ctrl-n:down,ctrl-p:up,ctrl-c:abort,esc:abort'
+# ctrl-x is the kill key both modes can share, because a ctrl combination is
+# never swallowed by the search field.
+binds="ctrl-n:down,ctrl-p:up,ctrl-c:abort,esc:abort,ctrl-x:$kill_row"
 
 if [ "$mode" = "select" ]; then
   # No text field, so every key is free to act as a command.
   binds="$binds,j:down,k:up,g:first,G:last,q:abort"
+  # No field to type into, so the plain key is free as well.
+  binds="$binds,x:$kill_row"
   for n in 1 2 3 4 5 6 7 8 9; do
     binds="$binds,$n:pos($n)+accept"
   done
   opts+=(--no-input)
 else
-  # Search mode: j/k, g/G, q and the digits must reach the input field, so none
-  # of them are bound. Navigation is ctrl-n / ctrl-p and the arrow keys only.
+  # Search mode: j/k, g/G, q, x and the digits must reach the input field, so
+  # none of them are bound. Navigation is ctrl-n / ctrl-p and the arrow keys,
+  # and killing is ctrl-x.
   opts+=(--prompt='  ')
 fi
 
-# Put the cursor on the current session instead of on row 1. This uses "load",
-# not "start": "start" fires before fzf has read stdin, so pos() would run
-# against an empty list and do nothing.
+# Put the cursor on the current session instead of on row 1. "start" fires once
+# at launch, unlike "load", which fires again on every reload and would drag the
+# cursor back to a stale row number after a kill.
 if [ -n "$current_row" ] && [ "$current_row" -gt 0 ] 2>/dev/null; then
-  binds="$binds,load:pos($current_row)"
+  binds="$binds,start:pos($current_row)"
 fi
 
 choice=$(printf '%s\n' "$rows" | fzf "${opts[@]}" --bind="$binds") || exit 0
