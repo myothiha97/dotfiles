@@ -5,9 +5,9 @@
 # keyboard. A key is either typed into a search field or acts as a command; it
 # cannot be both, so each mode picks one.
 #
-#   select  (prefix + f)  no input field. j/k, ctrl-n/ctrl-p, arrows and the
+#   select  (prefix + s)  no input field. j/k, ctrl-n/ctrl-p, arrows and the
 #                         digits 1-9 all navigate or jump. No search.
-#   search  (prefix + s)  input field shown. Everything types, including j/k
+#   search  (prefix + f)  input field shown. Everything types, including j/k
 #                         and digits; only ctrl-n/ctrl-p and the arrows move.
 #
 # tmux's own display-menu is not used for either: menu.c hardcodes its
