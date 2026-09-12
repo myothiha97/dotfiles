@@ -123,7 +123,8 @@ which would reshuffle whenever a session is renamed.
 | `Cmd+1` ... `Cmd+9` | Jump to a session by position |
 | `Cmd+n` / `Cmd+p` | Cycle to the next or previous session |
 
-Both pickers are fzf in a popup, sharing one look. `choose-tree` is not used for
+Both pickers are fzf in a popup, sharing one look. Both open with the cursor
+on the session you are in, which is marked `*`. `choose-tree` is not used for
 them because its row keys start at 0 and cannot be rebased, and `display-menu`
 hardcodes its navigation keys. Without fzf installed, the pickers fall back to
 `tmux/session-menu.sh`, a `display-menu` version.

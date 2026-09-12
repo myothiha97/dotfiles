@@ -30,8 +30,15 @@ fi
 
 current=$(tmux display-message -p '#S')
 
-rows=$("$script_dir/list-sessions.sh" | awk -v cur="$current" '
+sessions=$("$script_dir/list-sessions.sh")
+
+rows=$(printf '%s\n' "$sessions" | awk -v cur="$current" '
   { printf "%d  %s%s\n", NR, $0, ($0 == cur ? "  *" : "") }')
+
+# Row number of the session we are in, so the cursor can start there instead of
+# on the first row. Empty if the current session is somehow not in the list, in
+# which case the cursor is left where fzf puts it.
+current_row=$(printf '%s\n' "$sessions" | awk -v cur="$current" '$0 == cur { print NR; exit }')
 
 # Shared look, so both modes read as the same panel.
 opts=(
@@ -68,6 +75,13 @@ else
   # Search mode: j/k, g/G, q and the digits must reach the input field, so none
   # of them are bound. Navigation is ctrl-n / ctrl-p and the arrow keys only.
   opts+=(--prompt='  ')
+fi
+
+# Put the cursor on the current session instead of on row 1. This uses "load",
+# not "start": "start" fires before fzf has read stdin, so pos() would run
+# against an empty list and do nothing.
+if [ -n "$current_row" ] && [ "$current_row" -gt 0 ] 2>/dev/null; then
+  binds="$binds,load:pos($current_row)"
 fi
 
 choice=$(printf '%s\n' "$rows" | fzf "${opts[@]}" --bind="$binds") || exit 0
