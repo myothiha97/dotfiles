@@ -64,6 +64,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+J` | Ghostty |
 | `Cmd+Ctrl+K` | Finder |
 | `Cmd+Ctrl+L` | Slack |
+| `Cmd+Ctrl+O` | Neovide |
 | `Cmd+Ctrl+\`` | YouTube Music |
 | `Cmd+Ctrl+,` | IINA |
 
