@@ -81,6 +81,37 @@ skhd --start-service
 Grant both binaries access in **System Settings > Privacy & Security >
 Accessibility**. The scripting addition is not used, so SIP remains enabled.
 
+### Space switching on macOS 27
+
+macOS 27 broke Yabai's SIP-enabled space switching
+([asmvik/yabai#2822](https://github.com/asmvik/yabai/issues/2822)). Both
+`yabai -m space --focus` and `yabai -m display --focus` report success while
+doing nothing, so `skip_window_focus_animation` no longer suppresses the slide.
+
+Until that is fixed upstream, `focus-app.sh` changes the Space with
+[InstantSpaceSwitcher](https://github.com/jurplel/InstantSpaceSwitcher) and lets
+Yabai focus the window afterwards. The macOS 27 fix is still an unmerged pull
+request, so the app is built from source:
+
+```sh
+git clone https://github.com/jurplel/InstantSpaceSwitcher.git ~/projects/InstantSpaceSwitcher
+cd ~/projects/InstantSpaceSwitcher
+git fetch origin pull/88/head:macos27
+git switch macos27
+./dist/build.sh
+cp -R build/InstantSpaceSwitcher.app /Applications/
+```
+
+The helper calls `ISSCli` inside the bundle, so the menu bar app does not need
+to run. `skhd` is the responsible process for the synthetic gesture, so its
+Accessibility grant covers it.
+
+Hidden Spaces on an unfocused display still use the native animation, because
+Yabai cannot move focus between displays on macOS 27 either.
+
+Remove `/Applications/InstantSpaceSwitcher.app` and drop the `ISS` branch from
+`focus-app.sh` once Yabai ships the fix.
+
 AeroSpace is retained as a fallback but has `start-at-login = false`.
 
 ## Ghostty

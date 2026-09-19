@@ -7,6 +7,10 @@ yabai -m config layout float
 # Switch directly to applications on other native macOS Spaces without the
 # standard Space animation. This setup intentionally does not load the
 # scripting addition, so SIP can remain fully enabled.
+#
+# Kept on, but ineffective since macOS 27 (asmvik/yabai#2822): the synthetic
+# swipe Yabai posts is dropped by the Dock. focus-app.sh works around it with
+# InstantSpaceSwitcher. This line starts working again once Yabai is fixed.
 yabai -m config skip_window_focus_animation on
 
 # Preserve normal macOS pointer behavior.
