@@ -1,0 +1,23 @@
+# Yazi file manager. Defaults are already vim-like, so this file only adjusts
+# layout and sorting. Key changes live in keymap.toml.
+
+[mgr]
+# Parent : current : preview column widths. The preview gets the largest share
+# so images render big. Drop the parent to 0 to hide that column and give the
+# preview even more room.
+ratio = [1, 3, 5]
+sort_by = "natural"
+sort_dir_first = true
+sort_sensitive = false
+show_hidden = false
+show_symlink = true
+# Keep this many rows visible above and below the cursor, like vim's scrolloff
+scrolloff = 5
+linemode = "size"
+
+[preview]
+wrap = "yes"
+# Pixel cap yazi downscales images to before drawing. Low values look blurry on
+# a retina screen, so this is generous.
+max_width = 2400
+max_height = 1800

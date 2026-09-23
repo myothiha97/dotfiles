@@ -1,0 +1,28 @@
+# File name colours.
+#
+# `[filetype]` accepts only a full `rules` list. There is no `prepend_rules`
+# here (that exists for `[icon]` but not for this section), and an unknown key
+# is ignored without an error, so this list has to restate yazi's defaults.
+#
+# Changed from the default: the mime rules that painted images yellow, audio
+# and video magenta, archives red, and PDFs cyan are gone, so those files
+# inherit the terminal's normal foreground like any other file.
+#
+# Kept: directories blue, executables green, and a red background for broken
+# symlinks and unreadable entries, since those carry real information.
+
+[filetype]
+rules = [
+  { mime = "vfs/{absent,stale}", fg = "gray" },
+  { url = "*", is = "orphan", bg = "red" },
+  { url = "*", is = "exec", fg = "green" },
+  { url = "*", is = "dummy", bg = "red" },
+  { url = "*/", is = "dummy", bg = "red" },
+  { url = "*/", fg = "blue" },
+]
+
+# The bar drawn at the left edge of a file row: yellow when selected, green
+# when yanked for copy, red when cut. The default is a thin "|" that is easy
+# to miss, so this uses a full block.
+[mgr]
+marker_symbol = "█"

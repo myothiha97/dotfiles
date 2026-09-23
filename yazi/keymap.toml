@@ -1,0 +1,49 @@
+# Additions only. `prepend_keymap` keeps every built-in binding and puts these
+# in front of it, so yazi's stock keys still work: j/k/h/l, gg/G, ctrl-u/ctrl-d
+# (half page), ctrl-b/ctrl-f (page), J/K (scroll the preview), / ? n N, y, p, P,
+# space (toggle one), ctrl-a (all), ctrl-r (invert), o, r, a, . (hidden), q.
+
+[mgr]
+prepend_keymap = [
+  # Visual mode
+  # Vim's V selects whole lines. Yazi ships V as "unselect mode", which is
+  # moved to ctrl-v here.
+  { on = "V", run = "visual_mode", desc = "Visual mode (select)" },
+  { on = "<C-v>", run = "visual_mode --unset", desc = "Visual mode (unselect)" },
+
+  # Registers: d cuts, y copies, p pastes
+  # Yazi ships this the other way round (x cuts, d trashes), which breaks the
+  # vim habit of d then p to move something. The two keys are swapped back.
+  { on = "d", run = "yank --cut", desc = "Cut selected files" },
+  { on = "x", run = "remove", desc = "Move selected files to trash" },
+  # `D` still deletes permanently, and `X`/`Y` still cancel a yank, as shipped.
+
+  # oil.nvim style directory movement
+  { on = "<C-h>", run = "leave", desc = "Back to the parent directory" },
+  { on = "<C-l>", run = "enter", desc = "Enter the child directory" },
+
+  # Undo a yank or a selection
+  # Yazi puts unyank on X and Y, which sit right next to x and y, so ctrl-o is
+  # the safer version. Clearing the selection stays on Esc.
+  { on = "<C-o>", run = "unyank", desc = "Cancel the yank status" },
+
+  # Preview pane
+  # Closest thing yazi has to vim's ctrl-e / ctrl-y: the file list cannot
+  # scroll independently of the cursor, so these scroll the preview instead.
+  { on = "<C-e>", run = "seek 1",  desc = "Scroll preview down" },
+  { on = "<C-y>", run = "seek -1", desc = "Scroll preview up" },
+
+  # macOS
+  # `%h` is the hovered file and `%s` the selected ones. Yazi dropped the older
+  # `$0` / `$@` shell variables, so those two are the only forms that work.
+  # Everything after `--` is passed through raw, with no escaping needed.
+  { on = "F", run = "shell -- open -R %h", desc = "Reveal in Finder" },
+
+  # Copy the real files to the macOS clipboard, so Cmd+V pastes them in Finder.
+  # Yazi's own yank is internal to yazi, so this runs alongside it.
+  #
+  # `%y` is the set of files yazi just yanked, which is the right source here:
+  # `yank` clears the selection as it runs, so a `%s` in this position would
+  # already be empty and only the hovered file would reach the clipboard.
+  { on = "y", run = [ "yank", "shell -- ~/.dotfiles/yazi/clipboard-files.sh %y" ], desc = "Copy, and put the files on the macOS clipboard" },
+]

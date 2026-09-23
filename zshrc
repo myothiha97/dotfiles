@@ -98,6 +98,8 @@ bindkey '^[^[' autosuggest-clear  # Double-tap Esc to clear
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # alias
 alias vim='nvim'
@@ -109,6 +111,17 @@ alias g="git"
 alias lg="lazygit"
 alias cc="claude" # cc = alias for claude code 
 alias tm="tmux"
+# yazi: `y` opens the file manager, and on quit the shell follows the directory
+# you ended up in (plain `yazi` leaves you where you started). `q` quits and
+# cds, `Q` quits and stays put.
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
 # Copy current branch name to clipboard
 alias copybr="git branch --show-current | pbcopy"
 # alias clh='history -p && :> ~/.zsh_history && exec $SHELL'
