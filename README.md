@@ -14,6 +14,8 @@ and symlinked to their live locations.
 | `tmux` | Sessions, panes, keymaps, session scripts, and persistence | `~/.tmux.conf` |
 | `lazygit` | Faster log ordering and UI layout | `~/Library/Application Support/lazygit/config.yml` |
 | `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
+| `karabiner` | Key remapping, including vim keys inside Finder | `~/.config/karabiner/` |
+| `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
 Neovim is maintained separately at
@@ -34,6 +36,13 @@ ln -sf ~/.dotfiles/yabai/yabairc ~/.config/yabai/yabairc
 ln -sf ~/.dotfiles/yabai/focus-app.sh ~/.config/yabai/focus-app.sh
 ln -sf ~/.dotfiles/skhd/skhdrc ~/.config/skhd/skhdrc
 
+mkdir -p ~/.config/yazi
+ln -sf ~/.dotfiles/yazi/yazi.toml ~/.config/yazi/yazi.toml
+ln -sf ~/.dotfiles/yazi/keymap.toml ~/.config/yazi/keymap.toml
+ln -sf ~/.dotfiles/yazi/theme.toml ~/.config/yazi/theme.toml
+
+ln -s ~/.dotfiles/karabiner ~/.config/karabiner
+
 mkdir -p "$HOME/Library/Application Support/lazygit"
 ln -sf ~/.dotfiles/lazygit/config.yml \
   "$HOME/Library/Application Support/lazygit/config.yml"
@@ -51,6 +60,58 @@ no symlink, but the clone must live at `~/.dotfiles`. The session pickers use
 
 Local API keys and tokens belong in `~/.zshenv.local`. This file is sourced by
 `zshrc` and must not be committed.
+
+## Yazi
+
+Terminal file manager with vim keys by default. Install it and the preview
+helpers with:
+
+```sh
+brew install yazi ffmpegthumbnailer sevenzip jq imagemagick resvg
+```
+
+Run it with `y` (the zsh function in `zshrc`), not `yazi`, so the shell cds to
+the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
+`gg`/`G`, `ctrl-u`/`ctrl-d`, `v` visual mode, and `space` to toggle one file.
+
+`keymap.toml` pulls the rest closer to vim:
+
+- `d` cuts and `x` trashes, swapping yazi's defaults so `d` then `p` moves a
+  file the way vim moves text. `X` deletes permanently
+- `V` selects whole rows. Yazi's unselect mode moves to `ctrl-v`
+- `ctrl-h` and `ctrl-l` leave and enter directories, matching the oil.nvim setup
+- `ctrl-e` and `ctrl-y` scroll the preview pane
+- `ctrl-v` is unselect visual mode, since `V` now selects
+- `F` reveals the hovered file in Finder
+- `y` also puts the real files on the macOS clipboard via
+  `yazi/clipboard-files.sh`, so `Cmd+V` pastes them in Finder. Yazi's own yank
+  is internal to yazi and invisible to other apps
+- `ctrl-o` cancels a yank, next to yazi's own `X` and `Y`
+
+Shell commands stay on yazi's defaults: `;` runs one, `:` runs one and waits.
+
+`theme.toml` turns off yazi's mime-based colours for images, media, archives,
+and PDFs so file names read as plain white. Directories stay blue, executables
+green, and broken symlinks red.
+
+## Karabiner
+
+The whole `~/.config/karabiner` directory is symlinked, not just
+`karabiner.json`. Karabiner-Elements rewrites that file whenever you change a
+setting in its UI, and an atomic rewrite replaces a symlinked file with a real
+one. Linking the directory keeps every write inside the repo.
+
+`automatic_backups/` is gitignored; Karabiner fills it on its own.
+
+The Finder rules give Finder vim motions while it is the frontmost app: `j`/`k`
+move, `h`/`l` collapse and expand, `ctrl-d`/`ctrl-u` page, `gg`/`G` jump,
+`y`/`p` copy and paste, `v` visual select, `x` trash. `Return` and `/` switch to
+an insert mode so typing works for renaming and searching, and `Escape` switches
+back.
+
+Rules live in `assets/complex_modifications/` but only take effect once they are
+listed in `karabiner.json` under the selected profile, which is what the
+Karabiner-Elements UI does under Complex Modifications.
 
 ## Yabai and skhd
 
