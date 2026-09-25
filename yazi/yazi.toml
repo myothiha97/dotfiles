@@ -2,10 +2,10 @@
 # layout and sorting. Key changes live in keymap.toml.
 
 [mgr]
-# Parent : current : preview column widths. The preview gets the largest share
-# so images render big. Drop the parent to 0 to hide that column and give the
-# preview even more room.
-ratio = [2, 3, 4]
+# Parent : current : preview column widths. The parent column is hidden (0) and
+# its space goes to the file list and the preview, which gets the larger share
+# so images render big.
+ratio = [0, 2, 3]
 sort_by = "natural"
 sort_dir_first = true
 sort_sensitive = false

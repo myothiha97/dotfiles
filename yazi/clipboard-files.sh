@@ -29,6 +29,20 @@ function run(argv) {
 	const pb = $.NSPasteboard.generalPasteboard
 	pb.clearContents
 	pb.writeObjects($(argv.map(p => $.NSURL.fileURLWithPath(p))))
+
+	// The pasteboard server receives the items in the background, and any item
+	// still in flight is dropped when this process exits. Reads from inside this
+	// process only see a local cache, so a separate process does the check, and
+	// this one stays alive until that process sees every item (capped at ~5s).
+	const app = Application.currentApplication()
+	app.includeStandardAdditions = true
+	const countItems = `osascript -l JavaScript -e 'ObjC.import("AppKit"); $.NSPasteboard.generalPasteboard.pasteboardItems.count'`
+	// Limits how many times the clipboard is checked, not how many files are copied
+	const MAX_CHECKS = 50
+	for (let checks = 0; checks < MAX_CHECKS; checks++) {
+		if (Number(app.doShellScript(countItems)) >= argv.length) break
+		delay(0.02)
+	}
 	return ''
 }
 JXA
