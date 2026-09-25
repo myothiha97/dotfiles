@@ -41,7 +41,8 @@ window-save-state = never
 keybind = global:super+ctrl+l=toggle_quick_terminal
 # Font
 # font-family = Fira Code  # base fira code 
-font-family = "FiraCode Nerd Font"
+# font-family = "FiraCode Nerd Font"
+font-family = "JetBrains Mono"
 # font-family =   MapleMono NF
 # font-family = "Maple Mono NF"
 font-size = 13.7
