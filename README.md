@@ -272,9 +272,9 @@ rejected ones went, and how to regenerate a lighter or darker ladder.
 
 ### Plugins
 
-TPM manages `tmux-resurrect` and `tmux-continuum`. Sessions auto-save every 15
-minutes and restore when tmux starts. Install plugins with `Prefix+I` after TPM is
-installed at `~/.tmux/plugins/tpm`.
+TPM is installed at `~/.tmux/plugins/tpm`; install plugins with `Prefix+I`.
+`tmux-resurrect` and `tmux-continuum` (session save and restore across reboot)
+are commented out in `.tmux.conf` for now.
 
 ## IINA
 
