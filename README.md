@@ -182,7 +182,7 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 - Global quick terminal on `Cmd+Ctrl+L`.
 - `Ctrl+I` is distinct from Tab through the CSI-u sequence.
 - Selected Command keys are translated to Meta keys for Neovim.
-- Cmd+`n`/`p` and Cmd+`1`-`9` are translated for tmux session switching (see below).
+- Cmd+`n`/`p` and Cmd+`0`-`9` are translated for tmux session switching (see below).
 - macOS Option is not globally treated as Alt.
 
 `Cmd+Ctrl+L` is also assigned to Slack in skhd. Keep only one binding if they
@@ -190,7 +190,9 @@ conflict on the machine.
 
 The config carries long comments on the stroke-weight dial (`font-thicken`) and
 on why the session-switch keys use those exact escape sequences. Read them before
-changing either.
+changing either. After changing a Cmd keybind, quit and reopen Ghostty: a config
+reload can leave the old macOS menu shortcut (such as Cmd+0 = reset font size)
+in place.
 
 ## tmux
 
@@ -220,7 +222,9 @@ which would reshuffle whenever a session is renamed.
 | `f` | Session picker with a search field: everything types, arrows and `Ctrl+n`/`Ctrl+p` move, `Ctrl+x` kills |
 | `S` | Built-in `choose-tree` |
 | `Cmd+1` ... `Cmd+9` | Jump to a session by position |
-| `Cmd+n` / `Cmd+p` | Cycle to the next or previous session |
+| `Cmd+0` | Jump to the last session |
+| `Cmd+n` / `Cmd+p` | Cycle to the next or previous session, wrapping at the ends |
+| `o` | Toggle between the current pane and the `yazi` window of the `yazi-files` session (created in the current directory if missing) |
 
 Both pickers are fzf in a popup, sharing one look. Both open with the cursor
 on the session you are in, which is marked `*`, and that row carries a faint
@@ -260,6 +264,7 @@ Scripts in `tmux/`:
 | `session-menu.sh` | `display-menu` fallback when fzf is missing |
 | `switch-session.sh` | Jump to the session at a given position |
 | `cycle-session.sh` | Move to the next or previous session, wrapping |
+| `yazi-session.sh` | Toggle to and from the `yazi-files` session's `yazi` window |
 
 ### Status bar
 

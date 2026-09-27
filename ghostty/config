@@ -152,7 +152,8 @@ keybind = super+]=esc:]
 keybind = super+[=esc:[
 
 # tmux session switching: prefix + Cmd + <digit> jumps to a session by position,
-# prefix + Cmd + n / p cycles to the next / previous one.
+# prefix + Cmd + 0 to the last one, and prefix + Cmd + n / p cycles to the
+# next / previous one.
 #
 # tmux has no Super/Cmd modifier, so these deliberately emit Ctrl/Meta sequences
 # and tmux binds them as C-<n> / M-n / M-p. You press Cmd, tmux sees Ctrl or Alt.
@@ -196,6 +197,11 @@ keybind = super+eight=text:\x1b[27;5;56~
 keybind = super+digit_8=text:\x1b[27;5;56~
 keybind = super+nine=text:\x1b[27;5;57~
 keybind = super+digit_9=text:\x1b[27;5;57~
+
+# Cmd+0 jumps to the last session. Overrides Ghostty's default super+0 =
+# reset_font_size.
+keybind = super+zero=text:\x1b[27;5;48~
+keybind = super+digit_0=text:\x1b[27;5;48~
 
 # Cmd+K → <M-k> for Copilot toggle in Neovim insert mode (see copilot.lua/neovide.lua).
 # Deferred loose end: rarely used, and this would override Ghostty's default

@@ -5,7 +5,7 @@
 # list-sessions.sh, which orders sessions by creation time. That is the same
 # order session-menu.sh numbers, so the two stay in sync.
 #
-# Usage: switch-session.sh <index> [client-tty]
+# Usage: switch-session.sh <index|last> [client-tty]
 
 set -euo pipefail
 
@@ -14,7 +14,11 @@ script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 index=${1:?missing session index}
 client=${2:-}
 
-name=$("$script_dir/list-sessions.sh" | sed -n "${index}p")
+if [ "$index" = "last" ]; then
+  name=$("$script_dir/list-sessions.sh" | tail -n 1)
+else
+  name=$("$script_dir/list-sessions.sh" | sed -n "${index}p")
+fi
 
 if [ -z "$name" ]; then
   tmux display-message "No session #${index}"
