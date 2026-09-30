@@ -25,11 +25,11 @@ window-position-y = 50
 
 # copied from https://github.com/craftzdog/dotfiles-public/blob/master/.config/ghostty/config
 # basically the same config as craftzdog's but with some tweaks to the colors and font size
-background-opacity = 0.9
-background-blur-radius = 20
+# background-opacity = 0.9
+# background-blur-radius = 20
 background = #031219
-
-
+# reused the same color palette from my custom theme body.brightest color 
+foreground = #bcc9ca
 
 # State
 quick-terminal-position = center
@@ -45,7 +45,7 @@ keybind = global:super+ctrl+l=toggle_quick_terminal
 font-family = "JetBrains Mono"
 # font-family =   MapleMono NF
 # font-family = "Maple Mono NF"
-font-size = 13.7
+font-size = 12.5
 
 # cursor
 # cursor-style = block
