@@ -204,3 +204,7 @@ alias claude-work='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
 #    writing the completion dump, which forces a full fpath rescan on every
 #    shell start (measured: 1.27s cold vs 0.87s warm). -w only adds the
 #    "regenerating" noise you see at the prompt.
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/mtkh97/.local/bin:$PATH"
