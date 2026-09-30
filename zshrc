@@ -111,10 +111,10 @@ alias g="git"
 alias lg="lazygit"
 alias cc="claude" # cc = alias for claude code 
 alias tm="tmux"
-# yazi: `y` opens the file manager, and on quit the shell follows the directory
+# yazi: `f` opens the file manager, and on quit the shell follows the directory
 # you ended up in (plain `yazi` leaves you where you started). `q` quits and
 # cds, `Q` quits and stays put.
-function y() {
+function f() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
 	IFS= read -r -d '' cwd < "$tmp"
