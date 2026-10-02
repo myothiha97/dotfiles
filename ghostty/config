@@ -27,9 +27,25 @@ window-position-y = 50
 # basically the same config as craftzdog's but with some tweaks to the colors and font size
 # background-opacity = 0.9
 # background-blur-radius = 20
-background = #031219
+# background = #031219
+
 # reused the same color palette from my custom theme body.brightest color 
-foreground = #bcc9ca
+# start trialling from 1st Oct 2026 for below foreground text color 
+foreground = #bcc9ca 
+# foreground = "#ede7d3" body.base2 color, too saturated 
+
+# start trialling from 1st Oct 2026 for below background color
+background = #131312 
+
+
+# hiding top border 
+
+# Option 1: tab-style title bar. Ghostty hides the separator in this style.
+# macos-titlebar-style = tabs
+
+# Option 2: no title bar at all. No separator, but you also lose the
+# traffic-light buttons and the "tm" title.
+# macos-titlebar-style = hidden
 
 # State
 quick-terminal-position = center
