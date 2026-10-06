@@ -58,10 +58,15 @@ keybind = global:super+ctrl+l=toggle_quick_terminal
 # Font
 # font-family = Fira Code  # base fira code 
 # font-family = "FiraCode Nerd Font"
-font-family = "JetBrains Mono"
+# font-family = "JetBrains Mono"
 # font-family =   MapleMono NF
-# font-family = "Maple Mono NF"
+# SF Mono patched with Nerd Font icons and Fira Code ligatures (=> === && ||)
+# font-family = "Liga SFMono Nerd Font"
+# SF Mono has no Nerd Font icons, so Maple Mono NF fills in the missing glyphs
+font-family = "SF Mono"
+font-family = "Maple Mono NF"
 font-size = 12.5
+adjust-cell-height = 25%
 
 # cursor
 # cursor-style = block
