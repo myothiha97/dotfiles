@@ -58,13 +58,13 @@ keybind = global:super+ctrl+l=toggle_quick_terminal
 # Font
 # font-family = Fira Code  # base fira code 
 # font-family = "FiraCode Nerd Font"
-# font-family = "JetBrains Mono"
+font-family = "JetBrains Mono"
 # font-family =   MapleMono NF
 # SF Mono patched with Nerd Font icons and Fira Code ligatures (=> === && ||)
 # font-family = "Liga SFMono Nerd Font"
 # SF Mono has no Nerd Font icons, so Maple Mono NF fills in the missing glyphs
-font-family = "SF Mono"
-font-family = "Maple Mono NF"
+# font-family = "SF Mono"
+# font-family = "Maple Mono NF"
 font-size = 12.5
 adjust-cell-height = 25%
 
@@ -140,9 +140,13 @@ clipboard-write = allow
 # Rendering - sync frames to display refresh rate (reduces tearing)
 window-vsync = true
 
-# Ghostty's default auto-converts sRGB → P3 at shader level (best of both worlds).
-# display-p3 reinterprets raw hex as P3 coordinates, which distorts sRGB colorschemes
-# and breaks background-opacity on multi-monitor setups (macOS compositor issue).
+# Colorspace: kept on display-p3 on purpose, for the external monitor (Samsung
+# LS24C33xG, 1080p), which is the main screen. display-p3 reads theme hex values
+# as P3 instead of sRGB, so colors come out more saturated than the theme's
+# exact values. That is the preferred look on the external. The default (srgb)
+# is the color-accurate choice. On the MacBook Retina screen colors can still
+# look duller, but that comes from the display (thinner text at 2x, brightness,
+# True Tone), not from this setting.
 window-colorspace = display-p3
 
 # Send CSI u sequence for Ctrl+I to distinguish from Tab
