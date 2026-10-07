@@ -95,8 +95,24 @@ bindkey '^L' autosuggest-accept
 bindkey '^[^[' autosuggest-clear  # Double-tap Esc to clear
 
 # Environment & Tools
+
+# nvm, lazy-loaded. Sourcing nvm.sh costs ~0.6s on every new shell (each tmux
+# pane and window), so only the default Node goes on PATH here, and nvm.sh loads
+# the first time `nvm` itself runs. If the default alias does not resolve to an
+# installed version (e.g. "lts/*"), nvm.sh is sourced eagerly as before.
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+() {
+  local default_alias
+  [[ -r $NVM_DIR/alias/default ]] && default_alias=$(<"$NVM_DIR/alias/default")
+  # "22" or "v22.22.0" -> newest matching install (n = numeric sort, On = descending)
+  local -a node_bin=("$NVM_DIR"/versions/node/v${default_alias#v}(|.*)/bin(N/nOn[1]))
+  if [[ -n $default_alias && -n $node_bin ]]; then
+    path=("$node_bin[1]" $path)
+    nvm() { unset -f nvm; source "$NVM_DIR/nvm.sh"; nvm "$@"; }
+  else
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  fi
+}
 export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -182,10 +198,11 @@ alias claude-work='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
 #    If completion misbehaves after an OpenSpec update, check the top of
 #    this file first and delete any compinit line it added back.
 #
-# 3. nvm is the slowest thing here.
-#    Sourcing nvm.sh costs ~0.40s of the ~0.87s time to first prompt.
-#    p10k is only ~0.02s, so the theme is not the problem.
-#    To fix: lazy-load nvm (define a shim that sources nvm.sh on first use).
+# 3. nvm is lazy-loaded (2026-10-07).
+#    Sourcing nvm.sh cost ~0.6s of the ~0.9s time to first prompt, paid on
+#    every new tmux pane. Now only the default Node's bin goes on PATH, and
+#    nvm.sh loads on the first `nvm` call, so `nvm use` works as before.
+#    Volta (~/.zshenv) is also installed, but nvm's Node comes first on PATH.
 #
 # 4. Two dead settings, harmless but misleading.
 #    - LS_COLORS is empty on this machine, so the ':completion:*' list-colors
