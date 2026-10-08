@@ -1,3 +1,15 @@
+# Change policy
+# This file runs on every new shell and every tmux pane, so startup speed and
+# stability come first. Add a setting or fix ONLY after confirming it is safe:
+#   - Performance: measure startup before and after with `time zsh -i -c exit`.
+#     Lazy-load slow tools (see the nvm note below). No heavy work in hooks that
+#     run on every prompt or keystroke (precmd, preexec, zle widgets).
+#   - No regressions: keep `bindkey -e` above all other bindkey lines and plugin
+#     sources. Test inside tmux (inherits EDITOR=nvim) and in a fresh terminal:
+#       EDITOR=nvim zsh -i -c "bindkey '^P'"
+#       env -u EDITOR -u VISUAL zsh -i -c "bindkey '^P'"
+#   - Minimal: smallest change that solves the issue, with a short comment explaining why.
+
 # OPENSPEC:START
 # OpenSpec shell completions configuration
 fpath=("/Users/mtkh97/.zsh/completions" $fpath)
@@ -9,6 +21,9 @@ ZVM_CURSOR_STYLE_ENABLED=false
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# Emacs keymap always. Without this, zsh picks vi mode when EDITOR=nvim is inherited (e.g. inside tmux) and ^P/^N stop cycling history.
+bindkey -e
 
 # Theme
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
@@ -126,7 +141,7 @@ alias pn='pnpm'
 alias lgit='lazygit'
 alias g="git"
 alias lg="lazygit"
-alias cc="claude" # cc = alias for claude code 
+alias cl="claude" # cc = alias for claude code 
 alias tm="tmux"
 # yazi: `f` opens the file manager, and on quit the shell follows the directory
 # you ended up in (plain `yazi` leaves you where you started). `q` quits and
@@ -178,6 +193,7 @@ export PATH="$PATH:$HOME/go/bin"
 
 # Claude Code accounts
 alias claude-work='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
+alias clw='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
 
 # =============================================================================
 # MAINTENANCE NOTES
