@@ -141,7 +141,7 @@ alias pn='pnpm'
 alias lgit='lazygit'
 alias g="git"
 alias lg="lazygit"
-alias cl="claude" # cc = alias for claude code 
+alias cl="claude" # cl = alias for claude code
 alias tm="tmux"
 # yazi: `f` opens the file manager, and on quit the shell follows the directory
 # you ended up in (plain `yazi` leaves you where you started). `q` quits and
