@@ -1,3 +1,15 @@
+# Change policy
+# Settings here apply to every window, and some only take effect after a full
+# Ghostty restart. Add a setting or fix ONLY after confirming it is safe:
+#   - Performance: be careful with render and GPU settings (custom-shader,
+#     background-opacity, background-blur, window-colorspace). Check typing and
+#     scrolling stay smooth in nvim and tmux after the change.
+#   - No regressions: key remaps must not steal keys that tmux or nvim use
+#     (ctrl keys, super keys sent through as esc/csi sequences). Check the
+#     existing keybind lines below before adding one.
+#   - Validate before reloading: ghostty +validate-config
+#   - Minimal: smallest change that solves the issue, with a short comment explaining why.
+
 macos-option-as-alt = false
 
 # macOS handles key repeat outside Ghostty's own config, and the effective
