@@ -15,6 +15,17 @@
 # hook. The hook is a pure format check (no shell), does nothing while the pane
 # is still in its window, and removes itself once it has run.
 #
+# The layout is only restored while the window has the same number of panes as
+# before Claude opened. Otherwise it no longer fits, select-layout would fail
+# halfway, and tmux keeps its default resize instead.
+#
+# The window may have changed size since the layout was saved (for example the
+# terminal was resized). select-layout applies a smaller layout as is, leaving
+# the panes small inside a bigger window, so the restore first resizes the
+# window to the saved size, applies the layout, then unsets the window-size
+# option that resize-window forces to manual. tmux then fits the window back to
+# the client and scales the panes the same way as a normal terminal resize.
+#
 # Usage: claude-pane.sh <window-id> <start-dir>
 
 set -euo pipefail
@@ -22,7 +33,8 @@ set -euo pipefail
 window=${1:?missing window id}
 start_dir=${2:-$HOME}
 
-layout=$(tmux display-message -p -t "$window" '#{window_layout}')
+read -r layout width height panes < <(tmux display-message -p -t "$window" \
+  '#{window_layout} #{window_width} #{window_height} #{window_panes}')
 pane=$(tmux split-window -t "$window" -fh -l 35% -c "$start_dir" -P -F '#{pane_id}' \
   claude --model claude-sonnet-5-5 --effort medium)
 
@@ -34,6 +46,15 @@ tmux set-option -w -t "$window" @claude_pane "$pane"
 hook="window-layout-changed[$((1000 + ${window#@}))]"
 in_window="#{m:*1*,#{S:#{W:#{?#{==:#{window_id},$window},#{P:#{==:#{pane_id},$pane}},}}}}"
 window_exists="#{m:*1*,#{S:#{W:#{==:#{window_id},$window}}}}"
+layout_fits="#{m:*1*,#{S:#{W:#{&&:#{==:#{window_id},$window},#{==:#{window_panes},$panes}}}}}"
 
 tmux set-hook -g "$hook" \
-  "if -F '$in_window' '' { set-hook -ug $hook ; if -F '$window_exists' { select-layout -t $window '$layout' } }"
+  "if -F '$in_window' '' { set-hook -ug $hook ; if -F '$window_exists' { set-option -uw -t $window @claude_pane } ; if -F '$layout_fits' { resize-window -t $window -x $width -y $height ; select-layout -t $window '$layout' ; set-option -uw -t $window window-size } }"
+
+# Claude may already have exited (for example it failed to start) before the
+# hook was set. Its layout change is then missed, so drop the hook now rather
+# than let it restore an old layout on some later change.
+if ! tmux list-panes -t "$window" -F '#{pane_id}' 2>/dev/null | grep -qxF "$pane"; then
+  tmux set-hook -ug "$hook"
+  tmux set-option -uw -t "$window" @claude_pane 2>/dev/null || true
+fi
