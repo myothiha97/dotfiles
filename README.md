@@ -124,7 +124,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+I` | Safari |
 | `Cmd+Ctrl+J` | Ghostty |
 | `Cmd+Ctrl+K` | Finder |
-| `Cmd+Ctrl+L` | Slack (passes through inside Ghostty, see tmux) |
+| `Cmd+Ctrl+M` | Slack |
 | `Cmd+Ctrl+O` | Neovide |
 | `Cmd+Ctrl+\`` | YouTube Music |
 | `Cmd+Ctrl+,` | IINA |
@@ -185,8 +185,7 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 - Cmd+`n`/`p` and Cmd+`0`-`9` are translated for tmux session switching (see below).
 - macOS Option is not globally treated as Alt.
 
-skhd passes `Cmd+Ctrl+L` through to Ghostty and keeps it for Slack in every
-other app.
+`Cmd+Ctrl+L` is not bound in skhd, so it reaches Ghostty.
 
 The config carries long comments on the stroke-weight dial (`font-thicken`) and
 on why the session-switch keys use those exact escape sequences. Read them before
@@ -279,8 +278,8 @@ hand). Pressing it while already on the Claude pane does nothing.
 
 The binding is in `tmux/.tmux.conf` and the open and restore logic is in
 `tmux/claude-pane.sh`, whose header explains how the restore works. The key
-reaches tmux through `ghostty/config` (sent as `C-M-l`) and `skhd/skhdrc`
-(passed through in Ghostty, Slack everywhere else).
+reaches tmux through `ghostty/config`, which sends it as `C-M-l`. skhd leaves it
+unbound (Slack is on `Cmd+Ctrl+M`).
 
 Known limits, all minor:
 
