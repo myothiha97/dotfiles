@@ -198,11 +198,6 @@ in place.
 
 The prefix is `Ctrl+Space`.
 
-`Cmd+Ctrl+L` (no prefix) opens `claude --model claude-sonnet-5-5 --effort medium`
-as a pane on the right edge (full height, 35% of the window) in the current
-directory. It does nothing if the window already has a Claude pane. The pane
-closes when Claude exits, and the other panes get their previous sizes back.
-
 | Keys after prefix | Action |
 | --- | --- |
 | `v` / `e` | Split left-right / top-bottom in the current path |
@@ -270,6 +265,47 @@ Scripts in `tmux/`:
 | `switch-session.sh` | Jump to the session at a given position |
 | `cycle-session.sh` | Move to the next or previous session, wrapping |
 | `yazi-session.sh` | Toggle to and from the `yazi-files` session's `yazi` window |
+
+### Claude pane
+
+`Cmd+Ctrl+L` (no prefix) opens `claude --model claude-sonnet-5-5 --effort medium`
+as a pane on the right edge (full height, 35% of the window) in the current
+directory. Claude is the pane's own process, so the pane closes when Claude
+exits, and the other panes get their previous sizes back.
+
+If the window already has a Claude pane, the key focuses it instead: the pane
+the key opened, otherwise the first pane running `claude*` (one started by
+hand). Pressing it while already on the Claude pane does nothing.
+
+The binding is in `tmux/.tmux.conf` and the open and restore logic is in
+`tmux/claude-pane.sh`, whose header explains how the restore works. The key
+reaches tmux through `ghostty/config` (sent as `C-M-l`) and `skhd/skhdrc`
+(passed through in Ghostty, Slack everywhere else).
+
+Known limits, all minor:
+
+- The pane uses the tmux server's `PATH` and environment, not `.zshrc`. A Node
+  version switched with nvm or a newly exported variable only shows up after
+  the tmux server restarts.
+- After a terminal resize, the old pane sizes come back scaled the way tmux
+  scales them on a resize, not as exact ratios.
+- The restore resets any per-window `window-size` setting (none is used here).
+- If panes were added or closed while Claude was open, the saved layout no
+  longer fits and tmux keeps its default resize instead.
+- Only the current window is checked. A Claude pane in another window or
+  session is not focused, and the key opens a new one here.
+- A Claude started by hand is found by process name. Inside nvim's `:terminal`
+  it is not found, so the key opens a new pane. While that Claude runs a
+  command, the pane briefly shows another process name, so a press at that
+  instant could open a second pane. The pane the key opened is tracked by its
+  id and is always found.
+- With several Claude panes, the one the key opened wins, otherwise the first
+  one in pane order.
+- Focusing the Claude pane unzooms the window if another pane was zoomed.
+- It is not a toggle: pressing it on the Claude pane does not jump back. That
+  would be `select-pane -l` in the already-focused case.
+- Outside tmux, Ghostty still sends the key's escape sequence, which a plain
+  shell may show as a few stray characters.
 
 ### Status bar
 
