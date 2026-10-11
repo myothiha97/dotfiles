@@ -13,7 +13,8 @@
 #                         move.
 #
 # Killing is on ctrl-x in both modes, and additionally on plain x in select,
-# where no field is competing for the key.
+# where no field is competing for the key. Selecting works the same way: enter
+# and ctrl-l in both modes, plus plain l in select.
 #
 # tmux's own display-menu is not used for either: menu.c hardcodes its
 # navigation keys (arrows, j/k, tab, C-b/C-f, g/G) with no way to add
@@ -82,13 +83,13 @@ opts=(
 kill_row="execute(\"$script_dir/kill-session.sh\" {})+reload(\"$script_dir/session-rows.sh\")"
 
 # Arrows are fzf defaults in both modes; ctrl-n / ctrl-p are made explicit.
-# ctrl-x is the kill key both modes can share, because a ctrl combination is
-# never swallowed by the search field.
-binds="ctrl-n:down,ctrl-p:up,ctrl-c:abort,esc:abort,ctrl-x:$kill_row"
+# ctrl-x (kill) and ctrl-l (select, next to j/k on the home row) are shared by
+# both modes, because a ctrl combination is never swallowed by the search field.
+binds="ctrl-n:down,ctrl-p:up,ctrl-l:accept,ctrl-c:abort,esc:abort,ctrl-x:$kill_row"
 
 if [ "$mode" = "select" ]; then
   # No text field, so every key is free to act as a command.
-  binds="$binds,j:down,k:up,g:first,G:last,q:abort"
+  binds="$binds,j:down,k:up,l:accept,g:first,G:last,q:abort"
   # No field to type into, so the plain key is free as well.
   binds="$binds,x:$kill_row"
   for n in 1 2 3 4 5 6 7 8 9; do
@@ -96,9 +97,9 @@ if [ "$mode" = "select" ]; then
   done
   opts+=(--no-input)
 else
-  # Search mode: j/k, g/G, q, x and the digits must reach the input field, so
+  # Search mode: j/k/l, g/G, q, x and the digits must reach the input field, so
   # none of them are bound. Navigation is ctrl-n / ctrl-p and the arrow keys,
-  # and killing is ctrl-x.
+  # selecting is enter or ctrl-l, and killing is ctrl-x.
   opts+=(--prompt='  ')
 fi
 
