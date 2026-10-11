@@ -65,8 +65,10 @@ quick-terminal-screen = main
 quick-terminal-size = 75%,80%
 window-save-state = never
 
-# Keybinding for Quick Terminal
-keybind = global:super+ctrl+l=toggle_quick_terminal
+# Cmd+Ctrl+L opens Claude in a tmux split. tmux has no Cmd modifier, so this
+# sends the extended-key sequence for Ctrl+Alt+L (modifier 7) and tmux binds it
+# as C-M-l. Replaces the old global quick-terminal toggle on the same key.
+keybind = super+ctrl+l=text:\x1b[27;7;108~
 # Font
 # font-family = Fira Code  # base fira code 
 # font-family = "FiraCode Nerd Font"

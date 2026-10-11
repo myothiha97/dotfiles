@@ -4,7 +4,12 @@ cmd + ctrl - h : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Google Chrome"
 cmd + ctrl - i : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Safari"
 cmd + ctrl - j : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Ghostty"
 cmd + ctrl - k : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Finder"
-cmd + ctrl - l : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Slack"
+# Inside Ghostty the key passes through (~) so tmux can open a Claude pane
+# (see ghostty/config and tmux/.tmux.conf). Everywhere else it focuses Slack.
+cmd + ctrl - l [
+    "ghostty" ~
+    *         : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Slack"
+]
 cmd + ctrl - n : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Neovide"
 cmd + ctrl - 0x29 : /bin/sh "$HOME/.config/yabai/focus-app.sh" "YouTube Music"
 cmd + ctrl - o : /bin/sh "$HOME/.config/yabai/focus-app.sh" "IINA"

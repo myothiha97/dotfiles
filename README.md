@@ -124,7 +124,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+I` | Safari |
 | `Cmd+Ctrl+J` | Ghostty |
 | `Cmd+Ctrl+K` | Finder |
-| `Cmd+Ctrl+L` | Slack |
+| `Cmd+Ctrl+L` | Slack (passes through inside Ghostty, see tmux) |
 | `Cmd+Ctrl+O` | Neovide |
 | `Cmd+Ctrl+\`` | YouTube Music |
 | `Cmd+Ctrl+,` | IINA |
@@ -179,14 +179,14 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 
 - FiraCode Nerd Font at 13.7 pt with macOS font thickening enabled.
 - Transparent dark background (`#031219`, opacity 0.9), blur, and display-P3 output.
-- Global quick terminal on `Cmd+Ctrl+L`.
+- `Cmd+Ctrl+L` is sent to tmux as `C-M-l` to open a Claude pane (see tmux).
 - `Ctrl+I` is distinct from Tab through the CSI-u sequence.
 - Selected Command keys are translated to Meta keys for Neovim.
 - Cmd+`n`/`p` and Cmd+`0`-`9` are translated for tmux session switching (see below).
 - macOS Option is not globally treated as Alt.
 
-`Cmd+Ctrl+L` is also assigned to Slack in skhd. Keep only one binding if they
-conflict on the machine.
+skhd passes `Cmd+Ctrl+L` through to Ghostty and keeps it for Slack in every
+other app.
 
 The config carries long comments on the stroke-weight dial (`font-thicken`) and
 on why the session-switch keys use those exact escape sequences. Read them before
@@ -197,6 +197,11 @@ in place.
 ## tmux
 
 The prefix is `Ctrl+Space`.
+
+`Cmd+Ctrl+L` (no prefix) opens `claude --model claude-sonnet-5-5 --effort medium`
+as a pane on the right edge (full height, 35% of the window) in the current
+directory. It does nothing if the window already has a Claude pane. The pane
+closes when Claude exits, and the other panes get their previous sizes back.
 
 | Keys after prefix | Action |
 | --- | --- |
