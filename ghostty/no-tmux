@@ -22,10 +22,6 @@ keybind = ctrl+space>k=goto_split:up
 keybind = ctrl+space>l=goto_split:right
 keybind = ctrl+space>x=close_surface
 
-# ctrl+hjkl (no prefix) is deliberately NOT bound here: Ghostty would take it
-# before nvim sees it. nvim (lua/plugins/snacks.lua focus()) and zsh (zshrc)
-# handle it instead and ask Ghostty to move only when they have nowhere to go.
-
 # Tabs (tmux windows). No repeat on n/p: without a timeout, a following `n`
 # (search next in nvim) would switch tabs again.
 keybind = ctrl+space>c=new_tab
