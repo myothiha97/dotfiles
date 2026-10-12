@@ -10,6 +10,11 @@
 #       env -u EDITOR -u VISUAL zsh -i -c "bindkey '^P'"
 #   - Minimal: smallest change that solves the issue, with a short comment explaining why.
 
+# Keep PATH free of repeats. Each tmux pane and nested shell inherits a PATH that
+# already has the entries below, so every prepend would add them again. -U keeps
+# only the first copy of each, and a prepend moves that entry to the front.
+typeset -U path PATH
+
 # OPENSPEC:START
 # OpenSpec shell completions configuration
 fpath=("/Users/mtkh97/.zsh/completions" $fpath)
