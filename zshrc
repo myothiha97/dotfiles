@@ -35,7 +35,9 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 # Completion System
 if type brew &>/dev/null; then
-  BREW_PREFIX=$(brew --prefix)
+  # ~/.zprofile's `brew shellenv` already exports HOMEBREW_PREFIX. Reading it skips
+  # starting brew (~24ms) on every new shell. Falls back to asking brew if unset.
+  BREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
   FPATH=$BREW_PREFIX/share/zsh-completions:$FPATH
 fi
 
