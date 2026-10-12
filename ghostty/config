@@ -246,3 +246,8 @@ keybind = super+digit_0=text:\x1b[27;5;48~
 # Deferred loose end: rarely used, and this would override Ghostty's default
 # cmd+k = clear-scrollback. Uncomment to enable the in-terminal toggle.
 # keybind = super+k=esc:k
+
+# Tmux keymaps done natively in Ghostty (ctrl+space prefix). While this line is
+# active Ghostty owns ctrl+space, so tmux's prefix never arrives: comment it
+# out (and reload with cmd+shift+,) to go back to tmux.
+config-file = ?/Users/mtkh97/.dotfiles/ghostty/no-tmux

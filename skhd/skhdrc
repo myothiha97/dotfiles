@@ -4,8 +4,13 @@ cmd + ctrl - h : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Google Chrome"
 cmd + ctrl - i : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Safari"
 cmd + ctrl - j : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Ghostty"
 cmd + ctrl - k : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Finder"
-# Slack is on M, not L: cmd + ctrl - l is left unbound here so it reaches
-# Ghostty, where tmux opens a Claude pane (see ghostty/config, tmux/.tmux.conf).
+# Slack is on M, not L: cmd + ctrl - l is the Claude split in Ghostty. The
+# script opens a Ghostty split, or hands the key to tmux when ghostty/no-tmux is
+# not loaded. Other apps get the key unchanged.
+cmd + ctrl - l [
+  "ghostty" : /bin/sh "$HOME/.dotfiles/ghostty/claude-split.sh"
+  * ~
+]
 cmd + ctrl - m : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Slack"
 cmd + ctrl - n : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Neovide"
 cmd + ctrl - 0x29 : /bin/sh "$HOME/.config/yabai/focus-app.sh" "YouTube Music"

@@ -1,0 +1,62 @@
+# Ghostty-native replacement for the tmux keymaps (tmux/.tmux.conf).
+#
+# Loaded from ghostty/config through `config-file`. While it is loaded, Ghostty
+# owns ctrl+space, so tmux's prefix never arrives: comment the include out
+# there to go back to tmux. Reload with cmd+shift+, after toggling.
+#
+# Ghostty has no tmux sessions, so these stay unmapped: session pickers
+# (s/f/S), session cycling (M-n/M-p), C-1..C-0, swap-pane (</>), vi copy mode.
+# Tabs stand in for tmux windows.
+
+# Prefix: ctrl+space, then the key, same as tmux. Ghostty waits for the second
+# key with no timeout; an unbound second key sends both keys to the program.
+keybind = ctrl+space>ctrl+space=text:\x00
+keybind = ctrl+space>r=reload_config
+
+# Splits (tmux panes). New splits and tabs start in the current directory.
+keybind = ctrl+space>v=new_split:right
+keybind = ctrl+space>e=new_split:down
+keybind = ctrl+space>h=goto_split:left
+keybind = ctrl+space>j=goto_split:down
+keybind = ctrl+space>k=goto_split:up
+keybind = ctrl+space>l=goto_split:right
+keybind = ctrl+space>x=close_surface
+
+# ctrl+hjkl (no prefix) is deliberately NOT bound here: Ghostty would take it
+# before nvim sees it. nvim (lua/plugins/snacks.lua focus()) and zsh (zshrc)
+# handle it instead and ask Ghostty to move only when they have nowhere to go.
+
+# Tabs (tmux windows). No repeat on n/p: without a timeout, a following `n`
+# (search next in nvim) would switch tabs again.
+keybind = ctrl+space>c=new_tab
+keybind = ctrl+space>n=next_tab
+keybind = ctrl+space>p=previous_tab
+keybind = ctrl+space>tab=last_tab
+keybind = ctrl+space>shift+x=close_tab
+keybind = ctrl+space>shift+q=close_window
+
+# yazi: the quick terminal is one hidden terminal that keeps running between
+# toggles, like tmux's yazi-files session. Start yazi in it once (`f`); after
+# that prefix + o shows and hides the same yazi.
+keybind = ctrl+space>o=toggle_quick_terminal
+
+# Resize: prefix + ctrl+hjkl, then keep pressing ctrl+hjkl to repeat (tmux
+# `bind -r`). Ghostty has no repeat timeout, so the mode lasts until any other
+# key, which ends it and is swallowed (escape is the natural one).
+# Kept last: each `chain` line attaches to the binding right above it.
+keybind = ctrl+space>ctrl+h=resize_split:left,40
+keybind = chain=activate_key_table:resize
+keybind = ctrl+space>ctrl+j=resize_split:down,40
+keybind = chain=activate_key_table:resize
+keybind = ctrl+space>ctrl+k=resize_split:up,40
+keybind = chain=activate_key_table:resize
+keybind = ctrl+space>ctrl+l=resize_split:right,40
+keybind = chain=activate_key_table:resize
+keybind = resize/ctrl+h=resize_split:left,40
+keybind = resize/ctrl+j=resize_split:down,40
+keybind = resize/ctrl+k=resize_split:up,40
+keybind = resize/ctrl+l=resize_split:right,40
+keybind = resize/catch_all=deactivate_key_table
+
+# Claude split (cmd+ctrl+l) is not here: Ghostty keybinds cannot run a script,
+# so skhd catches it and runs ghostty/claude-split.sh.

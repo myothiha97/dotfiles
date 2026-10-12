@@ -169,7 +169,27 @@ clear-screen-widget() {
 
 # 2. Register and bind to Ctrl+f
 zle -N clear-screen-widget
-bindkey '^O' clear-screen-widget 
+bindkey '^O' clear-screen-widget
+
+# Ghostty splits without tmux (ghostty/no-tmux): ctrl+h/j/k/l moves to the
+# split in that direction, and nvim does the same at its window edges. With no
+# split there, the key keeps its old job (^L accepts the suggestion, ^K kills
+# to end of line). Each press asks Ghostty through AppleScript, ~150 ms.
+if [[ $TERM_PROGRAM == ghostty && -z $TMUX ]]; then
+  typeset -gA _ghostty_split_fallback
+  _ghostty_split_nav() {
+    local dir=${WIDGET#ghostty-split-}
+    if [[ $(osascript -e "tell application \"Ghostty\" to perform action \"goto_split:$dir\" on focused terminal of selected tab of front window" 2>/dev/null) != true ]]; then
+      zle ${_ghostty_split_fallback[$dir]}
+    fi
+  }
+  for key dir in '^H' left '^J' down '^K' up '^L' right; do
+    _ghostty_split_fallback[$dir]=${$(bindkey "$key")##* }
+    zle -N ghostty-split-$dir _ghostty_split_nav
+    bindkey "$key" ghostty-split-$dir
+  done
+  unset key dir
+fi
 
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
