@@ -1,2 +1,8 @@
 # Karabiner rewrites these on every change
 karabiner/automatic_backups/
+
+# Agents skill files
+.claude/
+.agents/
+/AGENTS.md
+/CLAUDE.md
