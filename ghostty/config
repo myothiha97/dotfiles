@@ -148,7 +148,9 @@ font-thicken = true
 #     Avoid `alpha-blending = linear-corrected` for this: it thins bright text on
 #     a dark background, which is the direction you already rejected.
 
-clipboard-read = allow
+# ask, not allow: with allow, any program output (ssh, cat, curl) could read the
+# clipboard silently through OSC 52. Cmd+V and nvim (pbpaste) do not use this.
+clipboard-read = ask
 clipboard-write = allow
 
 # Rendering - sync frames to display refresh rate (reduces tearing)
