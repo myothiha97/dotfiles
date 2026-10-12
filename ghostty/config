@@ -183,10 +183,20 @@ keybind = super+f=esc:f
 # Cmd+key sends Meta sequences for Neovim keymaps (since macos-option-as-alt is off)
 keybind = super+d=esc:d
 keybind = super+shift+l=esc:L
+# Cmd+H/J/K/L: move across tmux panes and nvim windows with one key
+# (<M-h>/<M-j>/<M-k>/<M-l>, bound in tmux/.tmux.conf and nvim keymaps.lua; nav
+# is normal mode only, so insert-mode <M-k>/<M-l> stay Copilot toggle/accept
+# line). Replaces Ghostty's cmd+k clear screen and cmd+j scroll-to-selection.
+# Cmd+H also needs macOS's "Hide Ghostty" moved off it, since menu shortcuts
+# fire before keybinds: defaults write com.mitchellh.ghostty
+# NSUserKeyEquivalents -dict-add "Hide Ghostty" '@$h' (now Cmd+Shift+H).
+keybind = super+h=esc:h
+keybind = super+j=esc:j
+keybind = super+k=esc:k
+keybind = super+l=esc:l
 keybind = super+shift+]=esc:}
 keybind = super+i=esc:i
 keybind = super+w=esc:w
-keybind = super+l=esc:l
 keybind = super+]=esc:]
 keybind = super+[=esc:[
 
@@ -242,7 +252,3 @@ keybind = super+digit_9=text:\x1b[27;5;57~
 keybind = super+zero=text:\x1b[27;5;48~
 keybind = super+digit_0=text:\x1b[27;5;48~
 
-# Cmd+K → <M-k> for Copilot toggle in Neovim insert mode (see copilot.lua/neovide.lua).
-# Deferred loose end: rarely used, and this would override Ghostty's default
-# cmd+k = clear-scrollback. Uncomment to enable the in-terminal toggle.
-# keybind = super+k=esc:k
