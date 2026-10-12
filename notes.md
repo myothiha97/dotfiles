@@ -5,4 +5,4 @@
 
 ## todo
 
-- native Ghostty as a tmux replacement (goal: ~80% of tmux's workflows, keymaps first, session restore low priority). Work lives on branch `unstable/ghostty-native-splits` (pushed, not merged, untested): `ghostty/no-tmux` keymaps (ctrl+space prefix), `ghostty/claude-split.sh` + `.applescript` (cmd+ctrl+l Claude split), skhd bind. Before merging: test it, and resolve the conflict with the cmd+hjkl pane-nav binds in `ghostty/config`. Still missing vs tmux: sessions, copy mode, swap panes, prefix timeout
+Deferred ideas live in [`todos/`](todos/README.md), one file per idea.

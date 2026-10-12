@@ -370,4 +370,5 @@ runtime state.
 2. Symlink it back to its live location.
 3. Commit the tracked file and README change.
 
-See `notes.md` for known issues and deferred work.
+See `notes.md` for known issues and `todos/` for deferred ideas (one file per
+idea, indexed in `todos/README.md`).
