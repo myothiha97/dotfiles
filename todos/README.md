@@ -14,6 +14,7 @@ first idea arrives. Two folders are not apps:
 | folder                 | what it holds                                       |
 | ---------------------- | --------------------------------------------------- |
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
+| [`tmux/`](#tmux)       | tmux config and its scripts                         |
 | `process/`             | how the config is worked on, not what it contains   |
 | `done/`                | shipped and verified; kept for the reasoning        |
 
@@ -35,3 +36,9 @@ To add an idea: create one file in the matching folder, add its row below
 | file                                                         | hook                                                                                          | status |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------ |
 | [`native-ghostty-splits.md`](ghostty/native-ghostty-splits.md) | Ghostty splits as a tmux replacement; on branch `unstable/ghostty-native-splits`, untested    | open   |
+
+## tmux
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
