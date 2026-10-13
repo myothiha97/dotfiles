@@ -1,114 +1,68 @@
 # Change policy
-# This file runs on every new shell and every tmux pane, so startup speed and
-# stability come first. Add a setting or fix ONLY after confirming it is safe:
-#   - Performance: measure startup before and after with `time zsh -i -c exit`.
-#     Lazy-load slow tools (see the nvm note below). No heavy work in hooks that
-#     run on every prompt or keystroke (precmd, preexec, zle widgets).
-#   - No regressions: keep `bindkey -e` above all other bindkey lines and plugin
-#     sources. Test inside tmux (inherits EDITOR=nvim) and in a fresh terminal:
+# Runs on every new shell and tmux pane: startup speed and stability come first.
+#   - Perf: measure with `time zsh -i -c exit`. Lazy-load slow tools (see nvm).
+#     No heavy work in precmd, preexec or zle widgets.
+#   - No regressions: keep `bindkey -e` above other bindkeys and plugin sources.
+#     Test in tmux (inherits EDITOR=nvim) and in a fresh terminal:
 #       EDITOR=nvim zsh -i -c "bindkey '^P'"
 #       env -u EDITOR -u VISUAL zsh -i -c "bindkey '^P'"
-#   - Minimal: smallest change that solves the issue, with a short comment explaining why.
+#   - Minimal: smallest change that works, with one short comment saying why.
 
-# Keep PATH free of repeats. Each tmux pane and nested shell inherits a PATH that
-# already has the entries below, so every prepend would add them again. -U keeps
-# only the first copy of each, and a prepend moves that entry to the front.
+# Dedupe PATH. Panes and nested shells inherit it, so each prepend would repeat
+# entries. -U keeps the first copy.
 typeset -U path PATH
 
 # OPENSPEC:START
 # OpenSpec shell completions configuration
 fpath=("/Users/mtkh97/.zsh/completions" $fpath)
-# NOTE: no compinit here. zsh-autocomplete runs compinit itself (see below).
+# NOTE: no compinit here, it runs once below.
 # OPENSPEC:END
 
 ZVM_CURSOR_STYLE_ENABLED=false
-# 1. Instant Prompt (Keep at very top for speed)
+# p10k instant prompt, keep near the top for speed
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Emacs keymap always. Without this, zsh picks vi mode when EDITOR=nvim is inherited (e.g. inside tmux) and ^P/^N stop cycling history.
+# Emacs keymap always. Otherwise zsh picks vi mode when EDITOR=nvim is inherited
+# (tmux) and ^P/^N stop cycling history.
 bindkey -e
 
 # Theme
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
-# Completion System
+# Completion
 if type brew &>/dev/null; then
-  # ~/.zprofile's `brew shellenv` already exports HOMEBREW_PREFIX. Reading it skips
-  # starting brew (~24ms) on every new shell. Falls back to asking brew if unset.
+  # Read HOMEBREW_PREFIX (from ~/.zprofile) instead of running brew (~24ms per shell).
   BREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
   FPATH=$BREW_PREFIX/share/zsh-completions:$FPATH
 fi
 
-# Real-time completion list below the cursor (fish style).
-# zsh-autocomplete owns compinit, so it must be sourced before any compdef call
-# and no compinit may run before it.
-#
-# Performance guards. These must be set BEFORE sourcing the plugin.
-# Autocomplete runs the completion system on every keystroke, so without these
-# it can feel laggy in big repos or directories with many files.
-zstyle ':autocomplete:*' min-input 2        # stay quiet until 2 characters are typed
-zstyle ':autocomplete:*' delay 0.1          # only fetch after typing pauses (seconds)
-zstyle ':autocomplete:*' timeout 1          # drop slow completers instead of blocking (seconds)
-zstyle ':autocomplete:*' list-lines 15      # cap the real-time listing height.
-                                            # Blank lines, group headers and the (MORE)
-                                            # marker all count, and each extra group
-                                            # costs 2 lines, so this gives roughly
-                                            # 12 items at 1 group and 8 at 3 groups.
-                                            # Does NOT apply once you enter the menu
-                                            # with Down / Ctrl+N; that is zsh's own
-                                            # menu-select and always uses the screen.
-# ignored-input is a pattern matched against the word you are currently typing.
-# When it matches, the plugin sets compstate[list]= and shows nothing.
-# Using the 'zstyle -e' (evaluated) form lets the pattern depend on the whole
-# line, because $words is in scope when the plugin reads this style. Returning
-# '*' matches any current word, which suppresses the list entirely.
-#   - after 'git add': show nothing (file lists here are noise)
-#   - otherwise: skip only bare '..', '...' and longer dot runs
-zstyle -e ':autocomplete:*' ignored-input '
-  if [[ ${words[1]:-} == (git|g) && ${words[2]:-} == add ]]; then
-    reply=( "*" )
-  else
-    reply=( "..##" )
-  fi'
-# compinit arguments. -C skips the slow per-file security scan, -i silences any
-# insecure-directory prompt. Do NOT add -D here (the README's example includes it):
-# -D disables writing the completion dump, which forces a full fpath rescan on
-# every single shell start. -w only adds diagnostic noise to the prompt.
-zstyle '*:compinit' arguments -i -C
-[[ -r $BREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]] &&
-  source $BREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# Tab completion, no live list. zsh-autocomplete was uninstalled (`brew uninstall
+# zsh-autocomplete`, nothing depended on it) because it ran completion on every
+# keystroke. To restore: `brew install zsh-autocomplete`, source its plugin here,
+# and drop the compinit call (the plugin runs it).
+# compinit: -C skips the security scan, -i silences insecure-dir prompts.
+# No -D: it forces a full fpath rescan on every shell start.
+autoload -Uz compinit
+compinit -i -C -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
 
-# Completion styling. Set after the plugin so these win over its defaults.
+# Completion styling.
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:options' description yes
 zstyle ':completion:*' list-packed true
 zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
 
-# Blank line above each group header, so groups are visually separated.
-# zsh-autocomplete wires ':completion:*:descriptions' with 'zstyle -e', which
-# evaluates this function at completion time, so redefining it here overrides
-# the plugin's version. The $'\n' is what creates the gap; the escape codes are
-# the plugin's own dim-bold header styling, kept as-is.
-autocomplete:config:format() {
-  reply=( $'\n%{\e[0;1;2m%}'$1$'%{\e[0m%}' )
-}
-
-# Cache slow completions (brew formulas, git config keys, etc.) to disk.
+# Cache slow completions to disk.
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh/compcache
 
-# Tab / Shift+Tab / arrow keys are bound by zsh-autocomplete. Do not rebind '^I'
-# or '^[[Z' here, or the real-time menu stops working.
-
 # Autosuggestions (ghost text).
-# Strategy is history only: the 'completion' strategy runs the completion system
-# a second time per keystroke, which duplicates zsh-autocomplete's work.
+# History only: the 'completion' strategy would run completion on every keystroke.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
 ZSH_AUTOSUGGEST_STRATEGY=(history)
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=80          # skip suggesting only for very long lines
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=80          # skip very long lines
 [[ -r $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] &&
   source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^L' autosuggest-accept
@@ -118,10 +72,9 @@ bindkey '^[^[' autosuggest-clear  # Double-tap Esc to clear
 
 # Environment & Tools
 
-# nvm, lazy-loaded. Sourcing nvm.sh costs ~0.6s on every new shell (each tmux
-# pane and window), so only the default Node goes on PATH here, and nvm.sh loads
-# the first time `nvm` itself runs. If the default alias does not resolve to an
-# installed version (e.g. "lts/*"), nvm.sh is sourced eagerly as before.
+# nvm, lazy-loaded: nvm.sh costs ~0.6s per shell. Only the default Node goes on
+# PATH here. nvm.sh loads on the first `nvm` call, or eagerly if the default
+# alias does not resolve to an installed version (e.g. "lts/*").
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 () {
   local default_alias
@@ -150,9 +103,8 @@ alias g="git"
 alias lg="lazygit"
 alias cl="claude" # cl = alias for claude code
 alias tm="tmux"
-# yazi: `f` opens the file manager, and on quit the shell follows the directory
-# you ended up in (plain `yazi` leaves you where you started). `q` quits and
-# cds, `Q` quits and stays put.
+# yazi: `f` cds to where you quit (plain `yazi` does not). `q` quits and cds,
+# `Q` quits and stays put.
 function f() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -166,15 +118,14 @@ alias copybr="git branch --show-current | pbcopy"
 # alias clh='history -p && :> ~/.zsh_history && exec $SHELL'
 
 clear-screen-widget() {
-    # 'clear' wipes the terminal view and scrollback without touching history files
-    # This keeps zsh-autosuggestions working perfectly
+    # 'clear' wipes the view and scrollback but keeps history, so autosuggestions still work
     clear
     
-    # Redraw the prompt at the top of the screen
+    # Redraw the prompt at the top
     zle reset-prompt
 }
 
-# 2. Register and bind to Ctrl+f
+# Bind to Ctrl+O
 zle -N clear-screen-widget
 bindkey '^O' clear-screen-widget 
 
@@ -195,7 +146,7 @@ export PATH="$HOME/.scripts:$PATH"
 # go bin
 export PATH="$PATH:$HOME/go/bin"
 
-# Local-only secrets (API keys, tokens). File lives outside ~/.dotfiles, never committed.
+# Local-only secrets (API keys, tokens), kept outside the repo.
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
 
 # Claude Code accounts
@@ -203,48 +154,29 @@ alias claude-work='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
 alias clw='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
 
 # =============================================================================
-# MAINTENANCE NOTES
-# Known quirks in this file. None of these are bugs to fix urgently, but they
-# will save you debugging time later. Measured on 2026-09-19.
+# MAINTENANCE NOTES (measured 2026-09-19)
+# Known quirks. Not urgent, but they save debugging time.
 # =============================================================================
 #
-# 1. Esc-Esc has a 0.4s delay.
-#    'bindkey ^[^[ autosuggest-clear' below binds a sequence that is a strict
-#    prefix of the Alt+Up / Alt+Down sequences zsh-autocomplete binds
-#    (^[^[[A and ^[^[[B). zsh must wait $KEYTIMEOUT (40, meaning 0.4s) to see
-#    which one you meant. Both keys work, Esc-Esc just feels slow.
-#    To fix: rebind autosuggest-clear to something that is not an Esc prefix.
+# 1. The OPENSPEC block at the top may be regenerated with a 'compinit' call
+#    before fpath is complete. Delete any compinit it adds. Only the one
+#    below should run.
 #
-# 2. The OPENSPEC block at the top is a landmine.
-#    If the OpenSpec tool ever regenerates it, it re-adds a 'compinit' call.
-#    zsh-autocomplete must own compinit, so that would break completion.
-#    If completion misbehaves after an OpenSpec update, check the top of
-#    this file first and delete any compinit line it added back.
+# 2. nvm is lazy-loaded (2026-10-07). nvm.sh was ~0.6s of the ~0.9s to first
+#    prompt in every pane. `nvm use` works as before. Volta (~/.zshenv) is
+#    also installed, but nvm's Node comes first on PATH.
 #
-# 3. nvm is lazy-loaded (2026-10-07).
-#    Sourcing nvm.sh cost ~0.6s of the ~0.9s time to first prompt, paid on
-#    every new tmux pane. Now only the default Node's bin goes on PATH, and
-#    nvm.sh loads on the first `nvm` call, so `nvm use` works as before.
-#    Volta (~/.zshenv) is also installed, but nvm's Node comes first on PATH.
+# 3. Dead settings, harmless:
+#    - LS_COLORS is empty here, so the list-colors style does nothing.
+#      Fix: populate it first, e.g. with gdircolors from coreutils.
+#    - ZVM_CURSOR_STYLE_ENABLED does nothing, zsh-vi-mode is not loaded.
 #
-# 4. Two dead settings, harmless but misleading.
-#    - LS_COLORS is empty on this machine, so the ':completion:*' list-colors
-#      line above expands to nothing and completion lists are uncoloured.
-#      To fix: populate LS_COLORS first, e.g. with gdircolors from coreutils.
-#    - ZVM_CURSOR_STYLE_ENABLED at the top does nothing, zsh-vi-mode is not
-#      loaded anywhere in this file.
+# 4. compinit uses -C (no security scan; 'compaudit' was clean when set), so a
+#    world-writable completion dir will not warn. New completions appear only
+#    after: rm ~/.cache/zsh/compdump
 #
-# 5. compinit runs with -C, which skips the security scan.
-#    'compaudit' was clean when this was set. If you later install something
-#    that creates a world-writable completion directory, you will NOT be
-#    warned. Also, newly installed completions only appear after the dump is
-#    invalidated: rm ~/.cache/zsh/compdump
-#
-# 6. Do not add -D to the compinit arguments.
-#    The zsh-autocomplete README suggests '-D -i -u -C -w'. The -D disables
-#    writing the completion dump, which forces a full fpath rescan on every
-#    shell start (measured: 1.27s cold vs 0.87s warm). -w only adds the
-#    "regenerating" noise you see at the prompt.
+# 5. Never add -D to compinit: it forces a full fpath rescan on every start
+#    (1.27s cold vs 0.87s warm).
 
 
 # Added by Antigravity CLI installer

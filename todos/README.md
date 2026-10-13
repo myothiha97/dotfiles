@@ -15,6 +15,7 @@ first idea arrives. Two folders are not apps:
 | ---------------------- | --------------------------------------------------- |
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
+| [`zsh/`](#zsh)         | zsh config, completion, prompt                      |
 | `process/`             | how the config is worked on, not what it contains   |
 | `done/`                | shipped and verified; kept for the reasoning        |
 
@@ -42,3 +43,9 @@ To add an idea: create one file in the matching folder, add its row below
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
+
+## zsh
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`disable-autocomplete-listing.md`](zsh/disable-autocomplete-listing.md) | turn off the zsh-autocomplete listing while typing; made by choice on request | done |
