@@ -79,7 +79,9 @@ font-family = "JetBrains Mono"
 # SF Mono has no Nerd Font icons, so Maple Mono NF fills in the missing glyphs
 # font-family = "SF Mono"
 # font-family = "Maple Mono NF"
-font-size = 12.5
+
+# font size is set to 13 since 2026-10-14 for better readability; 12.5 (the previous value) read too small.
+font-size = 13
 adjust-cell-height = 25%
 
 # cursor
@@ -97,9 +99,9 @@ shell-integration-features = no-cursor
 # Stroke weight. `font-thicken` is a macOS-only stroke thickening, and
 # `font-thicken-strength` scales it from 0 to 255.
 #
-# CURRENT STATE: the strength line below is commented out on purpose, so the
-# effective value is Ghostty's default of 255. Commenting it does NOT turn
-# thickening off -- `font-thicken = true` is still set.
+# CURRENT STATE: strength 180, tuned for JetBrains Mono at 13pt (2026-10-14).
+# Commenting the strength line out does NOT turn thickening off: it falls back
+# to Ghostty's default of 255, the heaviest. Only `font-thicken = false` turns it off.
 #
 # History, in order:
 #   255 -- once judged too heavy (thick, slightly blurred). That judgement was made
@@ -134,10 +136,14 @@ shell-integration-features = no-cursor
 # Skia applies its own gamma correction to text masks.) And note that raising the
 # nvim palette is not the lever either: at 0.386 coverage a brighter base0 bought
 # only ~2 L*. See `todos/syntax-palette-followups.md` item 4 in the nvim config.
+#
+# Ghostty has no trailing comments: `true # note` is read as the value and the
+# whole line is rejected. Keep notes on their own lines.
 font-thicken = true
-# font-thicken-strength = 165
-# Uncomment and adjust the line above only for a whole-terminal problem. It is a
-# 0-255 dial: 180 and up starts softening glyph edges, 140 measured faded.
+font-thicken-strength = 180
+
+# Adjust the strength only for a whole-terminal problem. It is a 0-255 dial:
+# 180 and up starts softening glyph edges, 140 measured faded.
 #
 # Two other knobs, only if the strength dial alone can't get there:
 #   * Thin strokes read as small type. One step up compensates without weight, and
