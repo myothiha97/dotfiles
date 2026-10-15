@@ -49,3 +49,4 @@ To add an idea: create one file in the matching folder, add its row below
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`disable-autocomplete-listing.md`](zsh/disable-autocomplete-listing.md) | turn off the zsh-autocomplete listing while typing; made by choice on request | done |
+| [`nvim-cd-on-exit.md`](zsh/nvim-cd-on-exit.md) | `n` wrapper to cd into nvim's last cwd on exit; works in a fresh shell, fails in live panes | open |
