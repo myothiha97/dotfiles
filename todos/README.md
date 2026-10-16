@@ -14,7 +14,10 @@ first idea arrives. Two folders are not apps:
 | folder                 | what it holds                                       |
 | ---------------------- | --------------------------------------------------- |
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
+| [`git/`](#git)         | git config (`~/.gitconfig`, not tracked yet)        |
+| [`lazygit/`](#lazygit) | lazygit config and its diff pager                   |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
+| [`zsh/`](#zsh)         | zsh config, completion, prompt                      |
 | `process/`             | how the config is worked on, not what it contains   |
 | `done/`                | shipped and verified; kept for the reasoning        |
 
@@ -37,8 +40,28 @@ To add an idea: create one file in the matching folder, add its row below
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------ |
 | [`native-ghostty-splits.md`](ghostty/native-ghostty-splits.md) | Ghostty splits as a tmux replacement; on branch `unstable/ghostty-native-splits`, untested    | open   |
 
+## git
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`delta-as-git-pager.md`](git/delta-as-git-pager.md) | syntax-coloured `git diff` in the shell via `core.pager = delta`; deferred, diffs are read in lazygit | open |
+
+## lazygit
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`delta-nvim-theme.md`](lazygit/delta-nvim-theme.md) | syntax-coloured diffs via delta (TwoDark); made by choice on request; old instability cause still unknown | done |
+| [`sync-delta-with-nvim-theme.md`](lazygit/sync-delta-with-nvim-theme.md) | generate a delta theme from the nvim palette so both match; approximate only (TextMate vs treesitter) | open |
+
 ## tmux
 
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
+
+## zsh
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`disable-autocomplete-listing.md`](zsh/disable-autocomplete-listing.md) | turn off the zsh-autocomplete listing while typing; made by choice on request | done |
+| [`nvim-cd-on-exit.md`](zsh/nvim-cd-on-exit.md) | `n` wrapper to cd into nvim's last cwd on exit; works in a fresh shell, fails in live panes | open |
