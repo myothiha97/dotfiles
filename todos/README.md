@@ -14,6 +14,7 @@ first idea arrives. Two folders are not apps:
 | folder                 | what it holds                                       |
 | ---------------------- | --------------------------------------------------- |
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
+| [`lazygit/`](#lazygit) | lazygit config and its diff pager                   |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
 | [`zsh/`](#zsh)         | zsh config, completion, prompt                      |
 | `process/`             | how the config is worked on, not what it contains   |
@@ -37,6 +38,13 @@ To add an idea: create one file in the matching folder, add its row below
 | file                                                         | hook                                                                                          | status |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------ |
 | [`native-ghostty-splits.md`](ghostty/native-ghostty-splits.md) | Ghostty splits as a tmux replacement; on branch `unstable/ghostty-native-splits`, untested    | open   |
+
+## lazygit
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`delta-nvim-theme.md`](lazygit/delta-nvim-theme.md) | syntax-coloured diffs via delta (TwoDark); made by choice on request; old instability cause still unknown | done |
+| [`sync-delta-with-nvim-theme.md`](lazygit/sync-delta-with-nvim-theme.md) | generate a delta theme from the nvim palette so both match; approximate only (TextMate vs treesitter) | open |
 
 ## tmux
 

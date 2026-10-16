@@ -6,17 +6,27 @@ git:
   # global sort pass. Harmless on small repos, big win on large ones.
   log:
     order: default
-  # DISABLED (2026-06-29): reverted to lazygit's default diff coloring — the
-  # delta pager proved unstable in the diff view. Kept here, commented, so it
-  # can be re-enabled later by uncommenting the `pagers` block below.
+  # delta for SYNTAX COLOURS ONLY (re-enabled 2026-10-16). The text is kept
+  # line-for-line identical to plain git diff (raw headers, +/- markers, real
+  # tabs, no truncation), verified by stripping colours and diffing. Only the
+  # diff panel uses it; the staging view and merge resolver are drawn by
+  # lazygit itself. Cost: ~30 ms per normal diff, ~140 ms for 4k lines.
   #
-  # Pipe diffs through delta for syntax highlighting + clearer add/remove
-  # colors. Affects the diff/preview panel only — lazygit renders the merge
-  # conflict resolver itself, so that view is unchanged. --paging=never lets
-  # lazygit own the scrolling; light-mode users can swap --dark for --light.
-  # pagers:
-  #   - colorArg: always
-  #     pager: delta --paging=never
+  # It was disabled 2026-06-29 as "unstable", cause never recorded. The likely
+  # suspect is delta asking the terminal for its background colour, so --dark
+  # pins it and skips that query; --no-gitconfig keeps outside delta settings
+  # out. Theme: TwoDark (Atom One Dark port), built in, no bat cache needed.
+  # Backgrounds are GitHub dark's add/remove tints. Undo: delete `pagers`.
+  pagers:
+    - colorArg: always
+      pager: >-
+        delta --no-gitconfig --dark --paging=never --tabs=0
+        --syntax-theme=TwoDark --keep-plus-minus-markers
+        --file-style=raw --file-decoration-style=none
+        --hunk-header-style=raw --hunk-header-decoration-style=none
+        --max-line-length=0
+        --plus-style='syntax #12261e' --plus-emph-style='syntax #12261e'
+        --minus-style='syntax #25171c' --minus-emph-style='syntax #25171c'
 gui:
   # Lazygit cannot truly hide the Commits/Stash panels by default in 0.62.2,
   # so bias the layout toward the currently focused area instead.

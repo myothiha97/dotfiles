@@ -12,7 +12,7 @@ and symlinked to their live locations.
 | `skhd` | Global app-focus shortcuts | `~/.config/skhd/skhdrc` |
 | `aerospace` | Disabled floating-only fallback config | `~/.config/aerospace/aerospace.toml` |
 | `tmux` | Sessions, panes, keymaps, session scripts, and persistence | `~/.tmux.conf` |
-| `lazygit` | Faster log ordering and UI layout | `~/Library/Application Support/lazygit/config.yml` |
+| `lazygit` | Faster log ordering, UI layout, and syntax-coloured diffs | `~/Library/Application Support/lazygit/config.yml` |
 | `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
 | `karabiner` | Key remapping, including vim keys inside Finder | `~/.config/karabiner/` |
 | `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
@@ -358,8 +358,37 @@ Useful aliases include `vim`/`vi` for Neovim, `g` for Git, `lg` for Lazygit,
 Git branch name.
 
 Lazygit uses Git's default commit order to avoid slow full-history sorting. Its
-command log is hidden, the focused side panel expands, and delta paging remains
-disabled because it was unstable.
+command log is hidden, and the focused side panel expands.
+
+### Syntax-coloured diffs (delta)
+
+The diff panel pipes through [delta](https://github.com/dandavison/delta)
+(`brew install git-delta`, 0.19.2) for syntax colours only. Theme `TwoDark`
+(built in, Atom One Dark style), with GitHub dark green/red line backgrounds.
+Every flag is explained in `lazygit/config.yml`.
+
+- The text is line-for-line the same as plain `git diff`: same headers, `+`/`-`
+  markers, tabs and long lines. Navigation, staging and keys do not change.
+- Only lazygit uses it. Plain `git diff` in a shell and nvim are unaffected.
+- `|` (cycle pagers) does nothing here: with one pager, lazygit shows
+  "No other pagers configured". The plain view is not one of the choices.
+- Undo: delete the `pagers` block.
+
+Known limitations and concerns:
+
+- **Old instability, cause unknown.** delta was disabled once (2026-06-29) as
+  "unstable in the diff view", with no record of why. `--dark` skips delta's
+  terminal colour query, the most likely suspect, but that is not proven. If
+  it happens again, note what was on screen before turning it off.
+- **Cost:** one delta process per diff shown, ~30 ms for a normal diff,
+  ~140 ms for 4,000 lines. Holding `j` through many files starts one per stop.
+- **Colours do not match nvim.** delta uses TextMate themes, nvim uses
+  treesitter, so even a custom theme only matches roughly. See
+  `todos/lazygit/sync-delta-with-nvim-theme.md`.
+- **No GitHub Dark theme.** It needs `bat`, a third-party `.tmTheme`, and a bat
+  cache matching delta's bundled bat, or delta silently falls back.
+- **Diff panel only.** The staging view and merge-conflict resolver are drawn
+  by lazygit and stay uncoloured.
 
 Lazygit's `state.yml` is intentionally not tracked because it contains changing
 runtime state.
