@@ -110,9 +110,9 @@ duti -s abnerworks.Typora .md all
 
 Markdown reader, opened from yazi with `o`. `typora/themes/github-dark.css` is
 GitHub's dark palette on top of Typora's bundled `github.css`, plus Mermaid's
-dark theme with curved edges. It imports `github.css` and
-`night/sourcemode.dark.css` from Typora's own themes folder, so only this one
-file is linked. Pick it with **Themes > Github Dark**; a changed file is picked
+dark theme with curved edges. All colours are tokens at the top of the file. It
+imports `github.css` from Typora's own themes folder, so only this one file is
+linked. Pick it with **Themes > Github Dark**; a changed file is picked
 up by selecting the theme again.
 
 `theme.toml` turns off yazi's mime-based colours for images, media, archives,
