@@ -14,6 +14,7 @@ first idea arrives. Two folders are not apps:
 | folder                 | what it holds                                       |
 | ---------------------- | --------------------------------------------------- |
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
+| [`git/`](#git)         | git config (`~/.gitconfig`, not tracked yet)        |
 | [`lazygit/`](#lazygit) | lazygit config and its diff pager                   |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
 | [`zsh/`](#zsh)         | zsh config, completion, prompt                      |
@@ -38,6 +39,12 @@ To add an idea: create one file in the matching folder, add its row below
 | file                                                         | hook                                                                                          | status |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------ |
 | [`native-ghostty-splits.md`](ghostty/native-ghostty-splits.md) | Ghostty splits as a tmux replacement; on branch `unstable/ghostty-native-splits`, untested    | open   |
+
+## git
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`delta-as-git-pager.md`](git/delta-as-git-pager.md) | syntax-coloured `git diff` in the shell via `core.pager = delta`; deferred, diffs are read in lazygit | open |
 
 ## lazygit
 
