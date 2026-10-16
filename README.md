@@ -80,6 +80,8 @@ the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
   file the way vim moves text. `X` deletes permanently
 - `V` selects whole rows. Yazi's unselect mode moves to `ctrl-v`
 - `ctrl-h` and `ctrl-l` leave and enter directories, matching the oil.nvim setup
+- `Enter` enters directories like `l`, instead of yazi's "open". Use `o` to
+  open a file
 - `ctrl-e` and `ctrl-y` scroll the preview pane
 - `ctrl-v` is unselect visual mode, since `V` now selects
 - `F` reveals the hovered file in Finder
@@ -89,6 +91,15 @@ the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
 - `ctrl-o` cancels a yank, next to yazi's own `X` and `Y`
 
 Shell commands stay on yazi's defaults: `;` runs one, `:` runs one and waits.
+
+`yazi.toml` opens `.md` files in Typora (`o`), with `$EDITOR` as the second
+choice under `O`. Typora is also the macOS default for markdown. That lives in
+LaunchServices, not this repo, so set it on a new Mac with:
+
+```sh
+duti -s abnerworks.Typora net.daringfireball.markdown all
+duti -s abnerworks.Typora .md all
+```
 
 `theme.toml` turns off yazi's mime-based colours for images, media, archives,
 and PDFs so file names read as plain white. Directories stay blue, executables
