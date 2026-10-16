@@ -181,8 +181,9 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 
 ## Ghostty
 
-- FiraCode Nerd Font at 13.7 pt with macOS font thickening enabled.
-- Transparent dark background (`#031219`, opacity 0.9), blur, and display-P3 output.
+- JetBrains Mono at 13 pt with macOS font thickening at strength 180.
+- Opaque dark background (`#131312`; opacity and blur are commented out) and
+  display-P3 output.
 - `Cmd+Ctrl+L` is sent to tmux as `C-M-l` to open a Claude pane (see tmux).
 - `Ctrl+I` is distinct from Tab through the CSI-u sequence.
 - Selected Command keys are translated to Meta keys for Neovim.
