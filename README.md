@@ -15,6 +15,7 @@ and symlinked to their live locations.
 | `lazygit` | Faster log ordering, UI layout, and syntax-coloured diffs | `~/Library/Application Support/lazygit/config.yml` |
 | `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
 | `karabiner` | Key remapping, including vim keys inside Finder | `~/.config/karabiner/` |
+| `typora` | GitHub Dark theme for the markdown reader | `~/Library/Application Support/abnerworks.Typora/themes/` |
 | `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
@@ -50,6 +51,10 @@ ln -sf ~/.dotfiles/lazygit/config.yml \
 mkdir -p "$HOME/Library/Application Support/com.colliderli.iina/input_conf"
 ln -sf ~/.dotfiles/iina/Custom.conf \
   "$HOME/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf"
+
+# Open Typora once first so it creates its themes folder
+ln -sf ~/.dotfiles/typora/themes/github-dark.css \
+  "$HOME/Library/Application Support/abnerworks.Typora/themes/github-dark.css"
 ```
 
 Back up any existing real file before replacing it with a symlink.
@@ -100,6 +105,15 @@ LaunchServices, not this repo, so set it on a new Mac with:
 duti -s abnerworks.Typora net.daringfireball.markdown all
 duti -s abnerworks.Typora .md all
 ```
+
+## Typora
+
+Markdown reader, opened from yazi with `o`. `typora/themes/github-dark.css` is
+GitHub's dark palette on top of Typora's bundled `github.css`, plus Mermaid's
+dark theme with curved edges. It imports `github.css` and
+`night/sourcemode.dark.css` from Typora's own themes folder, so only this one
+file is linked. Pick it with **Themes > Github Dark**; a changed file is picked
+up by selecting the theme again.
 
 `theme.toml` turns off yazi's mime-based colours for images, media, archives,
 and PDFs so file names read as plain white. Directories stay blue, executables

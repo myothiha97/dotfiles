@@ -1,0 +1,367 @@
+/*
+ * GitHub Dark for Typora.
+ * Layout and spacing come from the bundled github.css; this file only
+ * repaints it with GitHub's dark palette (Primer "dark default").
+ * Source mode reuses the dark styles shipped with Night.
+ */
+@import "github.css";
+@import "night/sourcemode.dark.css";
+
+:root {
+    /* Mermaid: the same "dark" theme the nvim browser preview uses (blue-grey
+       node borders, grey edge labels), with curved edges instead of elbows */
+    --mermaid-theme: dark;
+    --mermaid-flowchart-curve: basis;
+    --mermaid-font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+
+    /* Palette */
+    --gh-canvas: #0d1117;
+    --gh-canvas-subtle: #161b22;
+    --gh-canvas-inset: #010409;
+    --gh-fg: #e6edf3;
+    --gh-fg-muted: #9198a1;
+    --gh-border: #30363d;
+    --gh-border-muted: #21262d;
+    --gh-accent: #4493f8;
+    --gh-code-bg: rgba(110, 118, 129, 0.4);
+
+    /* Variables Typora's own UI reads (sidebar, search, menus) */
+    --bg-color: var(--gh-canvas);
+    --text-color: var(--gh-fg);
+    --side-bar-bg-color: var(--gh-canvas-inset);
+    --control-text-color: var(--gh-fg-muted);
+    --control-text-hover-color: var(--gh-fg);
+    --primary-color: var(--gh-accent);
+    --active-file-bg-color: var(--gh-canvas-subtle);
+    --active-file-text-color: var(--gh-fg);
+    --active-file-border-color: var(--gh-accent);
+    --item-hover-bg-color: var(--gh-border-muted);
+    --item-hover-text-color: var(--gh-fg);
+    --select-text-bg-color: rgba(56, 139, 253, 0.4);
+    --search-select-bg-color: #9e6a03;
+    --window-border: 1px solid var(--gh-border);
+    --rawblock-edit-panel-bd: var(--gh-canvas-subtle);
+    --meta-content-color: var(--gh-fg-muted);
+    --md-char-color: #6e7681;
+}
+
+html,
+body {
+    background: var(--gh-canvas);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+        "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji";
+    color: var(--gh-fg);
+}
+
+#write {
+    caret-color: var(--gh-fg);
+}
+
+/* Headings: bold and bright, with GitHub's thin rule under h1 and h2 */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--gh-fg);
+    font-weight: 600;
+}
+
+h1,
+h2 {
+    border-bottom: 1px solid var(--gh-border-muted);
+    padding-bottom: 0.3em;
+}
+
+h6 {
+    color: var(--gh-fg-muted);
+}
+
+a {
+    color: var(--gh-accent);
+}
+
+strong {
+    color: var(--gh-fg);
+}
+
+hr {
+    background-color: var(--gh-border);
+    height: 1px;
+}
+
+blockquote {
+    border-left: 4px solid var(--gh-border);
+    color: var(--gh-fg-muted);
+}
+
+/* Tables: plain header row, striped body, softer borders (as on GitHub) */
+table tr {
+    background-color: var(--gh-canvas);
+    border-top: 1px solid #272c32;
+}
+
+thead,
+thead tr {
+    background-color: var(--gh-canvas);
+}
+
+tbody tr:nth-child(2n) {
+    background-color: var(--gh-canvas-subtle);
+}
+
+table th,
+table td {
+    border-color: #3b434b;
+}
+
+/* Header cells centre like GitHub; an explicit :--- alignment still wins */
+table th {
+    text-align: center;
+}
+
+/* Inline code: the grey pill from the screenshots */
+code,
+tt {
+    background-color: var(--gh-code-bg);
+    border: none;
+    border-radius: 6px;
+    color: var(--gh-fg);
+    padding: 0.2em 0.4em;
+    font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+    font-size: 85%;
+}
+
+/* Code blocks */
+.md-fences {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border-muted);
+    border-radius: 6px;
+    padding: 12px 16px 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+    font-size: 0.85em;
+}
+
+.md-fences .code-tooltip {
+    background-color: var(--gh-canvas-subtle);
+    border-top: 1px solid var(--gh-border);
+}
+
+.CodeMirror div.CodeMirror-cursor {
+    border-left: 1px solid var(--gh-fg);
+}
+
+/* Syntax colours: GitHub dark ("prettylights") */
+.cm-s-inner {
+    color: var(--gh-fg);
+}
+
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-operator {
+    color: #ff7b72;
+}
+
+.cm-s-inner .cm-string,
+.cm-s-inner .cm-string-2 {
+    color: #a5d6ff;
+}
+
+.cm-s-inner .cm-comment {
+    color: #8b949e;
+    font-style: italic;
+}
+
+.cm-s-inner .cm-number,
+.cm-s-inner .cm-atom,
+.cm-s-inner .cm-builtin,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-qualifier {
+    color: #79c0ff;
+}
+
+.cm-s-inner .cm-def,
+.cm-s-inner .cm-type,
+.cm-s-inner .cm-variable-3 {
+    color: #d2a8ff;
+}
+
+.cm-s-inner .cm-variable,
+.cm-s-inner .cm-property {
+    color: var(--gh-fg);
+}
+
+.cm-s-inner .cm-variable-2,
+.cm-s-inner .cm-meta {
+    color: #ffa657;
+}
+
+.cm-s-inner .cm-tag {
+    color: #7ee787;
+}
+
+.cm-s-inner .cm-header {
+    color: #79c0ff;
+    font-weight: bold;
+}
+
+.cm-s-inner .cm-link {
+    color: #a5d6ff;
+    text-decoration: underline;
+}
+
+.cm-s-inner .cm-bracket {
+    color: var(--gh-fg-muted);
+}
+
+.cm-s-inner .cm-error {
+    color: #ffa198;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+    background: rgba(56, 139, 253, 0.4) !important;
+}
+
+/* Markdown syntax hints (#, **, etc.) shown while editing */
+.md-meta,
+.md-before,
+.md-after {
+    color: var(--md-char-color);
+}
+
+/* Task list checkboxes and footnotes */
+.md-task-list-item > input {
+    filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* Sidebar and file tree */
+#typora-sidebar,
+.sidebar-content,
+.sidebar-tabs,
+#file-library-search-panel {
+    background-color: var(--gh-canvas-inset);
+    color: var(--gh-fg);
+}
+
+.sidebar-tabs {
+    border-bottom: 1px solid var(--gh-border-muted);
+}
+
+.file-list-item,
+.file-node-content {
+    color: var(--gh-fg-muted);
+}
+
+.file-list-item.active,
+.file-node.active > .file-node-content {
+    color: var(--gh-fg);
+}
+
+/* Popups: quick open, menus, context menu, notifications */
+#typora-quick-open,
+.context-menu,
+.dropdown-menu,
+.megamenu-content,
+#md-notification,
+.modal-content {
+    background-color: var(--gh-canvas-subtle);
+    border-color: var(--gh-border);
+    color: var(--gh-fg);
+}
+
+.context-menu .divider,
+.dropdown-menu .divider {
+    background-color: var(--gh-border);
+    border-color: var(--gh-border);
+}
+
+input,
+textarea,
+.form-control {
+    background-color: var(--gh-canvas);
+    border: 1px solid var(--gh-border);
+    color: var(--gh-fg);
+}
+
+header,
+footer {
+    background-color: var(--gh-canvas);
+    color: var(--gh-fg-muted);
+}
+
+/* Lists: GitHub's tighter rhythm, so long bullet lists scan faster */
+#write li > p {
+    margin: 0;
+}
+
+#write li + li {
+    margin-top: 0.3em;
+}
+
+/* Diagrams sit on a subtle panel so they read as one figure */
+#write .md-diagram-panel {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border-muted);
+    border-radius: 8px;
+    padding: 20px 16px;
+    margin: 16px 0;
+}
+
+/* Mermaid's dark theme puts edge labels on a bright grey box; mute it */
+#write .md-diagram-panel .edgeLabel,
+#write .md-diagram-panel .edgeLabel p,
+#write .md-diagram-panel .edgeLabel span {
+    background-color: var(--gh-border) !important;
+    color: var(--gh-fg) !important;
+}
+
+#write .md-diagram-panel .edgeLabel rect {
+    fill: var(--gh-border) !important;
+    opacity: 1 !important;
+}
+
+/* Images, highlights and keys */
+#write img {
+    border-radius: 6px;
+}
+
+mark {
+    background-color: rgba(187, 128, 9, 0.25);
+    color: var(--gh-fg);
+}
+
+kbd {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border);
+    border-bottom-color: #6e7681;
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 #6e7681;
+    color: var(--gh-fg);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8em;
+    padding: 2px 6px;
+}
+
+/* Slim dark scrollbar instead of the light system one */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--gh-border);
+    border: 2px solid var(--gh-canvas);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #484f58;
+}
+
+/* Focus mode dims everything but the current block */
+.on-focus-mode blockquote {
+    border-left-color: var(--gh-border-muted);
+}
