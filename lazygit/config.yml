@@ -17,6 +17,9 @@ git:
   # pins it and skips that query; --no-gitconfig keeps outside delta settings
   # out. Theme: TwoDark (Atom One Dark port), built in, no bat cache needed.
   # Backgrounds are GitHub dark's add/remove tints. Undo: delete `pagers`.
+
+  # To turn off syntax colours, comment out the whole `pagers` block below.
+
   pagers:
     - colorArg: always
       pager: >-
@@ -27,6 +30,7 @@ git:
         --max-line-length=0
         --plus-style='syntax #12261e' --plus-emph-style='syntax #12261e'
         --minus-style='syntax #25171c' --minus-emph-style='syntax #25171c'
+
 gui:
   # Lazygit cannot truly hide the Commits/Stash panels by default in 0.62.2,
   # so bias the layout toward the currently focused area instead.
