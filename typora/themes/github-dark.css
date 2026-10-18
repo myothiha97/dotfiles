@@ -21,6 +21,8 @@
     --gh-canvas-overlay: #1c2128;
     --gh-fg: #e6edf3;
     --gh-fg-muted: #9198a1;
+    --gh-fg-soft: #b1bac4;
+    --gh-fg-strong: #ffffff;
     --gh-fg-subtle: #6e7681;
     --gh-border: #30363d;
     --gh-border-muted: #21262d;
@@ -475,15 +477,35 @@ svg[aria-roledescription="mindmap"] .mindmap-node div {
 }
 
 .file-list-item,
-.file-node-content,
-.outline-item {
+.file-node-content {
     color: var(--gh-fg-muted);
 }
 
 .file-list-item.active,
-.file-node.active > .file-node-content,
-.outline-item-active > .outline-item {
+.file-node.active > .file-node-content {
     color: var(--gh-fg);
+}
+
+/* Outline: brighter than fg-muted so the list reads well on the inset bg.
+ * The active heading is marked by colour only: Typora's bold changes the text
+ * width and snaps from item to item, while colour can fade. */
+.outline-item {
+    color: var(--gh-fg-soft);
+    transition: color 0.15s ease;
+}
+
+.outline-item.outline-item-active {
+    color: var(--gh-fg-strong);
+}
+
+.pin-outline .outline-active,
+.pin-outline #outline-content .outline-active strong {
+    font-weight: 400;
+}
+
+/* The row highlight already marks hover; drop Typora's link-style underline */
+.outline-label:hover {
+    text-decoration: none;
 }
 
 #typora-quick-open,
