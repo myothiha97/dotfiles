@@ -106,6 +106,10 @@ duti -s abnerworks.Typora net.daringfireball.markdown all
 duti -s abnerworks.Typora .md all
 ```
 
+`theme.toml` turns off yazi's mime-based colours for images, media, archives,
+and PDFs so file names read as plain white. Directories stay blue, executables
+green, and broken symlinks red.
+
 ## Typora
 
 Markdown reader, opened from yazi with `o`. `typora/themes/github-dark.css` is
@@ -114,10 +118,6 @@ dark theme with curved edges. All colours are tokens at the top of the file. It
 imports `github.css` from Typora's own themes folder, so only this one file is
 linked. Pick it with **Themes > Github Dark**; a changed file is picked
 up by selecting the theme again.
-
-`theme.toml` turns off yazi's mime-based colours for images, media, archives,
-and PDFs so file names read as plain white. Directories stay blue, executables
-green, and broken symlinks red.
 
 ## Karabiner
 
