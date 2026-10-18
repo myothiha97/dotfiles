@@ -17,6 +17,7 @@ first idea arrives. Two folders are not apps:
 | [`git/`](#git)         | git config (`~/.gitconfig`, not tracked yet)        |
 | [`lazygit/`](#lazygit) | lazygit config and its diff pager                   |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
+| [`typora/`](#typora)   | Typora themes                                       |
 | [`yazi/`](#yazi)       | yazi file manager config and openers                |
 | [`zsh/`](#zsh)         | zsh config, completion, prompt                      |
 | `process/`             | how the config is worked on, not what it contains   |
@@ -59,6 +60,12 @@ To add an idea: create one file in the matching folder, add its row below
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
+
+## typora
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`outline-pointer-cursor.md`](typora/outline-pointer-cursor.md) | hand cursor on outline items; Typora sets it already, cause unknown | open |
 
 ## yazi
 
