@@ -1,5 +1,5 @@
 # Yazi file manager. Defaults are already vim-like, so this file only adjusts
-# layout and sorting. Key changes live in keymap.toml.
+# layout, sorting and openers. Key changes live in keymap.toml.
 
 [mgr]
 # Parent : current : preview column widths. The parent column is hidden (0) and
@@ -21,3 +21,13 @@ wrap = "yes"
 # a retina screen, so this is generous.
 max_width = 2400
 max_height = 1800
+
+[opener]
+# Typora renders Mermaid diagrams, tables, images and code far better than an
+# editor, and markdown here is mostly read, not written.
+markdown = [{ run = "open -a Typora %s", orphan = true, desc = "Typora" }]
+
+[open]
+# Added in front of yazi's own rules, so other file types are unchanged. `edit`
+# stays as the second choice in "open with" (O).
+prepend_rules = [{ url = "*.md", use = ["markdown", "edit"] }]

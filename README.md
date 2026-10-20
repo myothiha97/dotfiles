@@ -15,6 +15,7 @@ and symlinked to their live locations.
 | `lazygit` | Faster log ordering, UI layout, and syntax-coloured diffs | `~/Library/Application Support/lazygit/config.yml` |
 | `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
 | `karabiner` | Key remapping, including vim keys inside Finder | `~/.config/karabiner/` |
+| `typora` | GitHub Dark theme for the markdown reader | `~/Library/Application Support/abnerworks.Typora/themes/` |
 | `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
@@ -50,6 +51,10 @@ ln -sf ~/.dotfiles/lazygit/config.yml \
 mkdir -p "$HOME/Library/Application Support/com.colliderli.iina/input_conf"
 ln -sf ~/.dotfiles/iina/Custom.conf \
   "$HOME/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf"
+
+# Open Typora once first so it creates its themes folder
+ln -sf ~/.dotfiles/typora/themes/github-dark.css \
+  "$HOME/Library/Application Support/abnerworks.Typora/themes/github-dark.css"
 ```
 
 Back up any existing real file before replacing it with a symlink.
@@ -80,6 +85,8 @@ the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
   file the way vim moves text. `X` deletes permanently
 - `V` selects whole rows. Yazi's unselect mode moves to `ctrl-v`
 - `ctrl-h` and `ctrl-l` leave and enter directories, matching the oil.nvim setup
+- `Enter` enters directories like `l`, instead of yazi's "open". Use `o` to
+  open a file
 - `ctrl-e` and `ctrl-y` scroll the preview pane
 - `ctrl-v` is unselect visual mode, since `V` now selects
 - `F` reveals the hovered file in Finder
@@ -90,9 +97,27 @@ the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
 
 Shell commands stay on yazi's defaults: `;` runs one, `:` runs one and waits.
 
+`yazi.toml` opens `.md` files in Typora (`o`), with `$EDITOR` as the second
+choice under `O`. Typora is also the macOS default for markdown. That lives in
+LaunchServices, not this repo, so set it on a new Mac with:
+
+```sh
+duti -s abnerworks.Typora net.daringfireball.markdown all
+duti -s abnerworks.Typora .md all
+```
+
 `theme.toml` turns off yazi's mime-based colours for images, media, archives,
 and PDFs so file names read as plain white. Directories stay blue, executables
 green, and broken symlinks red.
+
+## Typora
+
+Markdown reader, opened from yazi with `o`. `typora/themes/github-dark.css` is
+GitHub's dark palette on top of Typora's bundled `github.css`, plus Mermaid's
+dark theme with curved edges. All colours are tokens at the top of the file. It
+imports `github.css` from Typora's own themes folder, so only this one file is
+linked. Pick it with **Themes > Github Dark**; a changed file is picked
+up by selecting the theme again.
 
 ## Karabiner
 

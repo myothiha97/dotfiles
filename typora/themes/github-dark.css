@@ -1,0 +1,609 @@
+/*
+ * GitHub Dark for Typora
+ *
+ * GitHub's dark palette (Primer "dark default") on top of Typora's bundled
+ * github.css, which supplies the layout, spacing and type scale. Everything
+ * here is a repaint or a readability tweak; colours come only from the tokens
+ * in :root, so the palette can be tuned in one place.
+ *
+ * Install: symlink this file into Typora's themes folder, then choose
+ * Themes > Github Dark. github.css ships with Typora and must stay beside it.
+ */
+@import "github.css";
+
+:root {
+    color-scheme: dark;
+
+    /* Palette */
+    --gh-canvas: #0d1117;
+    --gh-canvas-subtle: #161b22;
+    --gh-canvas-inset: #010409;
+    --gh-canvas-overlay: #1c2128;
+    --gh-fg: #e6edf3;
+    --gh-fg-muted: #9198a1;
+    --gh-fg-soft: #b1bac4;
+    --gh-fg-strong: #ffffff;
+    --gh-fg-subtle: #6e7681;
+    --gh-border: #30363d;
+    --gh-border-muted: #21262d;
+    --gh-border-table: #3b434b;
+    --gh-border-row: #272c32;
+    --gh-neutral-muted: rgba(110, 118, 129, 0.4);
+    --gh-accent: #4493f8;
+    --gh-accent-muted: rgba(56, 139, 253, 0.4);
+    --gh-success: #3fb950;
+    --gh-attention: #d29922;
+    --gh-attention-muted: rgba(187, 128, 9, 0.4);
+    --gh-attention-emphasis: #9e6a03;
+    --gh-danger: #f85149;
+    --gh-done: #ab7df8;
+
+    /* Syntax (GitHub "prettylights") */
+    --gh-syntax-keyword: #ff7b72;
+    --gh-syntax-string: #a5d6ff;
+    --gh-syntax-comment: #8b949e;
+    --gh-syntax-constant: #79c0ff;
+    --gh-syntax-entity: #d2a8ff;
+    --gh-syntax-variable: #ffa657;
+    --gh-syntax-tag: #7ee787;
+    --gh-syntax-error: #ffa198;
+
+    /* Type */
+    --gh-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+        "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji";
+    --gh-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+        monospace;
+    --gh-radius: 6px;
+
+    /* Scrollbar thumb: muted grey, a little brighter when used */
+    --gh-scrollbar-thumb: rgba(145, 152, 161, 0.5);
+    --gh-scrollbar-thumb-hover: rgba(145, 152, 161, 0.65);
+    --gh-scrollbar-thumb-active: rgba(145, 152, 161, 0.8);
+
+    /* Variables Typora's own stylesheets read (editor, sidebar, panels) */
+    --bg-color: var(--gh-canvas);
+    --text-color: var(--gh-fg);
+    --monospace: var(--gh-font-mono);
+    --side-bar-bg-color: var(--gh-canvas-inset);
+    --control-text-color: var(--gh-fg-muted);
+    --control-text-hover-color: var(--gh-fg);
+    --primary-color: var(--gh-accent);
+    --primary-btn-border-color: var(--gh-accent);
+    --primary-btn-text-color: var(--gh-fg);
+    --focus-ring-color: var(--gh-accent);
+    --active-file-bg-color: var(--gh-canvas-subtle);
+    --active-file-text-color: var(--gh-fg);
+    --active-file-border-color: var(--gh-accent);
+    --active-toggle-btn-color: var(--gh-border);
+    --item-hover-bg-color: var(--gh-border-muted);
+    --item-hover-text-color: var(--gh-fg);
+    --select-text-bg-color: var(--gh-accent-muted);
+    --select-text-font-color: inherit;
+    --search-select-bg-color: var(--gh-attention-emphasis);
+    --search-select-text-color: var(--gh-fg);
+    --window-border: 1px solid var(--gh-border);
+    --border-color: var(--gh-border);
+    --panel-border-color: var(--gh-border);
+    --table-border-color: var(--gh-border-table);
+    --rawblock-edit-panel-bd: var(--gh-canvas-subtle);
+    --meta-content-color: var(--gh-fg-muted);
+    --md-char-color: var(--gh-fg-subtle);
+    --heading-char-color: var(--gh-fg-subtle);
+    --blur-text-color: var(--gh-fg-subtle);
+    --drag-placeholder-color: var(--gh-fg-subtle);
+    --node-fill: var(--gh-fg);
+
+    /* Mermaid: the dark theme, with curved edges instead of elbows */
+    --mermaid-theme: dark;
+    --mermaid-flowchart-curve: basis;
+    /* Typora copies this string into Mermaid's config, so it is a plain font
+       list rather than a var() reference. */
+    --mermaid-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Helvetica, Arial, sans-serif;
+}
+
+/* Base */
+
+/* 15px instead of github.css's 16px: close to GitHub at the usual 90% browser
+   zoom. Everything else is sized in em, so this one value scales the page. */
+html {
+    font-size: 15px;
+}
+
+html,
+body {
+    background-color: var(--gh-canvas);
+}
+
+body {
+    font-family: var(--gh-font-sans);
+    color: var(--gh-fg);
+}
+
+#write {
+    caret-color: var(--gh-fg);
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--gh-fg);
+    font-weight: 600;
+}
+
+h1,
+h2 {
+    border-bottom: 1px solid var(--gh-border-muted);
+    padding-bottom: 0.3em;
+}
+
+/* Space above a heading grows with its level, so a new section reads as a
+   clear break (github.css gives every level the same 1rem). Sized in rem so
+   the gap does not balloon with the heading's own font size. */
+h1,
+h2 {
+    margin-top: 2.5rem;
+}
+
+h3 {
+    margin-top: 2rem;
+}
+
+h4,
+h5,
+h6 {
+    margin-top: 1.5rem;
+}
+
+#write > :first-child {
+    margin-top: 0;
+}
+
+h6 {
+    color: var(--gh-fg-muted);
+}
+
+/* Inline text */
+
+a {
+    color: var(--gh-accent);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+strong {
+    color: var(--gh-fg);
+}
+
+mark {
+    background-color: var(--gh-attention-muted);
+    color: var(--gh-fg);
+}
+
+kbd {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border);
+    border-bottom-color: var(--gh-fg-subtle);
+    border-radius: var(--gh-radius);
+    box-shadow: inset 0 -1px 0 var(--gh-fg-subtle);
+    color: var(--gh-fg);
+    font-family: var(--gh-font-mono);
+    font-size: 0.8em;
+    padding: 2px 6px;
+}
+
+code,
+tt {
+    background-color: var(--gh-neutral-muted);
+    border: none;
+    border-radius: var(--gh-radius);
+    color: var(--gh-fg);
+    font-family: var(--gh-font-mono);
+    font-size: 85%;
+    padding: 0.2em 0.4em;
+}
+
+sup.md-footnote {
+    background-color: var(--gh-neutral-muted);
+    color: var(--gh-fg);
+}
+
+/* Blocks */
+
+hr {
+    background-color: var(--gh-border);
+    height: 1px;
+}
+
+blockquote {
+    border-left: 4px solid var(--gh-border);
+    color: var(--gh-fg-muted);
+}
+
+/* Lists: GitHub's tighter rhythm, so long bullet lists scan faster */
+#write li > p {
+    margin: 0;
+}
+
+#write li + li {
+    margin-top: 0.3em;
+}
+
+.md-task-list-item > input {
+    accent-color: var(--gh-accent);
+}
+
+#write img {
+    border-radius: var(--gh-radius);
+}
+
+/* Tables: plain header row, striped body */
+
+table tr {
+    background-color: var(--gh-canvas);
+    border-top: 1px solid var(--gh-border-row);
+}
+
+thead,
+thead tr {
+    background-color: var(--gh-canvas);
+}
+
+tbody tr:nth-child(2n) {
+    background-color: var(--gh-canvas-subtle);
+}
+
+table th,
+table td {
+    border-color: var(--gh-border-table);
+}
+
+/* Centred like GitHub; a column's own :--- alignment still wins */
+table th {
+    text-align: center;
+}
+
+/* Alerts (> [!NOTE] and friends) */
+
+.md-alert.md-alert-note { border-left-color: var(--gh-accent); }
+.md-alert.md-alert-tip { border-left-color: var(--gh-success); }
+.md-alert.md-alert-important { border-left-color: var(--gh-done); }
+.md-alert.md-alert-warning { border-left-color: var(--gh-attention); }
+.md-alert.md-alert-caution { border-left-color: var(--gh-danger); }
+
+.md-alert-text-note { color: var(--gh-accent); }
+.md-alert-text-tip { color: var(--gh-success); }
+.md-alert-text-important { color: var(--gh-done); }
+.md-alert-text-warning { color: var(--gh-attention); }
+.md-alert-text-caution { color: var(--gh-danger); }
+
+/* Code blocks */
+
+.md-fences {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border-muted);
+    border-radius: var(--gh-radius);
+    font-family: var(--gh-font-mono);
+    font-size: 0.85em;
+    /* Extra top room so the language tab below never crowds the first line */
+    padding: 20px 16px 12px;
+}
+
+/* Language picker (shown while editing a block): a small tab sitting on the
+   top-left border, like a file tab, instead of a strip under the block.
+   Math blocks use the same class for their own toolbar, so they keep it. */
+#write .md-fences:not(.md-fences-math) .code-tooltip {
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 12px;
+    float: none;
+    transform: translateY(-50%);
+    padding: 0;
+    background-color: var(--gh-canvas-overlay);
+    border: 1px solid var(--gh-border);
+    border-radius: var(--gh-radius);
+    box-shadow: none;
+    font-family: var(--gh-font-mono);
+    font-size: 0.85em;
+    color: var(--gh-fg-muted);
+}
+
+#write .md-fences:not(.md-fences-math) .code-tooltip .ty-input,
+#write .md-fences:not(.md-fences-math) .code-tooltip input {
+    min-width: 0;
+    margin: 0;
+    padding: 3px 10px;
+    text-align: left;
+    color: inherit;
+}
+
+.md-lang {
+    color: var(--gh-fg-muted);
+}
+
+.CodeMirror div.CodeMirror-cursor {
+    border-left: 1px solid var(--gh-fg);
+}
+
+.cm-s-inner { color: var(--gh-fg); }
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-operator { color: var(--gh-syntax-keyword); }
+.cm-s-inner .cm-string,
+.cm-s-inner .cm-string-2 { color: var(--gh-syntax-string); }
+.cm-s-inner .cm-comment { color: var(--gh-syntax-comment); font-style: italic; }
+.cm-s-inner .cm-number,
+.cm-s-inner .cm-atom,
+.cm-s-inner .cm-builtin,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-qualifier { color: var(--gh-syntax-constant); }
+.cm-s-inner .cm-def,
+.cm-s-inner .cm-type,
+.cm-s-inner .cm-variable-3 { color: var(--gh-syntax-entity); }
+.cm-s-inner .cm-variable,
+.cm-s-inner .cm-property { color: var(--gh-fg); }
+.cm-s-inner .cm-variable-2,
+.cm-s-inner .cm-meta { color: var(--gh-syntax-variable); }
+.cm-s-inner .cm-tag { color: var(--gh-syntax-tag); }
+.cm-s-inner .cm-header { color: var(--gh-syntax-constant); font-weight: 600; }
+.cm-s-inner .cm-link { color: var(--gh-syntax-string); text-decoration: underline; }
+.cm-s-inner .cm-bracket { color: var(--gh-fg-muted); }
+.cm-s-inner .cm-error { color: var(--gh-syntax-error); }
+
+/* Diagrams */
+
+/* The code block frame already gives the diagram its panel; just add room */
+#write .md-diagram-panel {
+    padding: 12px 0;
+}
+
+/* Mermaid's dark theme draws edge labels on a bright grey box. Mermaid sets
+   these colours inline, so !important is the only way to override them. */
+#write .md-diagram-panel .edgeLabel,
+#write .md-diagram-panel .edgeLabel p,
+#write .md-diagram-panel .edgeLabel span {
+    background-color: var(--gh-border) !important;
+    color: var(--gh-fg) !important;
+}
+
+#write .md-diagram-panel .edgeLabel rect {
+    fill: var(--gh-border) !important;
+}
+
+/* Long node labels: Mermaid lays a label out on one line, then wraps it only
+   if the measured width equals its 200px cap exactly. Typora's WebKit reports
+   fractional widths (199.98...), so the check fails, the box is capped and
+   the text spills out. Letting the label wrap up front makes Mermaid measure
+   the wrapped size instead. Not scoped to #write: Mermaid measures in a
+   scratch element outside the editor. */
+g.node foreignObject div {
+    white-space: normal !important;
+}
+
+/* Mindmaps: the dark theme pairs some branch colours (and the root) with
+   grey text on a grey shape. Light text reads on every branch colour. */
+svg[aria-roledescription="mindmap"] .mindmap-node text {
+    fill: var(--gh-fg) !important;
+}
+
+svg[aria-roledescription="mindmap"] .mindmap-node span,
+svg[aria-roledescription="mindmap"] .mindmap-node p,
+svg[aria-roledescription="mindmap"] .mindmap-node div {
+    color: var(--gh-fg) !important;
+}
+
+.md-diagram-panel-error {
+    color: var(--gh-danger);
+}
+
+/* Editing hints: markdown syntax, front matter, image paths, TOC */
+
+.md-meta,
+.md-before,
+.md-after,
+.md-tag {
+    color: var(--md-char-color);
+}
+
+.md-image > .md-meta {
+    color: var(--gh-fg-muted);
+}
+
+#write pre.md-meta-block {
+    background-color: var(--gh-canvas-subtle);
+    border-bottom: 1px solid var(--gh-border-muted);
+    color: var(--gh-fg-muted);
+}
+
+.md-toc-item {
+    color: var(--gh-accent);
+}
+
+.md-search-hit {
+    background-color: var(--gh-attention-muted);
+}
+
+.on-focus-mode blockquote {
+    border-left-color: var(--gh-border-muted);
+}
+
+/* Source mode (View > Source Code Mode) */
+
+.cm-s-typora-default { color: var(--gh-fg); }
+.cm-s-typora-default .cm-header { color: var(--gh-syntax-constant); font-weight: 600; }
+.cm-s-typora-default .cm-strong { color: var(--gh-fg); }
+.cm-s-typora-default .cm-em { color: var(--gh-fg); }
+.cm-s-typora-default .cm-link,
+.cm-s-typora-default .cm-url { color: var(--gh-syntax-string); }
+.cm-s-typora-default .cm-string { color: var(--gh-syntax-string); }
+.cm-s-typora-default .cm-comment,
+.cm-s-typora-default .cm-code { color: var(--gh-syntax-entity); }
+.cm-s-typora-default .cm-quote { color: var(--gh-fg-muted); }
+.cm-s-typora-default .cm-variable-2,
+.cm-s-typora-default .cm-variable-3 { color: var(--gh-fg); }
+.cm-s-typora-default .cm-hr,
+.cm-s-typora-default .cm-formatting { color: var(--gh-fg-subtle); }
+.cm-s-typora-default .cm-atom,
+.cm-s-typora-default .cm-number { color: var(--gh-syntax-constant); }
+.cm-s-typora-default .cm-property { color: var(--gh-syntax-variable); }
+
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+    border-left: 2px solid var(--gh-fg);
+}
+
+.cm-s-typora-default .CodeMirror-activeline-background {
+    background-color: var(--gh-canvas-subtle);
+}
+
+/* App chrome: sidebar, outline, popups, dialogs */
+
+#typora-sidebar,
+.sidebar-content,
+.sidebar-tabs,
+#file-library-search-panel {
+    background-color: var(--gh-canvas-inset);
+    color: var(--gh-fg);
+}
+
+.sidebar-tabs {
+    border-bottom: 1px solid var(--gh-border-muted);
+}
+
+.file-list-item,
+.file-node-content {
+    color: var(--gh-fg-muted);
+}
+
+.file-list-item.active,
+.file-node.active > .file-node-content {
+    color: var(--gh-fg);
+}
+
+/* Outline: brighter than fg-muted so the list reads well on the inset bg.
+ * The active heading is marked by colour only: Typora's bold changes the text
+ * width and snaps from item to item, while colour can fade. */
+.outline-item {
+    color: var(--gh-fg-soft);
+    transition: color 0.15s ease;
+}
+
+.outline-item.outline-item-active {
+    color: var(--gh-fg-strong);
+}
+
+.pin-outline .outline-active,
+.pin-outline #outline-content .outline-active strong {
+    font-weight: 400;
+}
+
+/* The row highlight already marks hover; drop Typora's link-style underline */
+.outline-label:hover {
+    text-decoration: none;
+}
+
+#typora-quick-open,
+#typora-quick-open-item,
+.context-menu,
+.dropdown-menu,
+.megamenu-content,
+#md-notification,
+.modal-content {
+    background-color: var(--gh-canvas-overlay);
+    border-color: var(--gh-border);
+    color: var(--gh-fg);
+}
+
+.context-menu .divider,
+.dropdown-menu .divider {
+    background-color: var(--gh-border);
+    border-color: var(--gh-border);
+    opacity: 1;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: var(--gh-canvas-subtle);
+    background-image: none;
+    border-color: var(--gh-border);
+    color: var(--gh-fg);
+}
+
+.ty-preferences .window-content {
+    background-color: var(--gh-canvas);
+}
+
+.ty-preferences .nav-group-item.active {
+    background-color: var(--gh-canvas-subtle);
+    color: var(--gh-fg);
+}
+
+input,
+textarea,
+.form-control {
+    background-color: var(--gh-canvas);
+    border: 1px solid var(--gh-border);
+    color: var(--gh-fg);
+}
+
+header,
+footer {
+    background-color: var(--gh-canvas);
+    color: var(--gh-fg-muted);
+}
+
+header,
+footer,
+.context-menu,
+.megamenu-content {
+    font-family: var(--gh-font-sans);
+}
+
+/* Scrollbar: Typora draws its own 12px bar (8px visible thumb). This makes
+   it slimmer, 5px, widening to 7px under the pointer so it stays easy to
+   grab. Typora's thumb rules set per-axis borders, so they are reset here. */
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar:hover {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:vertical,
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: var(--gh-scrollbar-thumb);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 9px;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover {
+    background-color: var(--gh-scrollbar-thumb-hover);
+    border-width: 1px;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: var(--gh-scrollbar-thumb-active);
+}
+
+/* Export and print keep the dark look, matching the dark Mermaid diagrams */
+
+@media print {
+    html,
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

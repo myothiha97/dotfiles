@@ -22,6 +22,10 @@ prepend_keymap = [
   { on = "<C-h>", run = "leave", desc = "Back to the parent directory" },
   { on = "<C-l>", run = "enter", desc = "Enter the child directory" },
 
+  # Enter does what l does. Yazi ships Enter as "open", which sends folders to
+  # the editor (Neovide) instead of going into them.
+  { on = "<Enter>", run = "enter", desc = "Enter the child directory" },
+
   # Undo a yank or a selection
   # Yazi puts unyank on X and Y, which sit right next to x and y, so ctrl-o is
   # the safer version. Clearing the selection stays on Esc.
