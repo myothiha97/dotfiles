@@ -1,0 +1,136 @@
+/* --- MAIN APPLICATION COLORS --- */
+/* Colours come from github-dark.css; the hex after each var() is the
+   fallback used when that snippet is off */
+.app-container,
+.workspace,
+.workspace-split,
+body {
+  background-color: var(--gh-canvas-inset, #191919) !important;
+  color: var(--gh-fg, #ffffff) !important;
+  font-size: 18px !important;
+}
+
+.status-bar {
+  background-color: var(--gh-canvas-inset, #191919) !important;
+  border-top: none !important;
+}
+
+/* Top ribbon/window controls */
+.titlebar,
+.workspace-ribbon.mod-left {
+  background-color: var(--gh-canvas-inset, #191919) !important;
+}
+
+/* Sidebars and panels */
+.sidebar-content,
+.workspace-leaf-content,
+.view-content,
+.view-header {
+  background-color: var(--gh-canvas-inset, #191919) !important;
+  border-bottom: none !important;
+}
+
+/* Modal/Settings Window Background */
+.modal,
+.modal-bg {
+  background-color: var(--gh-canvas, #191919) !important;
+}
+
+/* --- FILE EXPLORER STYLES --- */
+
+/* Default state */
+.nav-folder,
+.nav-file {
+  background-color: var(--gh-canvas-inset, #191919) !important;
+}
+
+.nav-folder-title,
+.nav-file-title {
+  color: var(--gh-fg, #ffffff) !important;
+}
+
+/* Sidebar items (file list, outline, search, tags) use the note's text size
+   (Settings > Appearance > Font size), so both sidebars stay in sync with
+   the note. Obsidian sizes every sidebar row with this variable. */
+.workspace-split.mod-sidedock {
+  --nav-item-size: var(--font-text-size);
+}
+
+/* --- UPDATE: Active/Selected state (Now using Theme Accent) --- */
+.nav-file-title.is-active,
+.nav-folder-title.is-active {
+  /* This grabs the same color used for your buttons (e.g., Blue, Red) */
+  background-color: var(--interactive-accent) !important;
+
+  /* This automatically picks White or Black text depending on the accent */
+  color: var(--text-on-accent) !important;
+}
+
+/* --- TOGGLE SWITCHES & BUTTONS (Using Atom Theme Colors) --- */
+
+/* 1. Toggle Switches */
+.checkbox-container {
+  background-color: var(--background-modifier-border) !important;
+  border: 1px solid var(--background-modifier-border) !important;
+}
+
+.checkbox-container.is-enabled {
+  background-color: var(--interactive-accent) !important;
+  border: none !important;
+}
+
+.checkbox-container:after {
+  background-color: #ffffff !important;
+}
+
+/* 2. Primary Buttons (e.g. "Check for updates", "Purchase") */
+button.mod-cta {
+  background-color: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+  border: none !important;
+  font-weight: bold !important;
+}
+
+/* --- POINTER CURSOR --- */
+
+/* Hand cursor on everything clickable. Obsidian draws icon buttons (view
+   actions, sidebar toggles), sidebar items, menus, settings and buttons with
+   var(--cursor), which defaults to the arrow. Breadcrumb links and tabs set
+   no cursor of their own, so they get it directly. */
+body {
+  --cursor: pointer;
+}
+
+.view-header-breadcrumb,
+.workspace-tab-header {
+  cursor: pointer;
+}
+
+/* --- INTERFACE TEXT --- */
+
+/* Interface text (tabs, breadcrumbs, status bar, menus, Settings) scales with
+   the note's text size (Settings > Appearance > Font size), keeping
+   Obsidian's own proportions: at its default 16px text these are 12, 13, 15
+   and 20px. Sizes built from them on body, such as setting names, follow. */
+body {
+  --font-ui-smaller: calc(var(--font-text-size) * 0.75);
+  --font-ui-small: calc(var(--font-text-size) * 0.8125);
+  --font-ui-medium: calc(var(--font-text-size) * 0.9375);
+  --font-ui-large: calc(var(--font-text-size) * 1.25);
+
+  /* Icons (ribbon, tab bar, view actions, sidebar toggles) and the ribbon
+     width follow too. At 16px text: icons 14, 16, 16, 18, 32px, ribbon 44px. */
+  --icon-xs: calc(var(--font-text-size) * 0.875);
+  --icon-s: var(--font-text-size);
+  --icon-m: var(--font-text-size);
+  --icon-l: calc(var(--font-text-size) * 1.125);
+  --icon-xl: calc(var(--font-text-size) * 2);
+  --ribbon-width: calc(var(--font-text-size) * 2.75);
+}
+
+/* --- NOTE WIDTH --- */
+
+/* Max width of note text when "Readable line length" is on (default 700px) */
+body {
+  --file-line-width: 900px;
+}
