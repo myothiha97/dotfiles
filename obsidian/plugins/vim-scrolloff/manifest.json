@@ -1,0 +1,9 @@
+{
+  "id": "vim-scrolloff",
+  "name": "Vim Scrolloff",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Keeps 13 lines between the cursor and the top or bottom of the note in Vim mode, like Vim's scrolloff.",
+  "author": "mtkh97",
+  "isDesktopOnly": false
+}
