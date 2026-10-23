@@ -1,0 +1,16 @@
+/* Focus mode (toggled by main.js): hide the chrome around the note, keeping
+   tabs and the note itself. The ribbon is the same pair of elements
+   Obsidian's own "Show ribbon" setting hides. */
+/* Obsidian makes room for the macOS window buttons as 80px minus the ribbon
+   width, so a hidden ribbon must count as 0px wide (as Obsidian's setting
+   does) or the tab bar slides under the buttons */
+body.focus-mode {
+    --ribbon-width: 0px;
+}
+
+body.focus-mode .workspace-ribbon.mod-left,
+body.focus-mode .side-dock-ribbon,
+body.focus-mode .workspace-leaf-content .view-header,
+body.focus-mode .status-bar {
+    display: none;
+}
