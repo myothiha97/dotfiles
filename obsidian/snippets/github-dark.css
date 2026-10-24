@@ -129,7 +129,12 @@
     --h4-color: var(--gh-fg);
     --h5-color: var(--gh-fg);
     --h6-color: var(--gh-fg-muted);
+    /* Obsidian sets the title size from --h1-size on body, which never sees
+       the scale above, so the title is set here: one step above H1 */
+    --inline-title-size: 2.5em;
     --inline-title-weight: 600;
+    --inline-title-line-height: 1.2;
+    --inline-title-margin-bottom: 0.4em;
     --inline-title-color: var(--gh-fg);
 
     --bold-weight: 600;
@@ -269,6 +274,14 @@ body.theme-dark {
 .theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
     border-bottom: 1px solid var(--gh-border-muted);
     padding-bottom: 0.3em;
+}
+
+/* Inline title (the file name): tighter letters at this size, and a gap that
+   scales with the text instead of Atom's fixed 20px */
+.theme-dark .cm-sizer > .inline-title,
+.theme-dark .markdown-preview-sizer > .inline-title {
+    letter-spacing: -0.01em;
+    margin-bottom: var(--inline-title-margin-bottom);
 }
 
 /* Space above a heading grows with its level (reading view). Same selectors
