@@ -41,6 +41,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "return_or_enter" },
@@ -65,6 +75,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "slash" },
@@ -94,6 +114,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -120,6 +150,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -153,6 +193,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_unless",
                     "value": 1
@@ -179,6 +229,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -210,6 +270,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -249,6 +319,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -295,6 +375,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -324,6 +414,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -350,6 +450,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -374,6 +484,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -405,6 +525,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -432,6 +562,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -464,6 +604,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   },
                   {
                     "name": "finder_visual",
@@ -498,6 +648,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_visual",
                     "type": "variable_if",
                     "value": 1
@@ -527,6 +687,16 @@
                     "value": 1
                   },
                   {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
+                  },
+                  {
                     "name": "finder_g",
                     "type": "variable_if",
                     "value": 1
@@ -554,6 +724,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "g" },
@@ -595,6 +775,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -614,6 +804,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "j" },
@@ -630,6 +830,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "k" },
@@ -646,6 +856,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "h" },
@@ -662,6 +882,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "l" },
@@ -678,6 +908,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -702,6 +942,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -726,6 +976,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -745,6 +1005,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -764,6 +1034,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -783,6 +1063,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -802,6 +1092,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "y" },
@@ -823,6 +1123,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -847,6 +1157,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "p" },
@@ -868,6 +1188,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": {
@@ -892,6 +1222,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "o" },
@@ -913,6 +1253,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "u" },
@@ -934,6 +1284,16 @@
                     "name": "finder_insert",
                     "type": "variable_unless",
                     "value": 1
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextField"
+                  },
+                  {
+                    "name": "accessibility.focused_ui_element.role_string",
+                    "type": "variable_unless",
+                    "value": "AXTextArea"
                   }
                 ],
                 "from": { "key_code": "x" },
