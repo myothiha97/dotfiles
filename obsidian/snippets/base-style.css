@@ -7,7 +7,6 @@
 body {
   background-color: var(--gh-canvas-inset, #191919) !important;
   color: var(--gh-fg, #ffffff) !important;
-  font-size: 18px !important;
 }
 
 .status-bar {
