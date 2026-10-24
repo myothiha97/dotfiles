@@ -340,7 +340,7 @@ body.theme-dark {
 
 .theme-dark .markdown-rendered th,
 .theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th {
-    border-bottom: 2px solid var(--gh-fg-subtle);
+    border-bottom: 1px solid var(--gh-fg-subtle);
 }
 
 /* A column's own :--- alignment is set inline, so it still wins */
