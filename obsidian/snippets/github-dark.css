@@ -1,0 +1,415 @@
+/*
+ * GitHub Dark for Obsidian notes
+ *
+ * GitHub's dark palette (Primer "dark default") and markdown layout, the same
+ * tokens as the Typora theme in ~/.dotfiles/typora/themes/github-dark.css, so
+ * a note reads the same in both apps. The UI (sidebars, tabs, settings) gets
+ * the same palette; Atom still supplies the layout. base-style.css reads the
+ * --gh-* colours below for its !important backgrounds.
+ *
+ * Text size comes from Settings > Appearance > Font size, headings scale
+ * from it in em like GitHub's.
+ */
+
+.theme-dark {
+    /* Palette */
+    --gh-canvas: #0d1117;
+    --gh-canvas-subtle: #161b22;
+    --gh-canvas-inset: #010409;
+    --gh-canvas-overlay: #1c2128;
+    --gh-fg: #e6edf3;
+    --gh-fg-muted: #9198a1;
+    --gh-fg-subtle: #6e7681;
+    --gh-border: #30363d;
+    --gh-border-muted: #21262d;
+    --gh-border-table: #3b434b;
+    --gh-neutral-muted: rgba(110, 118, 129, 0.4);
+    --gh-accent: #4493f8;
+    --gh-accent-emphasis: #1f6feb;
+    --gh-accent-muted: rgba(56, 139, 253, 0.4);
+    --gh-success: #3fb950;
+    --gh-success-emphasis: #238636;
+    --gh-done: #ab7df8;
+    --gh-done-emphasis: #8957e5;
+    --gh-attention: #d29922;
+    --gh-attention-emphasis: #9e6a03;
+    --gh-attention-muted: rgba(187, 128, 9, 0.4);
+    --gh-danger: #f85149;
+    --gh-danger-emphasis: #da3633;
+
+    /* Syntax (GitHub "prettylights") */
+    --gh-syntax-keyword: #ff7b72;
+    --gh-syntax-string: #a5d6ff;
+    --gh-syntax-comment: #8b949e;
+    --gh-syntax-constant: #79c0ff;
+    --gh-syntax-entity: #d2a8ff;
+    --gh-syntax-variable: #ffa657;
+    --gh-syntax-tag: #7ee787;
+
+    /* Type */
+    --gh-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Noto Sans", Helvetica, Arial,
+        sans-serif, "Apple Color Emoji";
+    --gh-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --gh-radius: 6px;
+
+    /* --- UI: Atom's variables, mapped to GitHub --- */
+
+    /* Chrome (sidebars, tab bar, ribbon) sits on GitHub's darker inset
+       canvas, like Typora's sidebar; notes use the main canvas */
+    --background-primary: var(--gh-canvas);
+    --background-primary-alt: var(--gh-canvas-subtle);
+    --background-secondary: var(--gh-canvas-inset);
+    --background-secondary-alt: var(--gh-canvas-subtle);
+    --background-modifier-border: var(--gh-border);
+    --background-modifier-hover: rgba(177, 186, 196, 0.12);
+    --background-modifier-form-field: var(--gh-canvas);
+    --interactive-normal: var(--gh-canvas-subtle);
+    --interactive-hover: var(--gh-border-muted);
+    --panel-border-color: var(--gh-border);
+    --divider-color: var(--gh-border-muted);
+
+    --tab-container-background: var(--gh-canvas-inset);
+    --titlebar-background: var(--gh-canvas-inset);
+    --titlebar-background-focused: var(--gh-canvas-inset);
+    --ribbon-background: var(--gh-canvas-inset);
+    --ribbon-background-collapsed: var(--gh-canvas-inset);
+    --status-bar-background: var(--gh-canvas-inset);
+
+    --modal-background: var(--gh-canvas);
+    --modal-border-color: var(--gh-border);
+    --prompt-background: var(--gh-canvas-overlay);
+    --menu-background: var(--gh-canvas-overlay);
+    --settings-background: var(--gh-canvas);
+    --setting-items-background: var(--gh-canvas-subtle);
+    --setting-items-border-color: var(--gh-border);
+    --setting-items-divider-color: var(--gh-border-muted);
+
+    --text-normal: var(--gh-fg);
+    --text-muted: var(--gh-fg-muted);
+    --text-faint: var(--gh-fg-subtle);
+    --text-selection: var(--gh-accent-muted);
+    --text-highlight-bg: var(--gh-attention-muted);
+    --caret-color: var(--gh-fg);
+}
+
+/* --- Notes: Obsidian's markdown variables, mapped to GitHub --- */
+
+.theme-dark .workspace-leaf-content[data-type="markdown"],
+.theme-dark .markdown-embed,
+.theme-dark .hover-popover {
+    --font-text-theme: var(--gh-font-sans);
+    --font-monospace-theme: var(--gh-font-mono);
+    /* Spacing and heading scale from Typora's github.css, which the Typora
+       theme builds on: roomier lines and larger headings than GitHub's */
+    --line-height-normal: 1.6;
+    --p-spacing: 0.8em;
+
+    /* Headings: semibold, one colour */
+    --h1-size: 2.25em;
+    --h2-size: 1.75em;
+    --h3-size: 1.5em;
+    --h4-size: 1.25em;
+    --h5-size: 1em;
+    --h6-size: 1em;
+    --h1-weight: 600;
+    --h2-weight: 600;
+    --h3-weight: 600;
+    --h4-weight: 600;
+    --h5-weight: 600;
+    --h6-weight: 600;
+    --h1-line-height: 1.2;
+    --h2-line-height: 1.225;
+    --h3-line-height: 1.43;
+    --h4-line-height: 1.4;
+    --h5-line-height: 1.4;
+    --h6-line-height: 1.4;
+    --h1-color: var(--gh-fg);
+    --h2-color: var(--gh-fg);
+    --h3-color: var(--gh-fg);
+    --h4-color: var(--gh-fg);
+    --h5-color: var(--gh-fg);
+    --h6-color: var(--gh-fg-muted);
+    /* Obsidian sets the title size from --h1-size on body, which never sees
+       the scale above, so the title is set here: one step above H1 */
+    --inline-title-size: 2.5em;
+    --inline-title-weight: 600;
+    --inline-title-line-height: 1.2;
+    --inline-title-margin-bottom: 0.4em;
+    --inline-title-color: var(--gh-fg);
+
+    --bold-weight: 600;
+    --bold-color: var(--gh-fg);
+
+    --link-color: var(--gh-accent);
+    --link-color-hover: var(--gh-accent);
+    --link-decoration: none;
+    --link-decoration-hover: underline;
+    --link-external-color: var(--gh-accent);
+    --link-external-color-hover: var(--gh-accent);
+    --link-external-decoration: none;
+    --link-external-decoration-hover: underline;
+
+    /* Lists: bullets and numbers in the text colour, and done tasks stay
+       plain text (Obsidian greys them and strikes them through) */
+    /* Obsidian adds this above and below every item, so 0.15em makes the
+       0.3em gap between items that Typora's github.css uses */
+    --list-spacing: 0.15em;
+    --list-marker-color: var(--gh-fg);
+    --checkbox-color: var(--gh-accent-emphasis);
+    --checkbox-color-hover: var(--gh-accent);
+    --checklist-done-color: var(--gh-fg);
+    --checklist-done-decoration: none;
+
+    /* Callouts: GitHub alert colours and shape (rules below) */
+    --callout-default: var(--gh-accent);
+    --callout-info: var(--gh-accent);
+    --callout-tip: var(--gh-success);
+    --callout-important: var(--gh-done);
+    --callout-warning: var(--gh-attention);
+    --callout-border-width: 0;
+    --callout-radius: 0;
+    --callout-padding: 0.5rem 1rem;
+    --callout-title-weight: 500;
+    --callout-blend-mode: normal;
+
+    --blockquote-border-thickness: 4px;
+    --blockquote-border-color: var(--gh-border);
+    --blockquote-color: var(--gh-fg-muted);
+    --blockquote-font-style: normal;
+    --blockquote-background-color: transparent;
+
+    --hr-color: var(--gh-border);
+    --hr-thickness: 1px;
+
+    /* Tables: plain header row, striped body, Typora's line height */
+    --table-line-height: 1.6;
+    --table-background: var(--gh-canvas);
+    --table-border-color: var(--gh-border-table);
+    /* Header row: the page colour, as on GitHub, set apart by slightly larger
+       text and a thicker line under it (rule below) instead of a fill */
+    --table-header-background: var(--gh-canvas);
+    --table-header-background-hover: var(--gh-canvas);
+    --table-header-size: 1.05em;
+    --table-header-border-color: var(--gh-border-table);
+    --table-header-color: var(--gh-fg);
+    --table-header-weight: 600;
+    --table-row-alt-background: var(--gh-canvas-subtle);
+    --table-row-alt-background-hover: var(--gh-canvas-subtle);
+    --table-row-background-hover: var(--gh-canvas);
+
+    /* Code */
+    --code-background: var(--gh-canvas-subtle);
+    --code-radius: var(--gh-radius);
+    --code-size: 0.85em;
+    --code-normal: var(--gh-fg);
+    --code-comment: var(--gh-syntax-comment);
+    --code-function: var(--gh-syntax-entity);
+    --code-keyword: var(--gh-syntax-keyword);
+    --code-operator: var(--gh-syntax-keyword);
+    --code-important: var(--gh-syntax-variable);
+    --code-property: var(--gh-syntax-constant);
+    --code-punctuation: var(--gh-fg-muted);
+    --code-string: var(--gh-syntax-string);
+    --code-tag: var(--gh-syntax-tag);
+    --code-value: var(--gh-syntax-constant);
+}
+
+/* Thinner, crisper text on macOS, as in Typora's github.css. Without it
+   Chromium draws text noticeably heavier than Typora does. */
+body.theme-dark {
+    -webkit-font-smoothing: antialiased;
+}
+
+/* base-style.css paints every pane the inset canvas with !important; notes
+   get the main canvas instead (this selector is more specific, so it wins) */
+.theme-dark .workspace-leaf-content[data-type="markdown"] .view-header,
+.theme-dark .workspace-leaf-content[data-type="markdown"] .view-content {
+    background-color: var(--gh-canvas) !important;
+}
+
+.theme-dark .markdown-rendered,
+.theme-dark .markdown-source-view.mod-cm6 .cm-content {
+    color: var(--gh-fg);
+}
+
+/* --- Prose width --- */
+
+/* Paragraphs, lists and quotes stop at about 80 characters (70ch: "ch" is
+   the width of "0", wider than average text), the readable range. Tables,
+   code, diagrams, headings and images keep the full column. Hand-wrapped
+   lines up to 80 characters fit, so they never wrap a second time. */
+.theme-dark .markdown-rendered :is(p, li, blockquote):not(:has(img, .internal-embed)),
+.theme-dark .markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-header, .HyperMD-codeblock, .HyperMD-table-row):not(:has(img, .internal-embed)) {
+    max-width: 70ch;
+}
+
+/* --- Live preview: blank lines --- */
+
+/* The blank line between blocks is drawn as a full empty line (1.6x the
+   text), twice the 0.8em gap Typora and reading view use. Half-height blank
+   lines give the same rhythm. Same empty-line test Obsidian's own heading
+   rules use; blank lines inside code blocks keep their height. */
+.theme-dark .markdown-source-view.mod-cm6.is-live-preview .cm-line:not(.HyperMD-codeblock):has(> br:only-child) {
+    line-height: 0.8;
+}
+
+/* A table widget already pads itself by 16px on every side (room for its
+   drag handles), so the blank lines next to it shrink further */
+.theme-dark .markdown-source-view.mod-cm6.is-live-preview .cm-line:has(> br:only-child):has(+ .cm-table-widget),
+.theme-dark .markdown-source-view.mod-cm6.is-live-preview .cm-table-widget + .cm-line:has(> br:only-child) {
+    line-height: 0.3;
+}
+
+/* A code block has no margin of its own, so the blank line after it gets
+   the extra room Typora gives code blocks */
+.theme-dark .markdown-source-view.mod-cm6.is-live-preview .HyperMD-codeblock-end + .cm-line:has(> br:only-child) {
+    line-height: 1.2;
+}
+
+/* --- Headings: rule under H1 and H2 --- */
+
+.theme-dark .markdown-rendered h1,
+.theme-dark .markdown-rendered h2,
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1,
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
+    border-bottom: 1px solid var(--gh-border-muted);
+    padding-bottom: 0.3em;
+}
+
+/* Inline title (the file name): tighter letters at this size, and a gap that
+   scales with the text instead of Atom's fixed 20px */
+.theme-dark .cm-sizer > .inline-title,
+.theme-dark .markdown-preview-sizer > .inline-title {
+    letter-spacing: -0.01em;
+    margin-bottom: var(--inline-title-margin-bottom);
+}
+
+/* Space above a heading grows with its level (reading view). Same selectors
+   as the Atom theme's 40px rule, so this later snippet replaces it. */
+.markdown-preview-section > div h1,
+.markdown-preview-section > div h2 {
+    margin-top: 2.5rem;
+}
+.markdown-preview-section > div h3 {
+    margin-top: 2rem;
+}
+.markdown-preview-section > div h4,
+.markdown-preview-section > div h5,
+.markdown-preview-section > div h6 {
+    margin-top: 1.5rem;
+}
+
+/* --- Inline code: GitHub's grey pill --- */
+
+.theme-dark .markdown-rendered :not(pre) > code,
+.theme-dark .markdown-source-view.mod-cm6 .cm-inline-code:not(.cm-formatting) {
+    background-color: var(--gh-neutral-muted);
+    border-radius: var(--gh-radius);
+    padding: 0.2em 0.4em;
+}
+
+/* --- Code blocks --- */
+
+.theme-dark .markdown-rendered pre {
+    border: 1px solid var(--gh-border-muted);
+    border-radius: var(--gh-radius);
+}
+
+/* Atom colours code with its own palette variables (with !important), so
+   remap that palette to GitHub's syntax colours inside code blocks only */
+.theme-dark .HyperMD-codeblock,
+.theme-dark .markdown-rendered pre {
+    --gray-1: var(--gh-syntax-comment);
+    --gray-2: var(--gh-fg);
+    --red: var(--gh-syntax-tag);
+    --orange: var(--gh-syntax-constant);
+    --green: var(--gh-syntax-string);
+    --aqua: var(--gh-syntax-keyword);
+    --purple: var(--gh-syntax-keyword);
+    --blue: var(--gh-syntax-entity);
+    --yellow: var(--gh-syntax-variable);
+}
+
+/* --- Tables: full width as in Typora, GitHub cell padding, centred header --- */
+
+.theme-dark .markdown-rendered table,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget table {
+    width: 100%;
+}
+
+/* Cell padding in em, so it grows with the text size (GitHub's 6px 13px is
+   sized for 16px text and feels cramped at larger sizes). The header row
+   gets a little more height. */
+.theme-dark .markdown-rendered td,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget td .table-cell-wrapper {
+    padding: 0.5em 0.9em;
+}
+
+.theme-dark .markdown-rendered th,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th .table-cell-wrapper {
+    padding: 0.65em 0.9em;
+}
+
+.theme-dark .markdown-rendered th,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th {
+    border-bottom: 1px solid var(--gh-fg-subtle);
+}
+
+/* A column's own :--- alignment is set inline, so it still wins */
+.theme-dark .markdown-rendered th,
+.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th {
+    text-align: center;
+}
+
+/* --- Callouts: GitHub alerts --- */
+
+/* > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING] and [!CAUTION] look like
+   GitHub's alerts: no fill, a bar on the left, a coloured title. The bar
+   uses each colour's deeper "emphasis" shade; other callout types keep
+   Obsidian's colours with the same shape. */
+.theme-dark .callout {
+    --gh-alert-bar: var(--callout-color);
+    background-color: transparent;
+    border-inline-start: 0.25em solid var(--gh-alert-bar);
+}
+.theme-dark .callout[data-callout="note"],
+.theme-dark .callout[data-callout="info"] {
+    --gh-alert-bar: var(--gh-accent-emphasis);
+    --callout-icon: lucide-info;
+}
+.theme-dark .callout[data-callout="tip"],
+.theme-dark .callout[data-callout="hint"] {
+    --gh-alert-bar: var(--gh-success-emphasis);
+}
+.theme-dark .callout[data-callout="important"] {
+    --gh-alert-bar: var(--gh-done-emphasis);
+}
+.theme-dark .callout[data-callout="warning"],
+.theme-dark .callout[data-callout="attention"] {
+    --gh-alert-bar: var(--gh-attention-emphasis);
+}
+/* Obsidian treats caution as a warning; on GitHub it is the red alert */
+.theme-dark .callout[data-callout="caution"] {
+    --callout-color: var(--gh-danger);
+    --gh-alert-bar: var(--gh-danger-emphasis);
+}
+
+/* --- Keys and images --- */
+
+.theme-dark .markdown-rendered kbd,
+.theme-dark .markdown-source-view.mod-cm6 kbd {
+    background-color: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border);
+    border-radius: var(--gh-radius);
+    box-shadow: inset 0 -1px 0 var(--gh-border);
+    color: var(--gh-fg);
+    font-family: var(--gh-font-mono);
+    font-size: 0.8em;
+    padding: 2px 6px;
+}
+
+.theme-dark .markdown-rendered img,
+.theme-dark .markdown-source-view.mod-cm6 img {
+    border-radius: var(--gh-radius);
+}

@@ -1,0 +1,9 @@
+{
+  "id": "mermaid-github-theme",
+  "name": "Mermaid GitHub Theme",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Draws Mermaid diagrams in GitHub's dark colours instead of inverting the light theme.",
+  "author": "mtkh97",
+  "isDesktopOnly": false
+}

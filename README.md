@@ -16,6 +16,7 @@ and symlinked to their live locations.
 | `iina` | Video player key bindings for course playback | `~/Library/Application Support/com.colliderli.iina/input_conf/Custom.conf` |
 | `karabiner` | Key remapping, including vim keys inside Finder | `~/.config/karabiner/` |
 | `typora` | GitHub Dark theme for the markdown reader | `~/Library/Application Support/abnerworks.Typora/themes/` |
+| `obsidian` | GitHub Dark snippets and four small plugins (Mermaid theme, focus mode, Vim scrolling) | `~/notes/professional-career/.obsidian/` |
 | `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
 
@@ -55,6 +56,13 @@ ln -sf ~/.dotfiles/iina/Custom.conf \
 # Open Typora once first so it creates its themes folder
 ln -sf ~/.dotfiles/typora/themes/github-dark.css \
   "$HOME/Library/Application Support/abnerworks.Typora/themes/github-dark.css"
+
+# Obsidian: link every tracked file into the vault's .obsidian folder
+vault="$HOME/notes/professional-career/.obsidian"
+for f in $(cd ~/.dotfiles/obsidian && find . -type f | sed 's|^\./||'); do
+  mkdir -p "$vault/$(dirname "$f")"
+  ln -sf ~/.dotfiles/obsidian/"$f" "$vault/$f"
+done
 ```
 
 Back up any existing real file before replacing it with a symlink.
@@ -98,13 +106,8 @@ the directory you were in when you quit. Built-in keys already cover `j/k/h/l`,
 Shell commands stay on yazi's defaults: `;` runs one, `:` runs one and waits.
 
 `yazi.toml` opens `.md` files in Typora (`o`), with `$EDITOR` as the second
-choice under `O`. Typora is also the macOS default for markdown. That lives in
-LaunchServices, not this repo, so set it on a new Mac with:
-
-```sh
-duti -s abnerworks.Typora net.daringfireball.markdown all
-duti -s abnerworks.Typora .md all
-```
+choice under `O`. The macOS default for markdown is Obsidian (see
+[Obsidian](#obsidian)).
 
 `theme.toml` turns off yazi's mime-based colours for images, media, archives,
 and PDFs so file names read as plain white. Directories stay blue, executables
@@ -118,6 +121,44 @@ dark theme with curved edges. All colours are tokens at the top of the file. It
 imports `github.css` from Typora's own themes folder, so only this one file is
 linked. Pick it with **Themes > Github Dark**; a changed file is picked
 up by selecting the theme again.
+
+## Obsidian
+
+The macOS default for markdown, and what nvim's `<leader>ui` opens. It is
+styled to read like the Typora theme above. Only files Obsidian reads but never
+writes are linked, one by one, into `~/notes/professional-career/.obsidian/`:
+
+- `snippets/`: `github-dark.css` (GitHub palette and Typora's spacing for
+  notes and the UI), `base-style.css` (UI sizes that follow the font size,
+  pointer cursor, note width) and `layouts.css` (layout utility classes)
+- `plugins/mermaid-github-theme/`: real dark theme for Mermaid instead of
+  Obsidian's colour inversion; diagrams fit the note width and follow the font
+  size, and a hover button opens a full-size view with zoom and pan
+- `plugins/focus-mode/`: `Cmd+Shift+H` hides the ribbon, tabs, breadcrumbs
+  and status bar
+- `plugins/vim-scrolloff/`: `scrolloff=13` for Vim mode
+- `plugins/vim-table-scroll/`: `Ctrl+E` / `Ctrl+Y` scroll the note while the
+  cursor is in a table cell
+
+Obsidian's own settings (`app.json`, `appearance.json`, `hotkeys.json`,
+`*-plugins.json`) are not linked. They are rewritten whenever a setting
+changes, and a dangling link (this repo on a branch without them) would make
+Obsidian fall back to defaults and save those. Each plugin's `data.json`
+(runtime state) also stays in the vault. Set these by hand on a new Mac:
+
+- **Appearance:** theme Atom, font size 22, snippets `github-dark`,
+  `base-style` and `layouts` on
+- **Editor:** Vim key bindings on, Readable line length on
+- **Community plugins:** turn on the four above
+
+The vault opens `.md` files from anywhere, so make it the default app:
+
+```sh
+duti -s md.obsidian net.daringfireball.markdown all
+duti -s md.obsidian .md all
+# Typora claims .md under its own type too
+duti -s md.obsidian io.typora.markdown all
+```
 
 ## Karabiner
 
@@ -150,7 +191,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+J` | Ghostty |
 | `Cmd+Ctrl+K` | Finder |
 | `Cmd+Ctrl+M` | Slack |
-| `Cmd+Ctrl+N` | Neovide |
+| `Cmd+Ctrl+N` | Obsidian |
 | `Cmd+Ctrl+;` | YouTube Music |
 | `Cmd+Ctrl+O` | IINA |
 | `Cmd+Ctrl+U` | Claude |

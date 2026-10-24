@@ -1,0 +1,99 @@
+/* Mermaid now draws in dark colours itself, so drop the invert filter
+   Obsidian uses to fake dark mode (it would flip the colours back) */
+body.theme-dark .mermaid > svg {
+    filter: none;
+}
+
+/* Centre diagrams in the note column, like GitHub and Typora. Diagrams scale
+   down to fit the column (main.js); one that would get too small to read
+   keeps a minimum size and scrolls sideways (live preview already does). */
+.mermaid {
+    position: relative;
+    text-align: center;
+}
+
+/* Expand button (main.js): bottom-right, shown on hover, since live preview
+   keeps its own </> button top-right. Hidden in print and PDF export. */
+.mermaid .mermaid-expand {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: flex;
+    height: auto;
+    padding: 4px;
+    border: none;
+    border-radius: var(--radius-s);
+    box-shadow: none;
+    background-color: var(--background-modifier-hover);
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.mermaid:hover .mermaid-expand {
+    opacity: 1;
+}
+
+.mermaid .mermaid-expand:hover {
+    color: var(--text-normal);
+}
+
+@media print {
+    .mermaid .mermaid-expand {
+        display: none;
+    }
+}
+
+/* Expanded view: nearly the whole window; the diagram scrolls and pans
+   inside it */
+.modal.mermaid-expand-modal {
+    width: 95vw;
+    max-width: none;
+    height: 90vh;
+    max-height: none;
+}
+
+.mermaid-expand-modal .modal-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Centred both ways while the diagram fits; "safe" falls back to the start
+   edge once it is larger, so zoomed-in parts can still be scrolled to */
+.mermaid-expand-view {
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;
+    height: 100%;
+    overflow: auto;
+    cursor: grab;
+    touch-action: none;
+}
+
+.mermaid-expand-view.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.mermaid-expand-view > svg {
+    flex: none;
+    height: auto;
+    max-width: none;
+    margin: 16px;
+}
+
+/* A little room above and below each diagram, as in the Typora theme */
+.mermaid > svg {
+    margin-block: 12px;
+}
+
+.markdown-rendered .mermaid {
+    overflow-x: auto;
+}
+
+/* No hover outline around diagrams in live preview; the </> edit button
+   still shows on hover */
+.markdown-source-view.mod-cm6 .cm-embed-block:has(> .mermaid):hover {
+    box-shadow: none;
+}

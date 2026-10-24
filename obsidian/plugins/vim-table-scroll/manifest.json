@@ -1,0 +1,9 @@
+{
+  "id": "vim-table-scroll",
+  "name": "Vim Table Scroll",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Makes Vim's Ctrl-E and Ctrl-Y scroll the note while the cursor is in a table cell.",
+  "author": "mtkh97",
+  "isDesktopOnly": true
+}
