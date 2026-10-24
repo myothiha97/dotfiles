@@ -3,8 +3,8 @@
 /*
  * Focus Mode
  *
- * One command (Cmd+Shift+H by default) hides the left icon ribbon, each
- * note's breadcrumb bar and the status bar, so only tabs and the note stay,
+ * One command (Cmd+Shift+H by default) hides the left icon ribbon, the tabs,
+ * each note's breadcrumb bar and the status bar, so only the note stays,
  * like Typora's plain window. Press it again to bring them back. The choice
  * is saved, so it survives a restart. styles.css does the hiding.
  */

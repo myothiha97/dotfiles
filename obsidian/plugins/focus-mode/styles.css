@@ -1,9 +1,9 @@
-/* Focus mode (toggled by main.js): hide the chrome around the note, keeping
-   tabs and the note itself. The ribbon is the same pair of elements
-   Obsidian's own "Show ribbon" setting hides. */
+/* Focus mode (toggled by main.js): hide everything around the note. The
+   ribbon is the same pair of elements Obsidian's own "Show ribbon" setting
+   hides. */
 /* Obsidian makes room for the macOS window buttons as 80px minus the ribbon
    width, so a hidden ribbon must count as 0px wide (as Obsidian's setting
-   does) or the tab bar slides under the buttons */
+   does) or the top bar slides under the buttons */
 body.focus-mode {
     --ribbon-width: 0px;
 }
@@ -13,4 +13,22 @@ body.focus-mode .side-dock-ribbon,
 body.focus-mode .workspace-leaf-content .view-header,
 body.focus-mode .status-bar {
     display: none;
+}
+
+/* Tab bar: only its contents go (tabs, new-tab and tab-list buttons, sidebar
+   toggles). The bar itself stays as an empty strip, because it holds the
+   macOS window buttons and is the window's drag area, like Typora's title
+   bar. Sidebars opened in focus mode keep their own tab headers. */
+body.focus-mode .mod-root .workspace-tab-header-container-inner,
+body.focus-mode .mod-root .workspace-tab-header-new-tab,
+body.focus-mode .mod-root .workspace-tab-header-tab-list,
+body.focus-mode .sidebar-toggle-button {
+    display: none;
+}
+
+/* The empty strip takes the note's background, so it blends into the page
+   like Typora's title area (base-style.css paints panes with !important) */
+body.focus-mode .mod-root .workspace-tab-header-container {
+    background-color: var(--background-primary) !important;
+    border-bottom: none;
 }

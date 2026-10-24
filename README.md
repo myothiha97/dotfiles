@@ -134,8 +134,8 @@ writes are linked, one by one, into `~/notes/professional-career/.obsidian/`:
 - `plugins/mermaid-github-theme/`: real dark theme for Mermaid instead of
   Obsidian's colour inversion; diagrams fit the note width and follow the font
   size, and a hover button opens a full-size view with zoom and pan
-- `plugins/focus-mode/`: `Cmd+Shift+H` hides the ribbon, breadcrumbs and
-  status bar
+- `plugins/focus-mode/`: `Cmd+Shift+H` hides the ribbon, tabs, breadcrumbs
+  and status bar
 - `plugins/vim-scrolloff/`: `scrolloff=13` for Vim mode
 - `plugins/vim-table-scroll/`: `Ctrl+E` / `Ctrl+Y` scroll the note while the
   cursor is in a table cell

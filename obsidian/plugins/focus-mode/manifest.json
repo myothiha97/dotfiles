@@ -3,7 +3,7 @@
   "name": "Focus Mode",
   "version": "1.0.0",
   "minAppVersion": "1.5.0",
-  "description": "Hides the icon ribbon, the note's breadcrumb bar and the status bar with one shortcut, for a clean, Typora-like view.",
+  "description": "Hides the icon ribbon, tabs, the note's breadcrumb bar and the status bar with one shortcut, for a clean, Typora-like view.",
   "author": "mtkh97",
   "isDesktopOnly": false
 }
