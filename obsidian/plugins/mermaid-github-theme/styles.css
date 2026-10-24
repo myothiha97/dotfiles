@@ -59,10 +59,14 @@ body.theme-dark .mermaid > svg {
     overflow: hidden;
 }
 
+/* Centred both ways while the diagram fits; "safe" falls back to the start
+   edge once it is larger, so zoomed-in parts can still be scrolled to */
 .mermaid-expand-view {
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;
     height: 100%;
     overflow: auto;
-    text-align: center;
     cursor: grab;
     touch-action: none;
 }
@@ -73,7 +77,7 @@ body.theme-dark .mermaid > svg {
 }
 
 .mermaid-expand-view > svg {
-    display: inline-block;
+    flex: none;
     height: auto;
     max-width: none;
     margin: 16px;

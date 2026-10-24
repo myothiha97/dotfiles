@@ -213,10 +213,12 @@ function compactVersion(text, flowchart) {
   return `${text}\n%%{init: ${JSON.stringify({ flowchart: spacing })}}%%`
 }
 
-// Added after each diagram drawn into a note (lucide "maximize-2" icon);
-// styles.css places it and one click handler serves them all
-const EXPAND_BUTTON =
-  '<button class="mermaid-expand" type="button" aria-label="Expand diagram">' +
+// Added after each diagram drawn into a note (lucide "maximize-2" icon). It
+// carries the diagram's source, so the expanded view can draw the diagram
+// as written (normal spacing, own direction) rather than the fitted copy on
+// the page. styles.css places it and one click handler serves them all.
+const expandButton = source =>
+  `<button class="mermaid-expand" type="button" aria-label="Expand diagram" data-source="${encodeURIComponent(source)}">` +
   '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" ' +
   'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
   '<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>' +
@@ -225,25 +227,37 @@ const EXPAND_BUTTON =
 // Limits for zooming in the expanded view
 const ZOOM_RANGE = [0.2, 5]
 
-// A diagram at full size in a large dialog: pinch or Cmd+scroll zooms around
-// the pointer, dragging pans, Esc closes
+// A diagram at full size in a large dialog, centred: pinch or Cmd+scroll
+// zooms around the pointer, dragging pans, Esc closes. `draw` renders the
+// source with Mermaid and resolves to the SVG markup.
 class DiagramModal extends Modal {
-  constructor(app, svg) {
+  constructor(app, source, draw) {
     super(app)
-    this.svg = svg
+    this.source = source
+    this.draw = draw
   }
 
-  onOpen() {
+  async onOpen() {
     this.modalEl.addClass('mermaid-expand-modal')
     const view = this.contentEl.createDiv('mermaid-expand-view')
-    const svg = this.svg.cloneNode(true)
-    const width = svg.viewBox.baseVal?.width || this.svg.getBoundingClientRect().width
+    try {
+      // Mermaid's own output at securityLevel "strict" (labels sanitised),
+      // placed the same way Obsidian places it on the page
+      view.innerHTML = await this.draw(this.source)
+    } catch (error) {
+      view.setText(`Could not draw this diagram: ${error?.message ?? error}`)
+      return
+    }
+    const svg = view.querySelector(':scope > svg')
+    if (!svg) return
+
+    const { width, height } = svg.viewBox.baseVal
     svg.removeAttribute('style')
     svg.removeAttribute('width')
-    view.append(svg)
+    svg.removeAttribute('height')
 
     // Opens fitted to the dialog, never enlarged past full size
-    let scale = Math.min(1, (view.clientWidth - 32) / width)
+    let scale = Math.min(1, (view.clientWidth - 32) / width, (view.clientHeight - 32) / height)
     const applyScale = () => (svg.style.width = `${width * scale}px`)
     applyScale()
 
@@ -333,8 +347,8 @@ module.exports = class MermaidGithubThemePlugin extends Plugin {
       if (!button) return
       event.preventDefault()
       event.stopPropagation()
-      const svg = button.parentElement?.querySelector(':scope > svg')
-      if (event.type === 'click' && svg) new DiagramModal(this.app, svg).open()
+      if (event.type !== 'click' || !button.dataset.source || !this.mermaid) return
+      new DiagramModal(this.app, decodeURIComponent(button.dataset.source), source => this.drawExpanded(source)).open()
     }
     this.registerDomEvent(document, 'mousedown', onExpand, { capture: true })
     this.registerDomEvent(document, 'click', onExpand, { capture: true })
@@ -390,8 +404,16 @@ module.exports = class MermaidGithubThemePlugin extends Plugin {
       const result = await this.render.call(mermaid, id, text, container)
       if (!container) return result
       const fitted = await this.fitToNote(result, id, text, container)
-      return { ...fitted, svg: fitted.svg + EXPAND_BUTTON }
+      return { ...fitted, svg: fitted.svg + expandButton(text) }
     }
+  }
+
+  // The expanded view's copy: Mermaid's plain render of the source, with no
+  // container, so no fitting, compact spacing or direction change applies
+  async drawExpanded(source) {
+    this.expandCount = (this.expandCount ?? 0) + 1
+    const { svg } = await this.render.call(this.mermaid, `mermaid-expand-${this.expandCount}`, source)
+    return svg
   }
 
   // `container` is as wide as the text column (Obsidian sizes it so)
