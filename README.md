@@ -173,7 +173,8 @@ The Finder rules give Finder vim motions while it is the frontmost app: `j`/`k`
 move, `h`/`l` collapse and expand, `ctrl-d`/`ctrl-u` page, `gg`/`G` jump,
 `y`/`p` copy and paste, `v` visual select, `x` trash. `Return` and `/` switch to
 an insert mode so typing works for renaming and searching, and `Escape` switches
-back.
+back. The motions also pause while a text field has focus (search box opened
+with `Cmd+F` or a click, Go to Folder), using Karabiner's focused UI element role.
 
 Rules live in `assets/complex_modifications/` but only take effect once they are
 listed in `karabiner.json` under the selected profile, which is what the
