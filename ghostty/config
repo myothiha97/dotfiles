@@ -90,6 +90,20 @@ adjust-cell-height = 25%
 # Cursor animation
 cursor-style = block
 cursor-style-blink = true
+
+# Cursor felt too tall/heavy (2026-10-27). Cursor SHAPE is set by nvim's
+# guicursor in options.lua; cursor SIZE can only come from Ghostty.
+#   * adjust-cursor-height is BROKEN in Ghostty (no effect at any value, still
+#     in 1.3.1): https://github.com/ghostty-org/ghostty/discussions/10514
+#     Kept disabled so it doesn't suddenly apply when a release fixes it.
+#     Retest after Ghostty updates:
+#       adjust-cursor-height = -35%
+#   * Width cannot be adjusted: a block cursor is always one cell wide.
+# So reduce the cursor's visual weight instead: text shows through the block.
+# Raise toward 1.0 if the cursor gets hard to find.
+# Cursor colour stays Ghostty's default (tried #919e9f `faded` on 2026-10-27,
+# reverted the same day).
+cursor-opacity = 0.7
 # cursor-color = 02b890
 shell-integration-features = no-cursor
 # cursor-text = a19f9f
@@ -161,6 +175,16 @@ clipboard-write = allow
 
 # Rendering - sync frames to display refresh rate (reduces tearing)
 window-vsync = true
+
+# Mouse wheel scroll distance (2026-10-27). Ghostty's default is
+# precision:1,discrete:3, and it applies to scroll events sent to TUI apps, so
+# one wheel notch reached nvim as ~3 scroll events. nvim's <ScrollWheelDown>
+# remap (keymaps.lua, scroll_depth = 1) scrolls 1 line per event, so speed per
+# device is tuned HERE:
+#   discrete:1  -> mouse wheel, 1 line per notch (for reading)
+#   precision:3 -> trackpad / Magic Mouse, same feel as the old nvim depth 3
+#                  that was best for the trackpad. Lower it if too fast.
+mouse-scroll-multiplier = precision:3,discrete:1
 
 # Colorspace: kept on display-p3 on purpose, for the external monitor (Samsung
 # LS24C33xG, 1080p), which is the main screen. display-p3 reads theme hex values
