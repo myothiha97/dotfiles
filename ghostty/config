@@ -176,6 +176,16 @@ clipboard-write = allow
 # Rendering - sync frames to display refresh rate (reduces tearing)
 window-vsync = true
 
+# Mouse wheel scroll distance (2026-10-27). Ghostty's default is
+# precision:1,discrete:3, and it applies to scroll events sent to TUI apps, so
+# one wheel notch reached nvim as ~3 scroll events. nvim's <ScrollWheelDown>
+# remap (keymaps.lua, scroll_depth = 1) scrolls 1 line per event, so speed per
+# device is tuned HERE:
+#   discrete:1  -> mouse wheel, 1 line per notch (for reading)
+#   precision:3 -> trackpad / Magic Mouse, same feel as the old nvim depth 3
+#                  that was best for the trackpad. Lower it if too fast.
+mouse-scroll-multiplier = precision:3,discrete:1
+
 # Colorspace: kept on display-p3 on purpose, for the external monitor (Samsung
 # LS24C33xG, 1080p), which is the main screen. display-p3 reads theme hex values
 # as P3 instead of sRGB, so colors come out more saturated than the theme's
