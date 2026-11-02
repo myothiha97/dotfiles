@@ -59,7 +59,7 @@ To add an idea: create one file in the matching folder, add its row below
 
 | file | hook | status |
 | ---- | ---- | ------ |
-| [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
+| [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130-190 ms; ~56 ms cut on branch `perf/tmux-session-picker-forks`, not merged yet | open |
 
 ## typora
 

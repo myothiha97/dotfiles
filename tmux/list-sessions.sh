@@ -3,7 +3,8 @@
 #
 # This is the single source of truth for session numbering. Both
 # session-menu.sh and switch-session.sh use it so the numbers shown in the
-# picker always match the prefix + Ctrl + <number> shortcuts.
+# picker always match the prefix + Ctrl + <number> shortcuts. session-picker.sh
+# copies this sort inline for speed; change both together.
 #
 # tmux's own `list-sessions` sorts by name, which reshuffles the numbering
 # whenever a session is renamed, so sort on #{session_created} instead.

@@ -4,6 +4,8 @@
 #
 # Split out of session-picker.sh because the picker rebuilds this list after a
 # kill, and fzf's reload needs a command it can run on its own.
+# session-picker.sh builds its first list inline with this same row format;
+# change both together.
 
 set -euo pipefail
 

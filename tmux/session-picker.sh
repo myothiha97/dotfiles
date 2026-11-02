@@ -34,16 +34,26 @@ if ! command -v fzf >/dev/null 2>&1; then
   exec "$script_dir/session-menu.sh"
 fi
 
-current=$(tmux display-message -p '#S')
+# One tmux call prints the current session first, then every session. Each
+# extra script or tmux call here adds a visible pause before the popup draws,
+# so the rows are built inline instead of through session-rows.sh. Keep the sort
+# in sync with list-sessions.sh and the row format with session-rows.sh, or the
+# numbers stop matching the prefix + Ctrl + <number> shortcuts.
+listing=$(tmux display-message -p '#S' \; list-sessions -F '#{session_created} #{session_name}')
+current=${listing%%$'\n'*}
 
-sessions=$("$script_dir/list-sessions.sh")
-
-rows=$("$script_dir/session-rows.sh")
+rows=$(printf '%s\n' "${listing#*$'\n'}" \
+  | sort -t' ' -k1,1n -k2,2 \
+  | awk -v cur="$current" '{
+      name = substr($0, index($0, " ") + 1)
+      printf "%d  %s%s\n", NR, name, (name == cur ? "  *" : "")
+    }')
 
 # Row number of the session we are in, so the cursor can start there instead of
-# on the first row. Empty if the current session is somehow not in the list, in
-# which case the cursor is left where fzf puts it.
-current_row=$(printf '%s\n' "$sessions" | awk -v cur="$current" '$0 == cur { print NR; exit }')
+# on the first row. Matches the whole row, so a session whose own name ends in
+# "  *" is not mistaken for it. Empty if the current session is somehow not in
+# the list, in which case the cursor is left where fzf puts it.
+current_row=$(printf '%s\n' "$rows" | awk -v cur="$current" '$0 == NR "  " cur "  *" { print NR; exit }')
 
 # Shared look, so both modes read as the same panel.
 opts=(
