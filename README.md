@@ -203,6 +203,13 @@ focus applications across native macOS Spaces without the normal Space animation
 The helper focuses an existing accessible window or launches the app. If Finder
 has no usable window, it opens the home folder.
 
+Ghostty window placement (other apps get these keys untouched):
+
+| Shortcut | Action |
+| --- | --- |
+| `Cmd+Option+Arrows` | Nudge the window 20 pt (replaces Ghostty's unused `goto_split`) |
+| `Cmd+Shift+C` | Center the window on its display (`yabai/center-window.sh`) |
+
 Enable both services at login:
 
 ```sh
@@ -248,7 +255,10 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 
 ## Ghostty
 
-- JetBrains Mono at 13 pt with macOS font thickening at strength 180.
+- JetBrains Mono at 14 pt with macOS font thickening at strength 180.
+- New windows open at 160x40 cells, centered on the 1920x1080 external monitor.
+  `Cmd+Shift+U` toggles between that size and filling the screen (zoom, not
+  fullscreen).
 - Opaque dark background (`#131312`; opacity and blur are commented out) and
   display-P3 output.
 - `Cmd+Ctrl+L` is sent to tmux as `C-M-l` to open a Claude pane (see tmux).
