@@ -12,3 +12,29 @@ cmd + ctrl - 0x29 : /bin/sh "$HOME/.config/yabai/focus-app.sh" "YouTube Music"
 cmd + ctrl - o : /bin/sh "$HOME/.config/yabai/focus-app.sh" "IINA"
 cmd + ctrl - u : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Claude"
 cmd + ctrl - 0x2B : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Preview"
+
+# Ghostty only: nudge the focused window 20 pt with Cmd+Option+Arrows, so it can
+# be placed without the mouse. Ghostty has no move action, so yabai does it.
+# Other apps get the key untouched (~). In Ghostty this replaces its default
+# goto_split, unused here since splits are tmux panes.
+cmd + alt - left [
+  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:-20:0
+  * ~
+]
+cmd + alt - right [
+  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:20:0
+  * ~
+]
+cmd + alt - up [
+  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:0:-20
+  * ~
+]
+cmd + alt - down [
+  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:0:20
+  * ~
+]
+# Cmd+Shift+C puts the Ghostty window back in the center of its display.
+cmd + shift - c [
+  "ghostty" : /bin/sh "$HOME/.dotfiles/yabai/center-window.sh"
+  * ~
+]

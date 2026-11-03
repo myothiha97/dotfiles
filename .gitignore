@@ -6,3 +6,6 @@ karabiner/automatic_backups/
 .agents/
 /AGENTS.md
 /CLAUDE.md
+
+# macOS Finder metadata
+.DS_Store

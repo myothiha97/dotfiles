@@ -23,12 +23,22 @@ macos-option-as-alt = false
 # Restart Ghostty after changing these values. If the change still does not
 # show up, log out of macOS and back in once.
 
-# window size
+# window size, in grid cells, so it depends on font-size. 160x40 at font-size 14
+# fills the 1284x960 window placed by hand on 2026-11-02 (was 160x44 at 13).
 window-width = 160
-window-height = 44
+window-height = 40
 
-window-position-x = 300
-window-position-y = 50
+# Top-left corner, in points from the top-left of the primary screen's visible
+# area (below the menu bar). Centers the 1284x960 window on the 1920x1080
+# external monitor: x = (1920 - 1284) / 2, y = (1080 - 960) / 2.
+window-position-x = 318
+window-position-y = 60
+
+# Two sizes: new windows open in the centered 160x40 "sm" frame above, and
+# Cmd+Shift+U toggles to filling the screen and back (macOS zoom, not
+# fullscreen, so no separate Space). Cmd+Shift+U is free in skhd, Karabiner
+# (its u rules are Finder-only), tmux, nvim, and Ghostty's own menus.
+keybind = super+shift+u=toggle_maximize
 
 # background = 0a0a0a
 # background = 1a1d24
@@ -80,8 +90,9 @@ font-family = "JetBrains Mono"
 # font-family = "SF Mono"
 # font-family = "Maple Mono NF"
 
-# font size is set to 13 since 2026-10-14 for better readability; 12.5 (the previous value) read too small.
-font-size = 13
+# font size is set to 14 since 2026-11-02: tried live with Cmd+= and it read better
+# than 13 (set 2026-10-14, after 12.5 read too small). Also matches Neovide (h14).
+font-size = 14
 adjust-cell-height = 25%
 
 # cursor
@@ -161,7 +172,8 @@ font-thicken-strength = 180
 #
 # Two other knobs, only if the strength dial alone can't get there:
 #   * Thin strokes read as small type. One step up compensates without weight, and
-#     would also match Neovide, which has been running at h14 all along:
+#     would also match Neovide, which has been running at h14 all along
+#     (applied 2026-11-02, see font-size above):
 #       font-size = 14
 #   * Real weight change. "Maple Mono NF Light" and "Medium" are both installed:
 #       font-style = Light
