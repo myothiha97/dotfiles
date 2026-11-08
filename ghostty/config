@@ -92,8 +92,11 @@ font-family = "JetBrains Mono"
 
 # font size is set to 14 since 2026-11-02: tried live with Cmd+= and it read better
 # than 13 (set 2026-10-14, after 12.5 read too small). Also matches Neovide (h14).
-font-size = 14
+# font-size = 14
+font-size = 14.7
 adjust-cell-height = 25%
+# use below setting if you want wider line width
+# adjust-cell-width = 4%
 
 # cursor
 # cursor-style = block
