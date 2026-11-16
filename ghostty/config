@@ -58,8 +58,10 @@ foreground = #bcc9ca
 # foreground = "#ede7d3" body.base2 color, too saturated 
 
 # start trialling from 1st Oct 2026 for below background color
-background = #131312 
+# background = #131312
 
+# start trialling from 9th Nov 2026
+background = #171716
 
 # hiding top border 
 
