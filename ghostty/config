@@ -48,8 +48,8 @@ keybind = super+shift+u=toggle_maximize
 
 # copied from https://github.com/craftzdog/dotfiles-public/blob/master/.config/ghostty/config
 # basically the same config as craftzdog's but with some tweaks to the colors and font size
-# background-opacity = 0.9
-# background-blur-radius = 20
+background-opacity = 0.9
+background-blur = 20
 # background = #031219
 
 # reused the same color palette from my custom theme body.brightest color 
@@ -58,8 +58,10 @@ foreground = #bcc9ca
 # foreground = "#ede7d3" body.base2 color, too saturated 
 
 # start trialling from 1st Oct 2026 for below background color
-background = #131312 
+# background = #131312
 
+# start trialling from 9th Nov 2026
+background = #171716
 
 # hiding top border 
 
@@ -94,8 +96,8 @@ font-family = "JetBrains Mono"
 # font size is set to 14 since 2026-11-02: tried live with Cmd+= and it read better
 # than 13 (set 2026-10-14, after 12.5 read too small). Also matches Neovide (h14).
 # font-size = 14
-font-size = 14.7
-adjust-cell-height = 25%
+font-size = 14.2
+adjust-cell-height = 35%
 # use below setting if you want wider line width
 # adjust-cell-width = 4%
 

@@ -260,8 +260,8 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 - New windows open at 160x40 cells, centered on the 1920x1080 external monitor.
   `Cmd+Shift+U` toggles between that size and filling the screen (zoom, not
   fullscreen).
-- Opaque dark background (`#131312`; opacity and blur are commented out) and
-  display-P3 output.
+- Dark background (`#171716`) at 0.9 opacity with blur 20, and display-P3
+  output.
 - `Cmd+Ctrl+L` is sent to tmux as `C-M-l` to open a Claude pane (see tmux).
 - `Ctrl+I` is distinct from Tab through the CSI-u sequence.
 - Selected Command keys are translated to Meta keys for Neovim.
