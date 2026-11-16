@@ -48,8 +48,8 @@ keybind = super+shift+u=toggle_maximize
 
 # copied from https://github.com/craftzdog/dotfiles-public/blob/master/.config/ghostty/config
 # basically the same config as craftzdog's but with some tweaks to the colors and font size
-# background-opacity = 0.9
-# background-blur-radius = 20
+background-opacity = 0.9
+background-blur = 20
 # background = #031219
 
 # reused the same color palette from my custom theme body.brightest color 
