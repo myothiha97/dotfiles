@@ -13,28 +13,22 @@ cmd + ctrl - o : /bin/sh "$HOME/.config/yabai/focus-app.sh" "IINA"
 cmd + ctrl - u : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Claude"
 cmd + ctrl - 0x2B : /bin/sh "$HOME/.config/yabai/focus-app.sh" "Preview"
 
-# Ghostty only: nudge the focused window 20 pt with Cmd+Option+Arrows, so it can
-# be placed without the mouse. Ghostty has no move action, so yabai does it.
-# Other apps get the key untouched (~). In Ghostty this replaces its default
-# goto_split, unused here since splits are tmux panes.
-cmd + alt - left [
-  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:-20:0
-  * ~
-]
-cmd + alt - right [
-  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:20:0
-  * ~
-]
-cmd + alt - up [
-  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:0:-20
-  * ~
-]
-cmd + alt - down [
-  "ghostty" : /opt/homebrew/bin/yabai -m window --move rel:0:20
-  * ~
-]
-# Cmd+Shift+C puts the Ghostty window back in the center of its display.
-cmd + shift - c [
-  "ghostty" : /bin/sh "$HOME/.dotfiles/yabai/center-window.sh"
-  * ~
+# Window placement keys for every app, so any window can be placed without the
+# mouse. They override what an app binds to them, on purpose: Cmd+Option+Left/
+# Right no longer switch browser or VS Code tabs, Cmd+Shift+C is not Chrome's
+# Inspect, Cmd+Shift+U is not Finder's Utilities.
+#
+# Cmd+Option+Arrows nudge the focused window 20 pt. In Ghostty this replaces its
+# default goto_split, unused here since splits are tmux panes.
+cmd + alt - left : /opt/homebrew/bin/yabai -m window --move rel:-20:0
+cmd + alt - right : /opt/homebrew/bin/yabai -m window --move rel:20:0
+cmd + alt - up : /opt/homebrew/bin/yabai -m window --move rel:0:-20
+cmd + alt - down : /opt/homebrew/bin/yabai -m window --move rel:0:20
+# Cmd+Shift+C puts the focused window back in the center of its display.
+cmd + shift - c : /bin/sh "$HOME/.dotfiles/yabai/center-window.sh"
+# Cmd+Shift+U toggles filling the display. Ghostty gets the key (~) for its own
+# toggle_maximize, which also knows its configured compact size.
+cmd + shift - u [
+  "ghostty" ~
+  * : /bin/sh "$HOME/.dotfiles/yabai/toggle-fill.sh"
 ]

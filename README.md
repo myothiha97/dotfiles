@@ -203,12 +203,13 @@ focus applications across native macOS Spaces without the normal Space animation
 The helper focuses an existing accessible window or launches the app. If Finder
 has no usable window, it opens the home folder.
 
-Ghostty window placement (other apps get these keys untouched):
+Window placement, in every app (overrides any app's own use of these keys):
 
 | Shortcut | Action |
 | --- | --- |
 | `Cmd+Option+Arrows` | Nudge the window 20 pt (replaces Ghostty's unused `goto_split`) |
 | `Cmd+Shift+C` | Center the window on its display (`yabai/center-window.sh`) |
+| `Cmd+Shift+U` | Toggle filling the display and back (`yabai/toggle-fill.sh`; Ghostty keeps its own `toggle_maximize`) |
 
 Enable both services at login:
 

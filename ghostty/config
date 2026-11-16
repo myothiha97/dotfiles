@@ -36,8 +36,9 @@ window-position-y = 60
 
 # Two sizes: new windows open in the centered 160x40 "sm" frame above, and
 # Cmd+Shift+U toggles to filling the screen and back (macOS zoom, not
-# fullscreen, so no separate Space). Cmd+Shift+U is free in skhd, Karabiner
-# (its u rules are Finder-only), tmux, nvim, and Ghostty's own menus.
+# fullscreen, so no separate Space). skhd passes Cmd+Shift+U through to Ghostty
+# (other apps get yabai/toggle-fill.sh); Karabiner (its u rules are Finder-only),
+# tmux, nvim, and Ghostty's own menus leave it free.
 keybind = super+shift+u=toggle_maximize
 
 # background = 0a0a0a
