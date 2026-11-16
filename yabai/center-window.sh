@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Move the focused window to the center of its display, keeping its size.
-# Bound in skhd (Cmd+Shift+C, Ghostty only) to undo Cmd+Option+Arrow nudges.
+# Bound in skhd (Cmd+Shift+C, every app) to undo Cmd+Option+Arrow nudges.
 
 YABAI=/opt/homebrew/bin/yabai
 JQ=/usr/bin/jq

@@ -16,6 +16,7 @@ first idea arrives. Two folders are not apps:
 | [`ghostty/`](#ghostty) | terminal config, keybinds, rendering                |
 | [`git/`](#git)         | git config (`~/.gitconfig`, not tracked yet)        |
 | [`lazygit/`](#lazygit) | lazygit config and its diff pager                   |
+| [`skhd/`](#skhd)       | global hotkeys (skhd) and the yabai calls they make |
 | [`tmux/`](#tmux)       | tmux config and its scripts                         |
 | [`typora/`](#typora)   | Typora themes                                       |
 | [`yazi/`](#yazi)       | yazi file manager config and openers                |
@@ -54,6 +55,12 @@ To add an idea: create one file in the matching folder, add its row below
 | ---- | ---- | ------ |
 | [`delta-nvim-theme.md`](lazygit/delta-nvim-theme.md) | syntax-coloured diffs via delta (TwoDark); made by choice on request; old instability cause still unknown | done |
 | [`sync-delta-with-nvim-theme.md`](lazygit/sync-delta-with-nvim-theme.md) | generate a delta theme from the nvim palette so both match; approximate only (TextMate vs treesitter) | open |
+
+## skhd
+
+| file | hook | status |
+| ---- | ---- | ------ |
+| [`window-keys-all-apps.md`](skhd/window-keys-all-apps.md) | Ghostty window keys (Cmd+Shift+U/C, Cmd+Opt+Arrows) in every app; overrides app keys by choice | done |
 
 ## tmux
 
