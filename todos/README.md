@@ -67,6 +67,7 @@ To add an idea: create one file in the matching folder, add its row below
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`session-picker-open-latency.md`](tmux/session-picker-open-latency.md) | picker opens in ~130 ms; ~70 ms is forks before fzf, one `list-sessions` would cut it | open |
+| [`claude-hatch-agent-layer.md`](tmux/claude-hatch-agent-layer.md) | Claude sessions in hidden popup sessions (tmux-claude-hatch), kept out of the session pickers; prefix + Y account switch; made by choice on request | done |
 
 ## typora
 

@@ -389,10 +389,35 @@ Known limits, all minor:
 - Outside tmux, Ghostty still sends the key's escape sequence, which a plain
   shell may show as a few stray characters.
 
+### Claude hatch (agent popups)
+
+[tmux-claude-hatch](https://github.com/craftzdog/tmux-claude-hatch) keeps Claude
+Code sessions in their own layer: each runs in a hidden `claude-<hash>` session
+per directory, shown in a popup. `list-sessions.sh` filters `claude-*` out, so
+the session pickers and shortcuts list only work sessions.
+
+| Keys after prefix | Action |
+| --- | --- |
+| `y` | Open the Claude popup for the current directory (reattach if it exists) |
+| `d` | Inside the popup: hide it, Claude keeps running. Outside: normal detach |
+| `u` | Agent picker: status, live preview, `Ctrl+x` kill, `Ctrl+y` copy location |
+| `Y` | Switch the Claude account between work and personal |
+
+`Y` sets `CLAUDE_CONFIG_DIR` in tmux's global environment (`~/.claude-work`
+for work, unset for personal, same as `cl`) and shows a message. The status bar
+shows `claude:<account>`. Work is the default when tmux starts.
+
+Known limits:
+
+- The picker lists only the active account's agents.
+- Popups are per directory, not per account: after switching, `y` in a
+  directory that already has a popup reopens the old account's Claude.
+- Panes and popups opened before a switch keep their account.
+
 ### Status bar
 
-Plain text, no powerline pills: session name on the left, clock and date on the
-right, windows as `<index>:<name>`. The background is `default` rather than a
+Plain text, no powerline pills: session name on the left, the Claude account,
+clock and date on the right, windows as `<index>:<name>`. The background is `default` rather than a
 hex colour so Ghostty's opacity and blur show through. Colours are tokyonight
 blue `#7aa2f7` for the accent, `#565f89` for dim text, `#c0caf5` for the
 default foreground. `tmux/COLORS.md` records every colour tried, why the

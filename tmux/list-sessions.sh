@@ -11,6 +11,9 @@
 
 set -euo pipefail
 
-tmux list-sessions -F '#{session_created} #{session_name}' \
+# The -f filter hides the claude-* sessions that tmux-claude-hatch runs behind
+# its popup (prefix + y), so the pickers and shortcuts list only work sessions.
+tmux list-sessions -f '#{!:#{m:claude-*,#{session_name}}}' \
+  -F '#{session_created} #{session_name}' \
   | sort -t' ' -k1,1n -k2,2 \
   | cut -d' ' -f2-
