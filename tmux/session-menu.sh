@@ -16,6 +16,7 @@ while IFS= read -r name; do
   if [ "$i" -le 9 ]; then
     key="$i"
   else
+    # shellcheck disable=SC2059 # format is a built octal escape, input is a number
     key=$(printf "\\$(printf '%03o' $((87 + i)))")  # 10 -> a, 11 -> b, ...
   fi
 

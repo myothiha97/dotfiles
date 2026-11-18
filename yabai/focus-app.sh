@@ -19,6 +19,7 @@ ISS=/Applications/InstantSpaceSwitcher.app/Contents/MacOS/ISSCli
 
 app_name=$1
 
+# shellcheck disable=SC2016 # $app is a jq variable, not shell
 window=$(
   $YABAI -m query --windows |
     $JQ -r --arg app "$app_name" \
@@ -32,6 +33,7 @@ if [ -n "$window" ]; then
 
   if [ -x "$ISS" ]; then
     # visible flag, display index and the space's 1-based position on that display
+    # shellcheck disable=SC2016 # $space and $target are jq variables, not shell
     target=$(
       $YABAI -m query --spaces |
         $JQ -r --argjson space "$space_index" \
@@ -42,6 +44,7 @@ if [ -n "$window" ]; then
                       | index($space) + 1)"
              end'
     )
+    # shellcheck disable=SC2086 # split on purpose into visible, display, position
     set -- $target
     visible=$1
     display_index=$2

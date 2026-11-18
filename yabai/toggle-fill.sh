@@ -13,6 +13,7 @@ STATE_DIR="${TMPDIR:-/tmp}/yabai-fill"
 FRAME='.frame | "\((.x|round) + 0):\((.y|round) + 0):\(.w|round):\(.h|round)"'
 
 window=$("$YABAI" -m query --windows --window) || exit 0
+# shellcheck disable=SC2046 # split on purpose into id, fullscreen, frame
 set -- $(printf '%s' "$window" | "$JQ" -r "\"\(.id) \(.\"is-native-fullscreen\") \" + ($FRAME)")
 id=$1 fullscreen=$2 current=$3
 [ "$fullscreen" = true ] && exit 0
