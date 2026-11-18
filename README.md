@@ -403,6 +403,23 @@ the session pickers and shortcuts list only work sessions.
 | `u` | Agent picker: status, live preview, `Ctrl+x` kill, `Ctrl+y` copy location |
 | `Y` | Switch the Claude account between work and personal |
 
+Changes on top of the plugin:
+
+- `Ctrl+f` (no prefix) also hides the popup. A `session-created` hook gives
+  every `claude-*` session its own `claude` key table, a copy of the root table
+  taken at config load plus `Ctrl+f`. Other sessions never see the binding.
+- nvim inside the popup (Claude's `Ctrl+g` editor, or one opened there) still
+  gets `Ctrl+f` for page down. Claude starts nvim as its child, so
+  `#{pane_current_command}` still reports Claude; the binding asks `ps` about
+  the pane's tty instead (~9 ms per `Ctrl+f`, only in the popup).
+- Agent picker: `Ctrl+j` / `Ctrl+k` move, `Enter` / `Ctrl+l` open, `Ctrl+f` or
+  `Esc` close (`@claude_fzf_options`).
+- Opening a hidden agent from the picker shows it over the current window. The
+  plugin's own enter switches the main client to the window where `y` was
+  first pressed; `tmux/claude-attach.sh` does the same attach without that
+  switch. An agent in a normal pane still jumps to that pane. `Esc` stays
+  with Claude Code (stop, cancel, rewind), so it is not used to hide.
+
 `Y` sets `CLAUDE_CONFIG_DIR` in tmux's global environment (`~/.claude-work`
 for work, unset for personal, same as `cl`) and shows a message. The status bar
 shows `claude:<account>`. Work is the default when tmux starts.
@@ -413,6 +430,38 @@ Known limits:
 - Popups are per directory, not per account: after switching, `y` in a
   directory that already has a popup reopens the old account's Claude.
 - Panes and popups opened before a switch keep their account.
+- `Ctrl+f` inside the popup is taken from everything except nvim: Claude Code
+  (cursor right, transcript page down; use the right arrow and space) and any
+  shell or window opened inside a `claude-*` session.
+- The `claude` key table is a snapshot. A root binding added live, or by a
+  plugin loaded after that line, works inside the popup only after a reload.
+- `set-hook -g session-created` is a single slot. Another `-g` setter (a future
+  plugin or line) silently replaces it; use `-ga` if a second one is needed.
+- Hiding the popup opened from the picker may flash the picker for a moment
+  before it closes (not checked visually).
+- Cost: config load is ~7 ms slower (root table copy, measured 255 to 262 ms
+  server start). Nothing runs per key, redraw or new shell outside the popup.
+
+Recheck after updating the plugin or fzf:
+
+- Picker rows are still `rank \t pane_id \t pid \t kind \t ...` (the plugin's
+  `scripts/agents.sh`). `claude-attach.sh` reads `{2}` and `{4}`.
+- The plugin's attach step in `scripts/picker.sh` (select-window, select-pane,
+  attach-session) has not gained a step that `claude-attach.sh` lacks.
+- fzf still leaves stderr on the real terminal during `execute`. It gives the
+  command `/dev/tty` as stdin, which tmux refuses (`can't use /dev/tty`), so
+  the script attaches on stderr. If that changes, `Enter` just closes the
+  picker.
+
+Testing notes (isolated server, `tmux -L test`):
+
+- A client started inside a test pane needs `env -u TMUX`, or tmux refuses to
+  nest and exits at once, which looks like a successful detach.
+- With `TMUX` unset, a script's plain `tmux` calls go to the live server. Put
+  a wrapper first in `PATH` that runs `tmux -L test "$@"`.
+- The prefix is `C-Space`, not `C-b`, when the test server loads this config.
+- Send keys to the pane running the test client (`send-keys -t <outer>`), so
+  they go through the client's key tables like a real key press.
 
 ### Status bar
 
