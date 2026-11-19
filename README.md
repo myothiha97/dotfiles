@@ -19,6 +19,7 @@ and symlinked to their live locations.
 | `obsidian` | GitHub Dark snippets and four small plugins (Mermaid theme, focus mode, Vim scrolling) | `~/notes/professional-career/.obsidian/` |
 | `yazi` | Terminal file manager layout and extra keys | `~/.config/yazi/` |
 | `zshrc` | Shell completion, aliases, tools, and prompt | `~/.zshrc` |
+| `herdr` | Herdr app (agent workspace) keys and two panel-toggle mods | `~/.config/herdr-app/` |
 
 Neovim is maintained separately at
 [`~/.config/nvim`](https://github.com/myothiha97/nvim).
@@ -63,6 +64,11 @@ for f in $(cd ~/.dotfiles/obsidian && find . -type f | sed 's|^\./||'); do
   mkdir -p "$vault/$(dirname "$f")"
   ln -sf ~/.dotfiles/obsidian/"$f" "$vault/$f"
 done
+
+# Herdr: open the app once first so it creates ~/.config/herdr-app
+ln -sf ~/.dotfiles/herdr/keys.json ~/.config/herdr-app/keys.json
+ln -sfn ~/.dotfiles/herdr/mods/panel-files ~/.config/herdr-app/mods/panel-files
+ln -sfn ~/.dotfiles/herdr/mods/panel-changes ~/.config/herdr-app/mods/panel-changes
 ```
 
 Back up any existing real file before replacing it with a symlink.
@@ -197,6 +203,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+O` | IINA |
 | `Cmd+Ctrl+U` | Claude |
 | `Cmd+Ctrl+,` | Preview |
+| `Cmd+Ctrl+W` | Herdr |
 
 `Cmd+Ctrl+L` is left unbound on purpose, so it reaches tmux (Claude pane).
 
@@ -518,6 +525,45 @@ Known limitations and concerns:
 
 Lazygit's `state.yml` is intentionally not tracked because it contains changing
 runtime state.
+
+## Herdr
+
+The Herdr desktop app is the agent workspace, kept apart from Ghostty + tmux
+so its keys never clash with the tmux ones. Only files written by hand are
+tracked: `keys.json` and the `panel-files` / `panel-changes` mods. The rest of
+`~/.config/herdr-app/` is written by the app (shipped mods, type files, data).
+`settings.json` stays untracked because the app's Settings window rewrites it,
+and an atomic rewrite would replace a symlink with a real file.
+
+Herdr does not see edits made through a symlink. After editing `keys.json`
+here, run `touch -h ~/.config/herdr-app/keys.json` to reload it. The mods load
+from disk each time their key opens them, so mod edits apply on the next press.
+Invalid keys are reported in `~/.config/herdr-app/keys.error`, and the app
+keeps the last good version.
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+J` / `Ctrl+N` | Next space |
+| `Ctrl+K` / `Ctrl+P` | Previous space |
+| `Cmd+Shift+1..9` | Go to space 1-9 (`Ctrl+1..9` too) |
+| `Cmd+Shift+H` / `Cmd+Shift+L` | Previous / next tab |
+| `Cmd+N` | New space |
+| `Cmd+Shift+W` | Close space (asks first) |
+| `Cmd+W` | Close tab |
+| `Cmd+Shift+X` | Close pane |
+| `Cmd+H` | Show or hide the sidebar (replaces macOS Hide) |
+| `Cmd+L` / `Cmd+;` | Toggle the Files / Changes panel |
+| `Cmd+/` | All shortcuts |
+
+The four plain Ctrl keys are taken from the program in the pane: Claude Code
+loses `Ctrl+J` (newline) and `Ctrl+K` (delete to end of line), and shells lose
+`Ctrl+N` / `Ctrl+P` history. `Cmd+1..9` (tab select) is unbound because macOS
+uses it. `Ctrl+Alt+Shift+Esc` sets `keys.json` aside and restores the defaults.
+
+`panel-files` and `panel-changes` do what the tab bar's Files and Changes
+buttons do. No single key command can pick a panel view and show it, so each
+key opens a tiny frameless mod that runs those commands and closes itself.
+Check a mod after editing it: `herdr-app check ~/.config/herdr-app/mods/<name>`.
 
 ## Adding another config
 

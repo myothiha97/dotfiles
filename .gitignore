@@ -1,6 +1,10 @@
 # Karabiner rewrites these on every change
 karabiner/automatic_backups/
 
+# Herdr rewrites these type files into every mod folder on start
+herdr/mods/*/*.d.ts
+herdr/mods/*/jsconfig.json
+
 # Agents skill files
 .claude/
 .agents/
