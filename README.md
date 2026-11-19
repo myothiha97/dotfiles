@@ -197,6 +197,7 @@ focus applications across native macOS Spaces without the normal Space animation
 | `Cmd+Ctrl+O` | IINA |
 | `Cmd+Ctrl+U` | Claude |
 | `Cmd+Ctrl+,` | Preview |
+| `Cmd+Ctrl+W` | Herdr |
 
 `Cmd+Ctrl+L` is left unbound on purpose, so it reaches tmux (Claude pane).
 
