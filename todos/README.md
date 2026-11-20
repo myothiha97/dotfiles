@@ -61,6 +61,7 @@ To add an idea: create one file in the matching folder, add its row below
 | file | hook | status |
 | ---- | ---- | ------ |
 | [`window-keys-all-apps.md`](skhd/window-keys-all-apps.md) | Ghostty window keys (Cmd+Shift+U/C, Cmd+Opt+Arrows) in every app; overrides app keys by choice | done |
+| [`neovide-obsidian-focus-keys.md`](skhd/neovide-obsidian-focus-keys.md) | Cmd+Ctrl+N to Neovide, Obsidian to Cmd+Ctrl+,; Preview has no key now; made by choice on request | done |
 
 ## tmux
 
