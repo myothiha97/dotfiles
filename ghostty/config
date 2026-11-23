@@ -204,14 +204,13 @@ window-vsync = true
 #                  that was best for the trackpad. Lower it if too fast.
 mouse-scroll-multiplier = precision:3,discrete:1
 
-# Colorspace: kept on display-p3 on purpose, for the external monitor (Samsung
-# LS24C33xG, 1080p), which is the main screen. display-p3 reads theme hex values
-# as P3 instead of sRGB, so colors come out more saturated than the theme's
-# exact values. That is the preferred look on the external. The default (srgb)
-# is the color-accurate choice. On the MacBook Retina screen colors can still
-# look duller, but that comes from the display (thinner text at 2x, brightness,
-# True Tone), not from this setting.
-window-colorspace = display-p3
+# Colorspace: srgb (the default) shows theme hex values exactly, since themes
+# are made in sRGB. display-p3 read them as P3, which made every color more
+# saturated and shifted blues toward cyan, on both screens. srgb measured 10-20%
+# less saturated with near-equal contrast, so it is calmer on the eyes. If the
+# external monitor looks harsher than the MacBook, check its macOS color
+# profile first (System Settings > Displays), not this setting.
+window-colorspace = srgb
 
 # Send CSI u sequence for Ctrl+I to distinguish from Tab
 keybind = ctrl+i=csi:105;5u
