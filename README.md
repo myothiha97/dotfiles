@@ -398,18 +398,19 @@ the session pickers and shortcuts list only work sessions.
 
 | Keys after prefix | Action |
 | --- | --- |
-| `y` | Open the Claude popup for the current directory (reattach if it exists) |
+| `u` | Open the Claude popup for the current directory (reattach if it exists) |
 | `d` | Inside the popup: hide it, Claude keeps running. Outside: normal detach |
-| `u` | Agent picker: status, live preview, `Ctrl+x` kill, `Ctrl+y` copy location |
+| `i` | Agent picker: status, live preview, `Ctrl+x` kill, `Ctrl+y` copy location |
+| `y` | `display-message` (tmux's default `i`, moved to make room) |
 | `Y` | Switch the Claude account between work and personal |
 
 Changes on top of the plugin:
 
 - Agent picker: `Ctrl+j` / `Ctrl+k` move, `Enter` / `Ctrl+l` open, `Ctrl+f` or
   `Esc` close (`@claude_fzf_options`). Opening an agent keeps the plugin's
-  behaviour: it switches to the window where `y` was first pressed.
+  behaviour: it switches to the window where `u` was first pressed.
 - `prefix + d` cannot close the picker. That popup runs fzf directly, not a
-  nested tmux client like `y`, so tmux never sees the prefix there.
+  nested tmux client like `u`, so tmux never sees the prefix there.
 
 `Y` sets `CLAUDE_CONFIG_DIR` in tmux's global environment (`~/.claude-work`
 for work, unset for personal, same as `cl`) and shows a message. The status bar
@@ -418,7 +419,7 @@ shows `claude:<account>`. Work is the default when tmux starts.
 Known limits:
 
 - The picker lists only the active account's agents.
-- Popups are per directory, not per account: after switching, `y` in a
+- Popups are per directory, not per account: after switching, `u` in a
   directory that already has a popup reopens the old account's Claude.
 - Panes and popups opened before a switch keep their account.
 
