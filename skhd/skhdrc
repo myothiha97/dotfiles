@@ -27,6 +27,12 @@ cmd + alt - up : /opt/homebrew/bin/yabai -m window --move rel:0:-20
 cmd + alt - down : /opt/homebrew/bin/yabai -m window --move rel:0:20
 # Cmd+Shift+C puts the focused window back in the center of its display.
 cmd + shift - c : /bin/sh "$HOME/.dotfiles/yabai/center-window.sh"
+# Cmd+Shift+Y toggles Ghostty between its small (111x26) and large (160x40)
+# sizes, centered. Other apps keep the key.
+cmd + shift - y [
+  "ghostty" : /bin/sh "$HOME/.dotfiles/yabai/toggle-size.sh"
+  * ~
+]
 # Cmd+Shift+U toggles filling the display. Ghostty gets the key (~) for its own
 # toggle_maximize, which also knows its configured compact size.
 cmd + shift - u [
