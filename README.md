@@ -209,6 +209,7 @@ Window placement, in every app (overrides any app's own use of these keys):
 | --- | --- |
 | `Cmd+Option+Arrows` | Nudge the window 20 pt (replaces Ghostty's unused `goto_split`) |
 | `Cmd+Shift+C` | Center the window on its display (`yabai/center-window.sh`) |
+| `Cmd+Shift+Y` | Ghostty only: toggle small (111x26) and medium (160x40), centered (`yabai/toggle-size.sh`) |
 | `Cmd+Shift+U` | Toggle filling the display and back (`yabai/toggle-fill.sh`; Ghostty keeps its own `toggle_maximize`) |
 
 Enable both services at login:
@@ -257,9 +258,11 @@ AeroSpace is retained as a fallback but has `start-at-login = false`.
 ## Ghostty
 
 - JetBrains Mono at 14 pt with macOS font thickening at strength 180.
-- New windows open at 160x40 cells, centered on the 1920x1080 external monitor.
+- New windows open at 111x26 cells (892x652 pt), centered on the 1920x1080 external monitor.
   `Cmd+Shift+U` toggles between that size and filling the screen (zoom, not
   fullscreen).
+  `Cmd+Shift+Y` toggles between that size and 160x40 (1284x960 pt), centered
+  (skhd + `yabai/toggle-size.sh`).
 - Dark background (`#171716`) at 0.9 opacity with blur 20, and display-P3
   output.
 - `Cmd+Ctrl+L` is sent to tmux as `C-M-l` to open a Claude pane (see tmux).

@@ -23,18 +23,18 @@ macos-option-as-alt = false
 # Restart Ghostty after changing these values. If the change still does not
 # show up, log out of macOS and back in once.
 
-# window size, in grid cells, so it depends on font-size. 160x40 at font-size 14
-# fills the 1284x960 window placed by hand on 2026-11-02 (was 160x44 at 13).
-window-width = 160
-window-height = 40
+# window size, in grid cells, so it depends on font-size. 111x26 at font-size 14
+# fills the 892x652 window sized by hand on 2026-11-24 (was 160x40, 1284x960).
+window-width = 111
+window-height = 26
 
 # Top-left corner, in points from the top-left of the primary screen's visible
-# area (below the menu bar). Centers the 1284x960 window on the 1920x1080
-# external monitor: x = (1920 - 1284) / 2, y = (1080 - 960) / 2.
-window-position-x = 318
-window-position-y = 60
+# area (below the menu bar). Centers the 892x652 window on the 1920x1080
+# external monitor: x = (1920 - 892) / 2, y = (1080 - 652) / 2.
+window-position-x = 514
+window-position-y = 214
 
-# Two sizes: new windows open in the centered 160x40 "sm" frame above, and
+# Two sizes: new windows open in the centered 111x26 "sm" frame above, and
 # Cmd+Shift+U toggles to filling the screen and back (macOS zoom, not
 # fullscreen, so no separate Space). skhd passes Cmd+Shift+U through to Ghostty
 # (other apps get yabai/toggle-fill.sh); Karabiner (its u rules are Finder-only),
@@ -204,14 +204,13 @@ window-vsync = true
 #                  that was best for the trackpad. Lower it if too fast.
 mouse-scroll-multiplier = precision:3,discrete:1
 
-# Colorspace: kept on display-p3 on purpose, for the external monitor (Samsung
-# LS24C33xG, 1080p), which is the main screen. display-p3 reads theme hex values
-# as P3 instead of sRGB, so colors come out more saturated than the theme's
-# exact values. That is the preferred look on the external. The default (srgb)
-# is the color-accurate choice. On the MacBook Retina screen colors can still
-# look duller, but that comes from the display (thinner text at 2x, brightness,
-# True Tone), not from this setting.
-window-colorspace = display-p3
+# Colorspace: srgb (the default) shows theme hex values exactly, since themes
+# are made in sRGB. display-p3 read them as P3, which made every color more
+# saturated and shifted blues toward cyan, on both screens. srgb measured 10-20%
+# less saturated with near-equal contrast, so it is calmer on the eyes. If the
+# external monitor looks harsher than the MacBook, check its macOS color
+# profile first (System Settings > Displays), not this setting.
+window-colorspace = srgb
 
 # Send CSI u sequence for Ctrl+I to distinguish from Tab
 keybind = ctrl+i=csi:105;5u
