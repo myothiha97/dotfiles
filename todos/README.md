@@ -42,6 +42,7 @@ To add an idea: create one file in the matching folder, add its row below
 | file                                                         | hook                                                                                          | status |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------ |
 | [`native-ghostty-splits.md`](ghostty/native-ghostty-splits.md) | Ghostty splits as a tmux replacement; on branch `unstable/ghostty-native-splits`, untested    | open   |
+| [`small-window-size-toggle.md`](ghostty/small-window-size-toggle.md) | 111x26 centered default; Cmd+Shift+Y toggles 160x40, Cmd+Shift+U full screen; made by choice on request | done |
 
 ## git
 
